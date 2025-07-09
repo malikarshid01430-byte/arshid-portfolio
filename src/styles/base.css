@@ -1,0 +1,111 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 230 15% 10%;
+    --foreground: 210 40% 98%;
+
+    --card: 230 15% 12%; 
+    --card-foreground: 210 40% 98%;
+
+    --popover: 230 15% 8%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 160 84% 39%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 36 96% 56%;
+    --secondary-foreground: 230 15% 10%;
+
+    --muted: 230 15% 15%;
+    --muted-foreground: 210 20% 70%;
+
+    --accent: 230 15% 15%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 230 15% 20%;
+    --input: 230 15% 20%;
+    --ring: 230 74% 65%;
+
+    --radius: 0.5rem;
+  }
+
+  /* Dark mode light theme - improved for better contrast and readability */
+  .dark-mode {
+    --background: 0 0% 98%;
+    --foreground: 230 15% 10%; 
+
+    --card: 0 0% 100%;
+    --card-foreground: 230 15% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 230 15% 10%;
+
+    --primary: 160 84% 36%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 36 96% 56%;
+    --secondary-foreground: 230 15% 10%;
+
+    --muted: 210 20% 96%;
+    --muted-foreground: 215 15% 40%;
+
+    --accent: 210 30% 96%;
+    --accent-foreground: 230 15% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 215 15% 85%;
+    --input: 215 15% 85%;
+    --ring: 230 74% 40%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+
+  body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-bold;
+  }
+
+  .section {
+    @apply py-14 px-4 md:px-8 lg:px-16;
+  }
+
+  .container-custom {
+    @apply max-w-7xl mx-auto;
+  }
+
+  /* Hide scrollbars but allow scrolling */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+

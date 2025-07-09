@@ -1,0 +1,130 @@
+
+/* Floating animation for cards and images */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Soft pulse animation for attention-grabbing elements */
+@keyframes softPulse {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  70% { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.animate-pulse-soft {
+  animation: softPulse 2s infinite;
+}
+
+/* Gradient animation for buttons and highlights */
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background: linear-gradient(270deg, var(--tw-gradient-stops));
+  background-size: 200% 200%;
+  animation: gradient 3s ease infinite;
+}
+
+/* Staggered entrance for lists */
+@keyframes fadeInStagger {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.stagger-item {
+  opacity: 0;
+}
+
+.stagger-item.active {
+  animation: fadeInStagger 0.5s ease forwards;
+}
+
+/* Rotating highlight for featured items */
+@keyframes rotateHighlight {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.rotating-highlight::before {
+  content: '';
+  @apply absolute -inset-1 rounded-lg;
+  background: conic-gradient(from 0deg, transparent, rgba(16, 185, 129, 0.3), transparent);
+  animation: rotateHighlight 3s linear infinite;
+  z-index: -1;
+}
+
+/* Subtle bounce for call to action buttons */
+@keyframes subtleBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.animate-bounce-subtle {
+  animation: subtleBounce 2s infinite;
+}
+
+/* Typewriter effect enhancement */
+.typewriter-cursor {
+  @apply inline-block w-0.5 h-5 align-middle;
+  background-color: currentColor;
+  animation: blink 0.7s step-end infinite;
+}
+
+@keyframes blink {
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Add missing animation for typing cursor */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+.animate-typing {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 3.5s steps(40, end);
+  display: inline-block;
+}
+
+/* Background shape animations */
+@keyframes morphShape {
+  0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  100% { border-radius: 50% 50% 40% 60% / 40% 40% 60% 50%; }
+}
+
+.morph-shape {
+  animation: morphShape 8s ease-in-out infinite;
+}
+
+/* Name highlight animation */
+@keyframes nameGlow {
+  0%, 100% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
+  50% { text-shadow: 0 0 20px rgba(16, 185, 129, 0.8), 0 0 30px rgba(16, 185, 129, 0.4); }
+}
+
+.animate-name-glow {
+  animation: nameGlow 3s infinite;
+}
+
+/* Text reveal animation */
+@keyframes textReveal {
+  0% { clip-path: inset(0 100% 0 0); }
+  100% { clip-path: inset(0 0 0 0); }
+}
+
+.text-reveal {
+  animation: textReveal 1s forwards;
+}
+

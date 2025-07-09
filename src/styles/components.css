@@ -1,0 +1,173 @@
+
+/* Skill bars, timeline, and text animation styles */
+.skill-bar {
+  @apply relative h-3 w-full bg-muted rounded-full overflow-hidden;
+}
+
+.skill-progress {
+  @apply h-full rounded-full transition-all duration-1000 ease-out;
+}
+
+.skill-value {
+  @apply absolute top-0 right-0 -translate-y-6 opacity-0 transition-all duration-500;
+}
+
+.timeline-item {
+  @apply relative pl-10 pb-12 border-l-2 border-muted;
+  position: relative;
+}
+
+.timeline-item::before {
+  content: '';
+  @apply absolute w-5 h-5 rounded-full bg-primary -left-[11px] top-1 shadow-md shadow-primary/20;
+}
+
+.timeline-item:last-child {
+  @apply border-l-0 pb-0;
+}
+
+.typed-text-wrapper {
+  @apply overflow-hidden whitespace-nowrap border-r-4 border-primary mx-auto inline-block animate-typing;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(15px);
+  transition: all 0.5s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Featured Projects Slider */
+.featured-projects-slider {
+  @apply overflow-hidden relative;
+}
+
+.slider-content {
+  @apply flex transition-transform duration-500 ease-in-out;
+}
+
+.slider-item {
+  @apply min-w-full md:min-w-[50%] lg:min-w-[33.33%] px-4;
+}
+
+.slider-controls {
+  @apply flex justify-center mt-6 gap-2;
+}
+
+.slider-dot {
+  @apply w-3 h-3 rounded-full bg-muted transition-all;
+}
+
+.slider-dot.active {
+  @apply bg-primary w-6;
+}
+
+/* Background shapes */
+.bg-shape {
+  @apply fixed opacity-10 rounded-full blur-3xl;
+  z-index: -1;
+  transition: all 0.5s ease;
+}
+
+.bg-shape.shape-1 {
+  @apply bg-emerald-500/30 w-96 h-96;
+  top: 10%;
+  left: 10%;
+  animation: morphShape 15s ease-in-out infinite alternate;
+}
+
+.bg-shape.shape-2 {
+  @apply bg-gold-500/30 w-80 h-80;
+  bottom: 10%;
+  right: 10%;
+  animation: morphShape 20s ease-in-out infinite alternate-reverse;
+}
+
+/* Section styles */
+.section {
+  @apply py-16 px-4 md:px-8 lg:px-16;
+  scroll-margin-top: 80px;
+}
+
+/* Cards with consistent sizing */
+.card-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6;
+}
+
+.card-standard {
+  @apply bg-card p-6 rounded-lg border border-border h-full flex flex-col;
+}
+
+.card-standard-header {
+  @apply mb-4;
+}
+
+.card-standard-body {
+  @apply flex-grow;
+}
+
+.card-standard-footer {
+  @apply mt-4 pt-4 border-t border-border;
+}
+
+/* Consistent button styles */
+.btn {
+  @apply px-6 py-2.5 rounded-md font-medium transition-all inline-flex items-center justify-center gap-2;
+}
+
+.btn-primary {
+  @apply btn bg-primary text-primary-foreground hover:bg-primary/90;
+}
+
+.btn-secondary {
+  @apply btn border border-primary/30 text-foreground hover:bg-primary/10;
+}
+
+.btn-outline {
+  @apply btn border border-border text-foreground hover:border-primary hover:text-primary;
+}
+
+/* Enhanced list styles */
+.feature-list {
+  @apply space-y-2;
+}
+
+.feature-list-item {
+  @apply flex items-start gap-2;
+}
+
+.feature-list-icon {
+  @apply text-primary mt-1 flex-shrink-0;
+}
+
+/* Styling for dark mode */
+.dark-mode .timeline-item {
+  @apply border-border/50;
+}
+
+.dark-mode .timeline-item::before {
+  @apply bg-primary shadow-md shadow-primary/20;
+}
+
+.dark-mode .card-effect {
+  @apply bg-white border-border/30 hover:border-primary/20 hover:shadow-[0_0_15px_rgba(0,0,0,0.1)];
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(0.95);
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
