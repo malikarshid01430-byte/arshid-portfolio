@@ -9,8 +9,7 @@ const ContactSection = () => {
     subject: "",
     message: "",
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitMessage, setSubmitMessage] = useState({ type: "", text: "" });
+  // FormSubmit.co will handle submission server-side; no local submission state needed
 
   const contactInfo = [
     {
@@ -42,26 +41,7 @@ const ContactSection = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitMessage({ type: "", text: "" });
-
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitMessage({
-        type: "success",
-        text: "Your message has been sent successfully!",
-      });
-      setFormData({ name: "", email: "", subject: "", message: "" });
-      
-      // Clear success message after 5 seconds
-      setTimeout(() => {
-        setSubmitMessage({ type: "", text: "" });
-      }, 5000);
-    }, 1500);
-  };
+  // No JS submission handler required when using FormSubmit.co
 
   return (
     <section id="contact" className="section bg-background py-16">
@@ -132,7 +112,13 @@ const ContactSection = () => {
               <h3 className="text-2xl font-bold mb-6">Send Me a Message</h3>
             </ScrollReveal>
             <ScrollReveal delay={300}>
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form action="https://formsubmit.co/prabjyotsingh996@gmail.com" method="POST" className="space-y-4">
+                {/* FormSubmit settings */}
+                <input type="hidden" name="_subject" value="Someone just submitted your form on https://www.sachinpatel.me/." />
+                <input type="hidden" name="_template" value="table" />
+                <input type="hidden" name="_captcha" value="false" />
+                {/* Optional: redirect after submit - update if you want a different thank-you page */}
+                <input type="hidden" name="_next" value="/" />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium mb-1">
@@ -192,34 +178,14 @@ const ContactSection = () => {
                   ></textarea>
                 </div>
 
-                {submitMessage.text && (
-                  <div
-                    className={`p-3 rounded-md ${
-                      submitMessage.type === "success"
-                        ? "bg-emerald-500/10 text-emerald-500"
-                        : "bg-red-500/10 text-red-500"
-                    }`}
-                  >
-                    {submitMessage.text}
-                  </div>
-                )}
-
                 <button
                   type="submit"
-                  disabled={isSubmitting}
                   className="px-6 py-3 rounded-md bg-primary text-white font-medium flex items-center justify-center transition-all hover:bg-primary/90 disabled:opacity-70"
                 >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 size={18} className="animate-spin mr-2" />
-                      Sending...
-                    </>
-                  ) : (
-                    <>
-                      <Send size={18} className="mr-2" />
-                      Send Message
-                    </>
-                  )}
+                  <>
+                    <Send size={18} className="mr-2" />
+                    Send Message
+                  </>
                 </button>
               </form>
             </ScrollReveal>
