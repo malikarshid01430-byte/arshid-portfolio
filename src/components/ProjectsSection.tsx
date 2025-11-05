@@ -86,6 +86,17 @@ const ProjectsSection = () => {
       codeLink: "https://github.com/prabjyotsingh",
       featured: true
     },
+    {
+      id: 8,
+      title: "DNS Lookup Simulator",
+      category: "web",
+      image: "/photo/project/dns.jpeg",
+      description: "Interactive educational app that visualizes DNS resolution step-by-step — from root to TLD to authoritative servers — showing how domains (e.g., google.com) map to IP addresses.",
+      technologies: ["React", "TypeScript", "TailwindCSS"],
+      demoLink: "https://github.com/prabjyotsingh/dns-simulator",
+      codeLink: "https://github.com/prabjyotsingh/dns-simulator",
+      featured: true
+    },
   ];
 
   const projects = [...featuredProjects];
