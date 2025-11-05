@@ -16,8 +16,8 @@ const ProjectsSection = () => {
       image: "https://placehold.co/600x400/1a1a2e/ffffff?text=Sentryl",
       description: "Advanced Vulnerability Management and Bug Bounty Platform.",
       technologies: ["React", "TypeScript", "TailwindCSS"],
-      demoLink: "https://github.com/Prabjyotsingh996/Sentryl.git",
-      codeLink: "https://github.com/Prabjyotsingh996/Sentryl.git",
+      demoLink: "https://github.com/prabjyotsingh/Sentryl",
+      codeLink: "https://github.com/prabjyotsingh/Sentryl",
       featured: true
     },
     {
@@ -38,8 +38,8 @@ const ProjectsSection = () => {
       image: "/photo/project/agribuddy.png",
       description: "Smart farming dashboard built with React, TypeScript and TailwindCSS to visualize and manage agricultural activities.",
       technologies: ["React", "TypeScript", "TailwindCSS"],
-      demoLink: "https://github.com/Prabjyotsingh996/agribuddy.git",
-      codeLink: "https://github.com/Prabjyotsingh996/agribuddy.git",
+      demoLink: "https://github.com/prabjyotsingh/agribuddy",
+      codeLink: "https://github.com/prabjyotsingh/agribuddy",
       featured: true
     },
     {
@@ -50,7 +50,7 @@ const ProjectsSection = () => {
       description: "Responsive movie ticket booking website with theaters, listings and a smooth, interactive UX.",
       technologies: ["HTML", "CSS", "JavaScript"],
       demoLink: "https://moviego-henna.vercel.app/",
-      codeLink: "https://github.com/Prabjyotsingh996/Moviego.git",
+      codeLink: "https://github.com/prabjyotsingh/Moviego",
       featured: true
     },
     {
@@ -62,6 +62,28 @@ const ProjectsSection = () => {
       technologies: ["React", "TailwindCSS"],
       demoLink: "https://panthnama.vercel.app/",
       codeLink: "https://github.com/prabjyotsingh/panthhnama",
+      featured: true
+    },
+    {
+      id: 6,
+      title: "Carbon Footprint",
+      category: "python",
+      image: "/photo/project/carbon-footprint.png",
+      description: "AI-assisted Streamlit app to estimate a meal's CO₂, calories, and water footprint with eco-friendly alternatives and simple meal history. Built completely in Python.",
+      technologies: ["Python", "Streamlit"],
+      demoLink: "https://github.com/prabjyotsingh/carbon-footprint",
+      codeLink: "https://github.com/prabjyotsingh/carbon-footprint",
+      featured: true
+    },
+    {
+      id: 7,
+      title: "CarBot",
+      category: "web",
+      image: "/photo/project/carbot.png",
+      description: "Automotive assistant to manage vehicles, predict engine health, locate nearby workshops, and shop for parts. Web-based app with AI-driven features.",
+      technologies: ["Python", "JavaScript"],
+      demoLink: "https://car-pi-nine.vercel.app/",
+      codeLink: "https://github.com/prabjyotsingh",
       featured: true
     },
   ];

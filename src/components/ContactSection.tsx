@@ -31,7 +31,7 @@ const ContactSection = () => {
   ];
 
   const socialLinks = [
-    { name: "Github", icon: <Github size={18} />, url: "https://github.com/Prabjyotsingh996" },
+    { name: "Github", icon: <Github size={18} />, url: "https://github.com/prabjyotsingh" },
     { name: "LinkedIn", icon: <Linkedin size={18} />, url: "https://www.linkedin.com/in/prabjyot-singh-a2bab4259" },
     { name: "Twitter", icon: <Twitter size={18} />, url: "https://x.com/Prabjyot_singh1" },
     { name: "Instagram", icon: <Instagram size={18} />, url: "https://www.instagram.com/the_ps_maratha.996" },

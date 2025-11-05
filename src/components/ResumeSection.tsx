@@ -73,7 +73,7 @@ const ResumeSection = () => {
     {
       period: "August 2024 - Present",
       role: "Tech Lead",
-      company: "MVJCE",
+      company: "SDC, MVJCE",
       description: [
         "Leading technical direction and mentoring peers in the club",
         "Driving web app initiatives and organizing workshops",
@@ -151,18 +151,18 @@ const ResumeSection = () => {
               </div>
             </ScrollReveal>
 
-            <div className="space-y-8">
+            <div className="timeline space-y-8">
               {education.map((item, index) => (
                 <ScrollReveal key={index} delay={300 + index * 100}>
                   <div className="timeline-item">
-                    <span className="text-xs font-medium text-primary py-1.5 px-3 rounded-full bg-primary/10 inline-block mb-2">
-                      {item.period}
-                    </span>
-                    <h4 className="text-lg font-bold mb-2">{item.degree}</h4>
-                    <h5 className="text-foreground/70 text-sm font-medium mb-3">
-                      {item.institution}
-                    </h5>
-                    <p className="text-foreground/60 text-sm leading-relaxed">{item.description}</p>
+                    <div className="timeline-card">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="period-badge">{item.period}</span>
+                        <span className="company-badge">{item.institution}</span>
+                      </div>
+                      <h4 className="text-lg font-bold mb-2">{item.degree}</h4>
+                      <p className="text-foreground/60 text-sm leading-relaxed">{item.description}</p>
+                    </div>
                   </div>
                 </ScrollReveal>
               ))}
@@ -203,7 +203,7 @@ const ResumeSection = () => {
                             <span className="company-badge">{item.company}</span>
                           </div>
                           <h4 className="text-lg font-bold mb-2">{item.role}</h4>
-                          <ul className={"text-foreground/60 text-sm list-none space-y-2 " + (isLeft ? "md:items-end" : "md:items-start") }>
+                          <ul className={"text-foreground/60 text-sm list-none space-y-2 " + (isLeft ? "md:text-right" : "md:text-left") }>
                           {Array.isArray(item.description) ? (
                             item.description.map((desc, i) => (
                               <li key={i} className="flex items-start">
