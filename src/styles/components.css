@@ -26,6 +26,24 @@
   @apply border-l-0 pb-0;
 }
 
+/* Single continuous spine for grouped timelines */
+.timeline {
+  @apply relative;
+}
+
+.timeline::before {
+  content: '';
+  @apply absolute top-0 bottom-0 left-0 w-0.5 bg-muted;
+}
+
+.timeline .timeline-item {
+  @apply border-0; /* use shared spine instead of per-item borders */
+}
+
+.timeline .timeline-item:last-child {
+  @apply pb-0;
+}
+
 .typed-text-wrapper {
   @apply overflow-hidden whitespace-nowrap border-r-4 border-primary mx-auto inline-block animate-typing;
 }
@@ -151,6 +169,60 @@
 
 .dark-mode .timeline-item::before {
   @apply bg-primary shadow-md shadow-primary/20;
+}
+
+.dark-mode .timeline::before {
+  @apply bg-border/50;
+}
+
+/* Centered timeline with alternating sides */
+.timeline-center {
+  @apply relative;
+}
+
+.timeline-center::before {
+  content: '';
+  @apply absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-0.5 bg-muted;
+}
+
+.timeline-entry {
+  position: relative;
+}
+
+.timeline-entry-left::before,
+.timeline-entry-right::before {
+  content: '';
+  @apply absolute w-5 h-5 rounded-full bg-primary top-1 shadow-md shadow-primary/20;
+}
+
+/* Dot sits on the center spine from either side */
+.timeline-entry-left::before {
+  right: -11px; /* half of dot width to overlap the spine */
+}
+
+.timeline-entry-right::before {
+  left: -11px;
+}
+
+.dark-mode .timeline-center::before {
+  @apply bg-border/50;
+}
+
+/* Experience cards */
+.timeline-card {
+  @apply bg-card/90 border border-border rounded-lg p-5 md:p-6 shadow-sm transition-all duration-300;
+}
+
+.timeline-card:hover {
+  @apply shadow-lg border-primary/30;
+}
+
+.period-badge {
+  @apply text-xs font-medium text-primary py-1 px-2 rounded bg-primary/10 inline-block;
+}
+
+.company-badge {
+  @apply inline-flex items-center gap-2 text-[11px] font-medium px-2 py-1 rounded-full bg-muted text-foreground/80;
 }
 
 .dark-mode .card-effect {

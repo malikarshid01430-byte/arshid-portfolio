@@ -4,6 +4,35 @@ import { BookOpen, Briefcase, Award, Download, Check } from "lucide-react";
 import { Button } from "./ui/button";
 
 const ResumeSection = () => {
+  // Helper to sort experiences from oldest to newest based on start month/year
+  const monthToIndex: Record<string, number> = {
+    january: 0,
+    february: 1,
+    march: 2,
+    april: 3,
+    may: 4,
+    june: 5,
+    july: 6,
+    august: 7,
+    september: 8,
+    october: 9,
+    november: 10,
+    december: 11,
+  };
+
+  const parseStartOfPeriod = (period: string) => {
+    const [start] = period.split(" - ");
+    const parts = start.trim().split(" ");
+    if (parts.length === 2) {
+      const [monthStr, yearStr] = parts;
+      const month = monthToIndex[monthStr.toLowerCase()] ?? 0;
+      const year = parseInt(yearStr, 10) || 0;
+      return new Date(year, month, 1).getTime();
+    }
+    // Fallback: just try year only
+    const yr = parseInt(start, 10) || 0;
+    return new Date(yr, 0, 1).getTime();
+  };
   const education = [
     {
       period: "2023 - 2027",
@@ -33,21 +62,21 @@ const ResumeSection = () => {
       ],
     },
     {
-      period: "August 2024 - Present",
-      role: "Software Development Club Member",
-      company: "MVJCE",
+      period: "June 2025 - Present",
+      role: "Web Developer Intern",
+      company: "NIT Srinagar",
       description: [
-        "Collaborate with team members to develop web applications and software solutions",
-        "Participate in coding competitions and workshops to enhance technical skills",
+        "Contributing to web interfaces and internal tools",
+        "Working with React and TailwindCSS for feature delivery",
       ],
     },
     {
-      period: "August 2023 - Present",
-      role: "Video Editor",
-      company: "Raag Abhinaya and Dhwani Music Club, MVJCE",
+      period: "August 2024 - Present",
+      role: "Tech Lead",
+      company: "MVJCE",
       description: [
-        "Create and edit video content for college cultural club events and performances",
-        "Design motion graphics and visual effects to enhance video presentations",
+        "Leading technical direction and mentoring peers in the club",
+        "Driving web app initiatives and organizing workshops",
       ],
     },
     {
@@ -110,7 +139,7 @@ const ResumeSection = () => {
           <div className="w-20 h-1 bg-primary mb-10 rounded-full md:mx-0"></div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-16">
+        <div className="grid grid-cols-1 gap-10 mb-16">
           {/* Education Section */}
           <div>
             <ScrollReveal delay={200}>
@@ -139,46 +168,61 @@ const ResumeSection = () => {
               ))}
             </div>
           </div>
+        </div>
 
-          {/* Experience Section */}
-          <div>
-            <ScrollReveal delay={200}>
-              <div className="flex items-center mb-5">
-                <div className="w-12 h-12 bg-primary/10 rounded-md flex items-center justify-center text-primary mr-4 shadow-sm">
-                  <Briefcase size={22} />
-                </div>
-                <h3 className="text-xl md:text-2xl font-bold">Professional Experience</h3>
+        {/* Professional Experience - centered line, alternating left/right, oldest → newest */}
+        <div className="mb-16">
+          <ScrollReveal delay={200}>
+            <div className="flex items-center mb-5">
+              <div className="w-12 h-12 bg-primary/10 rounded-md flex items-center justify-center text-primary mr-4 shadow-sm">
+                <Briefcase size={22} />
               </div>
-            </ScrollReveal>
+              <h3 className="text-xl md:text-2xl font-bold">Professional Experience</h3>
+            </div>
+          </ScrollReveal>
 
-            <div className="space-y-8">
-              {experience.map((item, index) => (
-                <ScrollReveal key={index} delay={300 + index * 100}>
-                  <div className="timeline-item">
-                    <span className="text-xs font-medium text-primary py-1.5 px-3 rounded-full bg-primary/10 inline-block mb-2">
-                      {item.period}
-                    </span>
-                    <h4 className="text-lg font-bold mb-2">{item.role}</h4>
-                    <h5 className="text-foreground/70 text-sm font-medium mb-3">
-                      {item.company}
-                    </h5>
-                    <ul className="text-foreground/60 text-sm list-none space-y-2">
-                      {Array.isArray(item.description) ? 
-                        item.description.map((desc, i) => (
-                          <li key={i} className="flex items-start">
-                            <Check size={16} className="text-primary mt-0.5 mr-2 flex-shrink-0" />
-                            <span className="leading-relaxed">{desc}</span>
-                          </li>
-                        )) : 
-                        <li className="flex items-start">
-                          <Check size={16} className="text-primary mt-0.5 mr-2 flex-shrink-0" />
-                          <span className="leading-relaxed">{item.description}</span>
-                        </li>
-                      }
-                    </ul>
-                  </div>
-                </ScrollReveal>
-              ))}
+          <div className="timeline-center">
+            <div className="md:grid md:grid-cols-2 md:gap-y-12 md:gap-x-8">
+              {([...experience]
+                .sort((a, b) => parseStartOfPeriod(a.period) - parseStartOfPeriod(b.period))
+                .map((item, index) => {
+                  const isLeft = index % 2 === 0;
+                  return (
+                    <ScrollReveal key={index} delay={300 + index * 100}>
+                      <div
+                        className={
+                          (isLeft
+                            ? "timeline-entry timeline-entry-left md:pr-12 md:text-right"
+                            : "timeline-entry timeline-entry-right md:pl-12 md:text-left") +
+                          " mb-10 md:mb-0"
+                        }
+                      >
+                        <div className="timeline-card">
+                          <div className={(isLeft ? "md:justify-end" : "md:justify-start") + " flex items-center gap-2 mb-2"}>
+                            <span className="period-badge">{item.period}</span>
+                            <span className="company-badge">{item.company}</span>
+                          </div>
+                          <h4 className="text-lg font-bold mb-2">{item.role}</h4>
+                          <ul className={"text-foreground/60 text-sm list-none space-y-2 " + (isLeft ? "md:items-end" : "md:items-start") }>
+                          {Array.isArray(item.description) ? (
+                            item.description.map((desc, i) => (
+                              <li key={i} className="flex items-start">
+                                <Check size={16} className={"text-primary mt-0.5 " + (isLeft ? "ml-2 order-2" : "mr-2") + " flex-shrink-0"} />
+                                <span className="leading-relaxed">{desc}</span>
+                              </li>
+                            ))
+                          ) : (
+                            <li className="flex items-start">
+                              <Check size={16} className={"text-primary mt-0.5 " + (isLeft ? "ml-2 order-2" : "mr-2") + " flex-shrink-0"} />
+                              <span className="leading-relaxed">{item.description}</span>
+                            </li>
+                          )}
+                          </ul>
+                        </div>
+                      </div>
+                    </ScrollReveal>
+                  );
+                }))}
             </div>
           </div>
         </div>
