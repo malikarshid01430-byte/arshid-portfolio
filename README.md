@@ -12,7 +12,7 @@ npm install
 npm run dev
 ```
 
-## How to Customize Your Portfolio
+## How to Customize Your Portfolio:
 
 ### Personal Information
 Edit the following files to update your personal information:
