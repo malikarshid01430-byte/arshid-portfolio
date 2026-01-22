@@ -123,7 +123,7 @@ const AboutSection = () => {
                 className="relative rounded-lg overflow-hidden border-4 border-primary/20 shadow-xl transition-all duration-300"
               >
                 <img 
-                  src="/uploads/71345e2d-0239-461e-a589-485f8251b2de.png" 
+                  src="public/uploads/mee.jpeg.png" 
                   alt="Prabjyot Singh" 
                   className="w-full h-auto max-w-md object-cover transition-transform duration-300"
                 />

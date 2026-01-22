@@ -61,7 +61,7 @@ const ProjectsSection = () => {
       description: "Modern And intelligent website  for health insights, exercise, and wellness  based on food intake.",
       technologies: ["React", "TailwindCSS"],
       demoLink: "https://fitt-track.vercel.app/",
-      codeLink: "https://github.com/prabjyotsingh/fittrack",
+      codeLink: "https://github.com/prabjyotsingh/panthhnama",
       featured: true
     },
     {
