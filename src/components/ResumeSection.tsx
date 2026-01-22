@@ -110,8 +110,8 @@ const ResumeSection = () => {
   const handleDownloadResume = () => {
     // Create a link element
     const link = document.createElement('a');
-    link.href = '/resume.pdf'; // Make sure to place your resume.pdf in the public folder
-    link.download = 'Prabjyot_Singh_Resume.pdf';
+    link.href = '/uploads/prabjyotsingh resume.pdf';
+    link.download = 'Prabjyotsingh_Resume.pdf';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

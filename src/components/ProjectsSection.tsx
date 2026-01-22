@@ -9,52 +9,19 @@ const ProjectsSection = () => {
 
   // Featured projects (a subset of all projects)
   const featuredProjects = [
-    {
+      {
       id: 1,
-      title: "Sentryl",
+      title: "CarBot",
       category: "web",
-      image: "/photo/project/sentryl.png",
-      description: "Advanced Vulnerability Management and Bug Bounty Platform.",
-      technologies: ["React", "TypeScript", "TailwindCSS"],
-      demoLink: "https://github.com/prabjyotsingh/Sentryl",
-      codeLink: "https://github.com/prabjyotsingh/Sentryl",
+      image: "/photo/project/carbot.png",
+      description: "Automotive assistant to manage vehicles, predict engine health, locate nearby workshops, and shop for parts. Web-based app with AI-driven features.",
+      technologies: ["Python", "JavaScript"],
+      demoLink: "https://car-pi-nine.vercel.app/",
+      codeLink: "https://github.com/prabjyotsingh",
       featured: true
     },
-    {
+       {
       id: 2,
-      title: "Car Service Centre",
-      category: "web",
-      image: "/photo/project/carservicecenter.png",
-      description: "Local SQL database demo for a car service appointment system. Pure client-side SQL operations; ideal for learning and exam demonstrations.",
-      technologies: ["JavaScript", "SQL.js", "Bootstrap"],
-      demoLink: "https://carservicecentre.vercel.app/",
-      codeLink: "https://github.com/Prabjyotsingh996/carservicecentre.git",
-      featured: true
-    },
-    {
-      id: 3,
-      title: "Agribuddy",
-      category: "web",
-      image: "/photo/project/agribuddy.png",
-      description: "Smart farming dashboard built with React, TypeScript and TailwindCSS to visualize and manage agricultural activities.",
-      technologies: ["React", "TypeScript", "TailwindCSS"],
-      demoLink: "https://github.com/prabjyotsingh/agribuddy",
-      codeLink: "https://github.com/prabjyotsingh/agribuddy",
-      featured: true
-    },
-    {
-      id: 4,
-      title: "Moviego",
-      category: "web",
-      image: "/photo/project/moviego.png",
-      description: "Responsive movie ticket booking website with theaters, listings and a smooth, interactive UX.",
-      technologies: ["HTML", "CSS", "JavaScript"],
-      demoLink: "https://moviego-henna.vercel.app/",
-      codeLink: "https://github.com/prabjyotsingh/Moviego",
-      featured: true
-    },
-    {
-      id: 5,
       title: "Panthhnama",
       category: "web",
       image: "/photo/project/panthanama.png",
@@ -65,7 +32,63 @@ const ProjectsSection = () => {
       featured: true
     },
     {
+      id: 3,
+      title: "Sentryl",
+      category: "web",
+      image: "/photo/project/sentryl.png",
+      description: "Advanced Vulnerability Management and Bug Bounty Platform.",
+      technologies: ["React", "TypeScript", "TailwindCSS"],
+      demoLink: "https://github.com/prabjyotsingh/Sentryl",
+      codeLink: "https://github.com/prabjyotsingh/Sentryl",
+      featured: true
+    },
+    {
+      id: 4,
+      title: "Car Service Centre",
+      category: "web",
+      image: "/photo/project/carservicecenter.png",
+      description: "Local SQL database demo for a car service appointment system. Pure client-side SQL operations; ideal for learning and exam demonstrations.",
+      technologies: ["JavaScript", "SQL.js", "Bootstrap"],
+      demoLink: "https://carservicecentre.vercel.app/",
+      codeLink: "https://github.com/Prabjyotsingh996/carservicecentre.git",
+      featured: true
+    },
+       {
+      id: 5,
+      title: "fitness Tracker",
+      category: "web",
+      image: "public/photo/project/fitness.png",
+      description: "Modern And intelligent website  for health insights, exercise, and wellness  based on food intake.",
+      technologies: ["React", "TailwindCSS"],
+      demoLink: "https://fitt-track.vercel.app/",
+      codeLink: "https://github.com/prabjyotsingh/fittrack",
+      featured: true
+    },
+    {
       id: 6,
+      title: "Agribuddy",
+      category: "web",
+      image: "/photo/project/agribuddy.png",
+      description: "Smart farming dashboard built with React, TypeScript and TailwindCSS to visualize and manage agricultural activities.",
+      technologies: ["React", "TypeScript", "TailwindCSS"],
+      demoLink: "https://github.com/prabjyotsingh/agribuddy",
+      codeLink: "https://github.com/prabjyotsingh/agribuddy",
+      featured: true
+    },
+    {
+      id: 8,
+      title: "Moviego",
+      category: "web",
+      image: "/photo/project/moviego.png",
+      description: "Responsive movie ticket booking website with theaters, listings and a smooth, interactive UX.",
+      technologies: ["HTML", "CSS", "JavaScript"],
+      demoLink: "https://moviego-henna.vercel.app/",
+      codeLink: "https://github.com/prabjyotsingh/Moviego",
+      featured: true
+    },
+ 
+    {
+      id: 9,
       title: "Carbon Footprint",
       category: "python",
       image: "/photo/project/carbon-footprint.jpg",
@@ -75,19 +98,9 @@ const ProjectsSection = () => {
       codeLink: "https://github.com/prabjyotsingh/carbon-footprint",
       featured: true
     },
+  
     {
-      id: 7,
-      title: "CarBot",
-      category: "web",
-      image: "/photo/project/carbot.png",
-      description: "Automotive assistant to manage vehicles, predict engine health, locate nearby workshops, and shop for parts. Web-based app with AI-driven features.",
-      technologies: ["Python", "JavaScript"],
-      demoLink: "https://car-pi-nine.vercel.app/",
-      codeLink: "https://github.com/prabjyotsingh",
-      featured: true
-    },
-    {
-      id: 8,
+      id: 10,
       title: "DNS Lookup Simulator",
       category: "web",
       image: "/photo/project/dns.jpeg",
