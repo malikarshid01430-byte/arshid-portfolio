@@ -57,7 +57,7 @@ const ProjectsSection = () => {
       id: 5,
       title: "fitness Tracker",
       category: "web",
-      image: "public/photo/project/fitness.png",
+      image: "/photo/project/fitness.png",
       description: "Modern And intelligent website  for health insights, exercise, and wellness  based on food intake.",
       technologies: ["React", "TailwindCSS"],
       demoLink: "https://fitt-track.vercel.app/",
