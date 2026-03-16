@@ -1,7 +1,7 @@
 
 import React, { useRef, useEffect } from "react";
 import ScrollReveal from "./ScrollReveal";
-import { Code, GitBranch, Palette, Database, FileVideo, Star, Book, Cpu } from "lucide-react";
+import { Code, GitBranch, Palette, Database, FileVideo, Star, Book, Cpu, Brain, Globe } from "lucide-react";
 
 const SkillsSection = () => {
   const skillsRef = useRef<HTMLDivElement>(null);
@@ -80,10 +80,25 @@ const SkillsSection = () => {
       level: 80,
       icon: <GitBranch size={24} className="text-primary" /> 
     },
-    { 
-      name: "Video Editing", 
+    {
+      name: "Video Editing",
       level: 60,
-      icon: <FileVideo size={24} className="text-primary" /> 
+      icon: <FileVideo size={24} className="text-primary" />
+    },
+    {
+      name: "Machine Learning",
+      level: 65,
+      icon: <Brain size={24} className="text-primary" />
+    },
+    {
+      name: "Django",
+      level: 70,
+      icon: <Code size={24} className="text-primary" />
+    },
+    {
+      name: "Web Scraping",
+      level: 75,
+      icon: <Globe size={24} className="text-primary" />
     },
   ];
 

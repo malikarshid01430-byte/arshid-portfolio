@@ -52,7 +52,7 @@ const HeroSection = () => {
         
         <ScrollReveal delay={400}>
           <h2 className="text-xl md:text-2xl lg:text-3xl text-foreground mb-8">
-            I'm a <TypedText texts={["Cloud Engineer", "MERN Stack Developer", "Data Science Enthusiast", "Problem Solver"]} />
+            I'm a <TypedText texts={["Cloud Engineer", "Web Developer", "Data Science Enthusiast", "Problem Solver"]} />
           </h2>
         </ScrollReveal>
         

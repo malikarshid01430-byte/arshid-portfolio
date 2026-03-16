@@ -81,7 +81,7 @@ const AboutSection = () => {
             </ScrollReveal>
             <ScrollReveal delay={300}>
               <p className="text-foreground/80 mb-6 leading-relaxed">
-                I'm a passionate Cloud Engineer and MERN Stack Developer
+                I'm a passionate Cloud Engineer and Web Developer
                 currently pursuing my B.Tech at MVJ College of Engineering in
                 Bangalore. With a strong foundation in cloud technologies and data science,
                 I create innovative, scalable solutions that solve real-world problems.

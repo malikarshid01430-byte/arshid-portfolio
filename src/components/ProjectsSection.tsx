@@ -32,6 +32,17 @@ const ProjectsSection = () => {
       featured: true
     },
     {
+      id: 7,
+      title: "VidyaX AI",
+      category: "ai",
+      image: "/photo/project/vidyaxai.jpeg",
+      description: "Productivity web app to track YouTube playlists, monitor study progress, maintain daily streaks, and organize AI-generated notes with a StudyBuddy AI chatbot powered by Groq API.",
+      technologies: ["React", "Vite", "TailwindCSS", "Groq API", "Express.js"],
+      demoLink: "https://vidyaxai.vercel.app",
+      codeLink: "https://github.com/prabjyotsingh/Vidyax",
+      featured: true
+    },
+    {
       id: 3,
       title: "Sentryl",
       category: "web",
