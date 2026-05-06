@@ -7,7 +7,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
   const headerRef = useRef<HTMLElement>(null);
   const isMobile = useIsMobile();
 
@@ -36,10 +36,11 @@ const Navbar = () => {
       }
     };
 
-    // Check for dark mode preference on load
-    if (localStorage.getItem("darkMode") === "true" || 
-       (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && 
-        localStorage.getItem("darkMode") === null)) {
+    // Check for dark mode preference on load - default to dark mode
+    if (localStorage.getItem("darkMode") === "false") {
+      setDarkMode(false);
+      document.documentElement.classList.remove("dark-mode");
+    } else {
       setDarkMode(true);
       document.documentElement.classList.add("dark-mode");
     }

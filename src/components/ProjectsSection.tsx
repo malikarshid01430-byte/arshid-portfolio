@@ -20,15 +20,15 @@ const ProjectsSection = () => {
       codeLink: "https://github.com/prabjyotsingh",
       featured: true
     },
-       {
-      id: 2,
-      title: "Panthhnama",
+    {
+      id: 11,
+      title: "Swayam",
       category: "web",
-      image: "/photo/project/panthanama.png",
-      description: "Modern React website for Virsa Channel promoting Punjabi culture, history and literature.",
-      technologies: ["React", "TailwindCSS"],
-      demoLink: "https://panthnama.vercel.app/",
-      codeLink: "https://github.com/prabjyotsingh/panthhnama",
+      image: "/photo/project/swayam.png",
+      description: "A polished React-based festival platform for SWAYAM 2026, MVJCE's annual cultural celebration, built to deliver a modern, engaging, and responsive event experience.",
+      technologies: ["React 18", "Vite", "React Router", "Axios", "html5-qrcode", "Express 5", "Supabase", "JWT"],
+      demoLink: "https://swayammvjce.cc",
+      codeLink: "https://github.com/prabjyotsingh/Swayam",
       featured: true
     },
     {
@@ -40,6 +40,17 @@ const ProjectsSection = () => {
       technologies: ["React", "Vite", "TailwindCSS", "Groq API", "Express.js"],
       demoLink: "https://vidyaxai.vercel.app",
       codeLink: "https://github.com/prabjyotsingh/Vidyax",
+      featured: true
+    },
+       {
+      id: 2,
+      title: "Panthhnama",
+      category: "web",
+      image: "/photo/project/panthanama.png",
+      description: "Modern React website for Virsa Channel promoting Punjabi culture, history and literature.",
+      technologies: ["React", "TailwindCSS"],
+      demoLink: "https://panthnama.vercel.app/",
+      codeLink: "https://github.com/prabjyotsingh/panthhnama",
       featured: true
     },
     {
@@ -238,7 +249,7 @@ const ProjectsSection = () => {
                         <img
                           src={project.image}
                           alt={project.title}
-                          className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                          className={`w-full h-64 ${project.id === 11 ? "object-contain bg-[#07111f] p-2" : "object-cover transition-transform duration-500 group-hover:scale-110"}`}
                         />
                         <div className="absolute inset-0 bg-primary/60 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                           <a

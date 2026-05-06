@@ -12,7 +12,7 @@ import Footer from "../components/Footer";
 const Index = () => {
   useEffect(() => {
     // Update document title
-    document.title = "Prabjyot Singh - Cloud Engineer";
+    document.title = "Prabjyot Singh - AI/ML Enthusiast";
     
     // Cursive follower effect (decorative element that follows the cursor)
     const createCursorFollower = () => {
