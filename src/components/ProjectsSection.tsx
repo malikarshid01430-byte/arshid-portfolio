@@ -9,7 +9,18 @@ const ProjectsSection = () => {
 
   // Featured projects (a subset of all projects)
   const featuredProjects = [
-      {
+    {
+      id: 12,
+      title: "GT-Skin",
+      category: "ai",
+      image: "/photo/project/gtskin.png",
+      description: "An AI-powered diagnostic helper that classifies dermoscopic skin images into 7 distinct disease categories (including malignant melanoma) using a state-of-the-art Deep Learning Ensemble.",
+      technologies: ["PyTorch", "timm", "Albumentations", "Gradio", "Hugging Face"],
+      demoLink: "https://prabysingh996-gt-skin-demo.hf.space/",
+      codeLink: "https://github.com/prabjyotsingh/context_free_skin",
+      featured: true
+    },
+    {
       id: 1,
       title: "CarBot",
       category: "web",

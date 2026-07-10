@@ -36,14 +36,10 @@ const Navbar = () => {
       }
     };
 
-    // Check for dark mode preference on load - default to dark mode
-    if (localStorage.getItem("darkMode") === "false") {
-      setDarkMode(false);
-      document.documentElement.classList.remove("dark-mode");
-    } else {
-      setDarkMode(true);
-      document.documentElement.classList.add("dark-mode");
-    }
+    // Always start in dark mode on load.
+    setDarkMode(true);
+    localStorage.setItem("darkMode", "true");
+    document.documentElement.classList.add("dark-mode");
 
     window.addEventListener("scroll", handleScroll);
     document.addEventListener("mousedown", handleClickOutside);
