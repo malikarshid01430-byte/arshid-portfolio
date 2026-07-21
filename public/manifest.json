@@ -1,0 +1,38 @@
+{
+  "name": "Arshid Ahmad Malik - Portfolio",
+  "short_name": "Arshid Portfolio",
+  "description": "Enterprise-grade portfolio showcasing projects in Embedded Systems, IoT, VLSI, and Full Stack Development",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#06b6d4",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "categories": ["portfolio", "engineering", "technology"],
+  "lang": "en-US",
+  "dir": "ltr",
+  "scope": "/",
+  "id": "arshid-portfolio"
+}

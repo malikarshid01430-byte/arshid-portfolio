@@ -1,0 +1,33 @@
+User-agent: *
+Allow: /
+
+# Disallow admin and API routes
+Disallow: /api/
+Disallow: /_next/
+
+# Allow main pages
+Allow: /
+Allow: /blog
+Allow: /projects
+Allow: /skills
+Allow: /testimonials
+Allow: /contact
+Allow: /timeline
+Allow: /certifications
+Allow: /search
+
+# Sitemap
+Sitemap: https://arshid-portfolio.vercel.app/sitemap.xml
+
+# Crawl delay
+Crawl-delay: 1
+
+# Block common bots that might be aggressive
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
