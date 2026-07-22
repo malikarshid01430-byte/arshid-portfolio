@@ -54,7 +54,7 @@ export default function Hero() {
   return (
     <section ref={ref} className="relative flex min-h-screen w-full flex-col items-center justify-center pt-28 pb-16 overflow-hidden">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
           {/* Left Column: Heading and CTAs */}
           <motion.div
@@ -68,7 +68,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 10 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
               transition={{ delay: 0.1, duration: 0.3 }}
-              className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-950/20 px-3 py-1 font-mono text-xs text-emerald-400 mb-6"
+              className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-950/20 px-3 py-1 font-mono text-xs text-emerald-400 mb-6 w-fit"
             >
               <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>AVAILABLE FOR FULL-TIME OPPORTUNITIES</span>
@@ -79,7 +79,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ delay: 0.15, duration: 0.3 }}
-              className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl"
+              className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl leading-tight"
             >
               {portfolioData.personalInfo.name}
             </motion.h1>
@@ -97,7 +97,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 15 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
               transition={{ delay: 0.25, duration: 0.3 }}
-              className="mt-6 max-w-xl text-base leading-8 text-zinc-400 sm:text-lg"
+              className="mt-6 max-w-xl text-base leading-7 text-zinc-400 sm:text-lg"
             >
               {portfolioData.personalInfo.bioShort}
             </motion.p>
@@ -107,14 +107,14 @@ export default function Hero() {
               initial={{ opacity: 0, y: 15 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
               transition={{ delay: 0.3, duration: 0.3 }}
-              className="mt-8 flex flex-wrap gap-4 items-center"
+              className="mt-8 flex flex-wrap gap-3 sm:gap-4 items-center"
             >
               <DownloadResumeButton variant="primary" label="Download Resume" />
               <a
                 href={portfolioData.personalInfo.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-12 items-center justify-center gap-2 rounded-lg border border-cyan-500/20 bg-cyan-950/5 px-6 font-mono text-sm tracking-wider font-medium text-cyan-400 hover:border-cyan-400 hover:bg-cyan-500/5 transition-colors"
+                className="flex h-12 items-center justify-center gap-2 rounded-lg border border-cyan-500/20 bg-cyan-950/5 px-4 sm:px-6 font-mono text-sm tracking-wider font-medium text-cyan-400 hover:border-cyan-400 hover:bg-cyan-500/5 transition-colors"
               >
                 GitHub
               </a>
@@ -122,13 +122,13 @@ export default function Hero() {
                 href={portfolioData.personalInfo.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-12 items-center justify-center gap-2 rounded-lg border border-cyan-500/20 bg-cyan-950/5 px-6 font-mono text-sm tracking-wider font-medium text-cyan-400 hover:border-cyan-400 hover:bg-cyan-500/5 transition-colors"
+                className="flex h-12 items-center justify-center gap-2 rounded-lg border border-cyan-500/20 bg-cyan-950/5 px-4 sm:px-6 font-mono text-sm tracking-wider font-medium text-cyan-400 hover:border-cyan-400 hover:bg-cyan-500/5 transition-colors"
               >
                 LinkedIn
               </a>
               <a
                 href="#contact"
-                className="flex h-12 items-center justify-center gap-2 rounded-lg border border-cyan-500/20 bg-cyan-950/5 px-6 font-mono text-sm tracking-wider font-medium text-cyan-400 hover:border-cyan-400 hover:bg-cyan-500/5 transition-colors"
+                className="flex h-12 items-center justify-center gap-2 rounded-lg border border-cyan-500/20 bg-cyan-950/5 px-4 sm:px-6 font-mono text-sm tracking-wider font-medium text-cyan-400 hover:border-cyan-400 hover:bg-cyan-500/5 transition-colors"
               >
                 Contact
               </a>
@@ -166,9 +166,9 @@ export default function Hero() {
             animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.3, delay: 0.3 }}
           >
-            <div className="relative w-full max-w-md">
+            <div className="relative w-full max-w-md flex flex-col items-center">
               {/* Profile Image */}
-              <div className="relative mb-6 flex justify-center">
+              <div className="relative mb-6 flex justify-center w-full">
                 <div className="relative h-48 w-48 sm:h-56 sm:w-56 lg:h-64 lg:w-64">
                   <Image
                     src={portfolioData.personalInfo.profileImage || "/images/profile.jpg"}
@@ -197,7 +197,7 @@ export default function Hero() {
                     <div className="h-2 w-2 rounded-full bg-emerald-500/50" />
                   </div>
                 </div>
-                <div className="h-80 overflow-y-auto p-4 text-[10px] sm:text-[11px] leading-6 text-cyan-500/90 flex flex-col justify-start" aria-live="polite" aria-atomic="false">
+                <div className="h-64 sm:h-72 lg:h-80 overflow-y-auto p-4 text-[10px] sm:text-[11px] leading-6 text-cyan-500/90 flex flex-col justify-start" aria-live="polite" aria-atomic="false">
                   {consoleLines.map((line, idx) => (
                     <div key={idx} className="flex items-start gap-1">
                       <span className="text-cyan-600 select-none">{'>'}{'>'}</span>

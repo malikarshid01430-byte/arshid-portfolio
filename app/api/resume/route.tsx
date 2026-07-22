@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
-import { Document, Page, Text, View, StyleSheet, Font } from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet, Font, Image } from "@react-pdf/renderer";
 import { portfolioData } from "@/app/data/portfolio";
+import fs from "fs";
+import path from "path";
 
 // Use standard PDF fonts to avoid network font fetches in serverless environments
 Font.register({ family: "Helvetica", fonts: [{ src: "", fontWeight: 400 }] });
@@ -18,6 +20,28 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderBottom: "2 solid #00d2ff",
     paddingBottom: 15,
+  },
+  headerContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 12,
+    justifyContent: "space-between",
+  },
+  headerLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
+  },
+  profileImage: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    marginRight: 12,
+    objectFit: "cover",
+  },
+  headerText: {
+    flex: 1,
+    marginLeft: 12,
   },
   name: {
     fontSize: 22,
@@ -172,14 +196,27 @@ const styles = StyleSheet.create({
 function ResumeDocument() {
   const { personalInfo, skillCategories, projects, experience, education, certifications, achievements } = portfolioData;
 
+  // Load profile image from public folder
+  let profileImageSrc: string | undefined;
+  try {
+    const imagePath = path.join(process.cwd(), "public", personalInfo.profileImage || "/images/profile.jpg");
+    if (fs.existsSync(imagePath)) {
+      profileImageSrc = imagePath;
+    }
+  } catch (e) {
+    console.error("Failed to load profile image:", e);
+  }
+
   return (
     <Document title={`${personalInfo.name} - Resume`} author={personalInfo.name}>
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
-          <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 12, justifyContent: "space-between" }}>
-            <View style={{ flexDirection: "row", alignItems: "center", flex: 1 }}>
-              <View style={{ width: 64, height: 64, borderRadius: 32, backgroundColor: "#e5e5e5", marginRight: 12 }} />
-              <View style={{ flex: 1, marginLeft: 12 }}>
+          <View style={styles.headerContent}>
+            <View style={styles.headerLeft}>
+              {profileImageSrc && (
+                <Image src={profileImageSrc} style={styles.profileImage} alt={personalInfo.name} />
+              )}
+              <View style={styles.headerText}>
                 <Text style={styles.name}>{personalInfo.name}</Text>
                 <Text style={styles.title}>{personalInfo.title}</Text>
                 <Text style={styles.contactItem}>Generated: {new Date().toLocaleDateString()}</Text>

@@ -18,12 +18,12 @@ import { portfolioData } from "../data/portfolio";
 
 export default function RecruiterDashboard() {
   const quickInfo = [
-    { icon: Briefcase, label: "Current Status", value: "Actively Seeking Full Time Roles", color: "emerald" },
-    { icon: MapPin, label: "Current Location", value: "Bangalore, Karnataka", color: "cyan" },
-    { icon: MapPin, label: "Home State", value: "Jammu and Kashmir", color: "violet" },
-    { icon: Calendar, label: "Graduation", value: "2026", color: "emerald" },
-    { icon: CheckCircle, label: "Willing to Relocate", value: "Yes", color: "cyan" },
-    { icon: MessageSquare, label: "Response Time", value: "Within 24 Hours", color: "violet" },
+    { icon: Briefcase, label: "Current Status", value: "Actively Seeking Full Time Roles", className: "text-emerald-400 border-emerald-500/20 bg-emerald-500/5" },
+    { icon: MapPin, label: "Current Location", value: "Bangalore, Karnataka", className: "text-cyan-400 border-cyan-500/20 bg-cyan-500/5" },
+    { icon: MapPin, label: "Home State", value: "Jammu and Kashmir", className: "text-violet-400 border-violet-500/20 bg-violet-500/5" },
+    { icon: Calendar, label: "Graduation", value: "2026", className: "text-emerald-400 border-emerald-500/20 bg-emerald-500/5" },
+    { icon: CheckCircle, label: "Willing to Relocate", value: "Yes", className: "text-cyan-400 border-cyan-500/20 bg-cyan-500/5" },
+    { icon: MessageSquare, label: "Response Time", value: "Within 24 Hours", className: "text-violet-400 border-violet-500/20 bg-violet-500/5" },
   ];
 
   const primaryRoles = [
@@ -37,12 +37,12 @@ export default function RecruiterDashboard() {
   ];
 
   const quickActions = [
-    { icon: Download, label: "Download Resume", href: portfolioData.personalInfo.resumeUrl, color: "cyan" },
-    { icon: ExternalLink, label: "LinkedIn", href: portfolioData.personalInfo.linkedin, color: "blue" },
-    { icon: ExternalLink, label: "GitHub", href: portfolioData.personalInfo.github, color: "zinc" },
-    { icon: Mail, label: "Email", href: `mailto:${portfolioData.personalInfo.email}`, color: "violet" },
-    { icon: Phone, label: "Call", href: `tel:${portfolioData.personalInfo.phone}`, color: "emerald" },
-    { icon: ExternalLink, label: "Portfolio", href: portfolioData.personalInfo.portfolioUrl, color: "cyan" },
+    { icon: Download, label: "Download Resume", href: portfolioData.personalInfo.resumeUrl, className: "border-cyan-500/20 bg-cyan-500/5 text-cyan-400 hover:border-cyan-400" },
+    { icon: ExternalLink, label: "LinkedIn", href: portfolioData.personalInfo.linkedin, className: "border-blue-500/20 bg-blue-500/5 text-blue-400 hover:border-blue-400" },
+    { icon: ExternalLink, label: "GitHub", href: portfolioData.personalInfo.github, className: "border-zinc-700 bg-zinc-900/50 text-zinc-300 hover:text-cyan-400 hover:border-cyan-500/20" },
+    { icon: Mail, label: "Email", href: `mailto:${portfolioData.personalInfo.email}`, className: "border-violet-500/20 bg-violet-500/5 text-violet-400 hover:border-violet-400" },
+    { icon: Phone, label: "Call", href: `tel:${portfolioData.personalInfo.phone}`, className: "border-emerald-500/20 bg-emerald-500/5 text-emerald-400 hover:border-emerald-400" },
+    { icon: ExternalLink, label: "Portfolio", href: portfolioData.personalInfo.portfolioUrl, className: "border-cyan-500/20 bg-cyan-500/5 text-cyan-400 hover:border-cyan-400" },
   ];
 
   return (
@@ -82,7 +82,7 @@ export default function RecruiterDashboard() {
                   transition={{ delay: idx * 0.05, duration: 0.3 }}
                   className="flex items-center gap-3 rounded-lg border border-zinc-800 bg-zinc-950/50 p-4"
                 >
-                  <div className={`flex h-10 w-10 items-center justify-center rounded-lg border border-${info.color}-500/20 bg-${info.color}-500/5 text-${info.color}-400`}>
+                  <div className={`flex h-10 w-10 items-center justify-center rounded-lg border bg-black/40 text-cyan-400 ${info.className}`}>
                     <Icon className="h-5 w-5" />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -117,15 +117,15 @@ export default function RecruiterDashboard() {
                     transition={{ delay: idx * 0.05, duration: 0.3 }}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`flex items-center gap-3 rounded-lg border border-${action.color}-500/20 bg-${action.color}-500/5 p-4 hover:border-${action.color}-400 transition-colors group`}
+                    className={`flex items-center gap-3 rounded-lg border p-4 transition-colors group ${action.className}`}
                   >
-                    <div className={`flex h-10 w-10 items-center justify-center rounded-lg border border-${action.color}-500/20 bg-${action.color}-500/10 text-${action.color}-400 group-hover:border-${action.color}-400 transition-colors`}>
+                    <div className={`flex h-10 w-10 items-center justify-center rounded-lg border bg-black/40 transition-colors ${action.className}`}>
                       <Icon className="h-5 w-5" />
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-medium text-white">{action.label}</p>
                     </div>
-                    <div className="text-zinc-500 group-hover:text-${action.color}-400 transition-colors">
+                    <div className="text-zinc-500 group-hover:text-cyan-400 transition-colors">
                       <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
