@@ -21,13 +21,14 @@ const ResumePreview = memo(function ResumePreview({
   const [error, setError] = useState(false);
 
   const handlePrint = useCallback(() => {
-    window.open(resumeUrl, "_blank");
+    window.open(resumeUrl, "_blank", "noopener,noreferrer");
   }, [resumeUrl]);
 
   const handleDownload = useCallback(() => {
     const link = document.createElement("a");
     link.href = resumeUrl;
     link.download = filename;
+    link.target = "_blank";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

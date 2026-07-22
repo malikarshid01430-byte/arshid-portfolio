@@ -1,40 +1,18 @@
 import { NextResponse } from "next/server";
-import { Document, Page, Text, View, StyleSheet, Font, Image } from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet, Font } from "@react-pdf/renderer";
 import { portfolioData } from "@/app/data/portfolio";
 
-// Register fonts for better typography
-Font.register({
-  family: "Inter",
-  fonts: [
-    { src: "https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7.woff", fontWeight: 400 },
-    { src: "https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7.woff", fontWeight: 600 },
-    { src: "https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7.woff", fontWeight: 700 },
-  ],
-});
-
-const QR_PLACEHOLDER = "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://arshid-portfolio.vercel.app";
+// Use standard PDF fonts to avoid network font fetches in serverless environments
+Font.register({ family: "Helvetica", fonts: [{ src: "", fontWeight: 400 }] });
 
 const styles = StyleSheet.create({
   page: {
-    fontFamily: "Inter",
+    fontFamily: "Helvetica",
     fontSize: 10,
     lineHeight: 1.5,
     color: "#1a1a1a",
     padding: 40,
     backgroundColor: "#ffffff",
-  },
-  profileImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    objectFit: "cover",
-    marginRight: 16,
-    border: "2 solid #00d2ff",
-  },
-  qrCode: {
-    width: 70,
-    height: 70,
-    marginTop: 8,
   },
   header: {
     marginBottom: 20,
@@ -180,15 +158,14 @@ const styles = StyleSheet.create({
     marginBottom: 3,
     marginLeft: 8,
   },
-  links: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 8,
-    marginTop: 4,
-  },
   link: {
     fontSize: 9,
     color: "#00d2ff",
+  },
+  qrCode: {
+    width: 56,
+    height: 56,
+    marginTop: 8,
   },
 });
 
@@ -198,44 +175,32 @@ function ResumeDocument() {
   return (
     <Document title={`${personalInfo.name} - Resume`} author={personalInfo.name}>
       <Page size="A4" style={styles.page}>
-        {/* Header with Profile Image and QR Code */}
         <View style={styles.header}>
           <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 12, justifyContent: "space-between" }}>
             <View style={{ flexDirection: "row", alignItems: "center", flex: 1 }}>
-              {/* eslint-disable-next-line jsx-a11y/alt-text */}
-              <Image
-                src={personalInfo.profileImage || "/images/profile.png"}
-                style={styles.profileImage}
-              />
+              <View style={{ width: 64, height: 64, borderRadius: 32, backgroundColor: "#e5e5e5", marginRight: 12 }} />
               <View style={{ flex: 1, marginLeft: 12 }}>
                 <Text style={styles.name}>{personalInfo.name}</Text>
                 <Text style={styles.title}>{personalInfo.title}</Text>
                 <Text style={styles.contactItem}>Generated: {new Date().toLocaleDateString()}</Text>
               </View>
             </View>
-            {/* eslint-disable-next-line jsx-a11y/alt-text */}
-            <Image 
-              src={QR_PLACEHOLDER} 
-              style={styles.qrCode} 
-            />
           </View>
           <View style={styles.contact}>
-            <Text style={styles.contactItem}>📧 {personalInfo.email}</Text>
-            <Text style={styles.contactItem}>📱 {personalInfo.phone}</Text>
-            <Text style={styles.contactItem}>📍 {personalInfo.location}</Text>
-            <Text style={styles.contactItem}>🔗 linkedin.com/in/arshid-ahmad-malik</Text>
-            <Text style={styles.contactItem}>💻 github.com/malikarshid01430-byte</Text>
-            <Text style={styles.contactItem}>🌐 {personalInfo.portfolioUrl}</Text>
+            <Text style={styles.contactItem}>Email: {personalInfo.email}</Text>
+            <Text style={styles.contactItem}>Phone: {personalInfo.phone}</Text>
+            <Text style={styles.contactItem}>Location: {personalInfo.location}</Text>
+            <Text style={styles.contactItem}>LinkedIn: {personalInfo.linkedin.replace("https://", "")}</Text>
+            <Text style={styles.contactItem}>GitHub: {personalInfo.github.replace("https://", "")}</Text>
+            <Text style={styles.contactItem}>Portfolio: {personalInfo.portfolioUrl.replace("https://", "")}</Text>
           </View>
         </View>
 
-        {/* Professional Summary */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Professional Summary</Text>
           <Text style={styles.summary}>{personalInfo.bioShort}</Text>
         </View>
 
-        {/* Skills */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Technical Skills</Text>
           {skillCategories.map((category, idx) => (
@@ -243,14 +208,13 @@ function ResumeDocument() {
               <Text style={styles.skillCategoryTitle}>{category.title}</Text>
               {category.skills.map((skill, sIdx) => (
                 <Text key={sIdx} style={styles.skillItem}>
-                  • {skill.name} ({skill.level}%)
+                  {skill.name} ({skill.level}%)
                 </Text>
               ))}
             </View>
           ))}
         </View>
 
-        {/* Projects */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Projects</Text>
           {projects.map((project, idx) => (
@@ -263,7 +227,6 @@ function ResumeDocument() {
           ))}
         </View>
 
-        {/* Experience */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Experience</Text>
           {experience.map((exp, idx) => (
@@ -277,7 +240,7 @@ function ResumeDocument() {
               </Text>
               {exp.description.map((desc, dIdx) => (
                 <Text key={dIdx} style={styles.experienceDescription}>
-                  • {desc}
+                  {desc}
                 </Text>
               ))}
               <Text style={styles.techStack}>Technologies: {exp.technologies.join(", ")}</Text>
@@ -285,7 +248,6 @@ function ResumeDocument() {
           ))}
         </View>
 
-        {/* Education */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Education</Text>
           {education.map((edu, idx) => (
@@ -297,44 +259,41 @@ function ResumeDocument() {
               </Text>
               {edu.details.map((detail, dIdx) => (
                 <Text key={dIdx} style={styles.certification}>
-                  • {detail}
+                  {detail}
                 </Text>
               ))}
             </View>
           ))}
         </View>
 
-        {/* Certifications */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Certifications</Text>
           {certifications.map((cert, idx) => (
             <View key={idx} style={styles.certification}>
               <Text>
-                • {cert.name} - {cert.issuer} ({cert.date})
+                {cert.name} - {cert.issuer} ({cert.date})
               </Text>
             </View>
           ))}
         </View>
 
-        {/* Achievements */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Achievements</Text>
           {achievements.map((achievement, idx) => (
             <View key={idx} style={styles.achievement}>
               <Text>
-                • {achievement.title} - {achievement.description} ({achievement.date})
+                {achievement.title} - {achievement.description} ({achievement.date})
               </Text>
             </View>
           ))}
         </View>
 
-        {/* Links */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Connect</Text>
-          <View style={styles.links}>
-            <Text style={styles.link}>GitHub: github.com/malikarshid01430-byte</Text>
-            <Text style={styles.link}>LinkedIn: linkedin.com/in/arshid-ahmad-malik</Text>
-            <Text style={styles.link}>Portfolio: {personalInfo.portfolioUrl}</Text>
+          <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8, marginTop: 4 }}>
+            <Text style={styles.link}>GitHub: {personalInfo.github.replace("https://", "")}</Text>
+            <Text style={styles.link}>LinkedIn: {personalInfo.linkedin.replace("https://", "")}</Text>
+            <Text style={styles.link}>Portfolio: {personalInfo.portfolioUrl.replace("https://", "")}</Text>
             <Text style={styles.link}>Email: {personalInfo.email}</Text>
             <Text style={styles.link}>Phone: {personalInfo.phone}</Text>
             <Text style={styles.link}>Location: {personalInfo.location}</Text>
@@ -345,19 +304,15 @@ function ResumeDocument() {
   );
 }
 
-// Build PDF outside try/catch to satisfy lint rule about JSX in try/catch
 const pdfDoc = <ResumeDocument />;
 
 export async function GET() {
   try {
-    const ReactPDF = await import("@react-pdf/renderer");
-    const { pdf } = ReactPDF;
-    
-    // Generate PDF
+    const { pdf } = await import("@react-pdf/renderer");
+
     const blob = await pdf(pdfDoc).toBlob();
-    
-    // Return PDF as downloadable file
-    return new NextResponse(blob as unknown as string, {
+
+    return new NextResponse(blob, {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",
@@ -365,10 +320,11 @@ export async function GET() {
         "Cache-Control": "no-cache",
       },
     });
-  } catch {
-    return NextResponse.json(
-      { error: "Failed to generate resume" },
-      { status: 500 }
-    );
+  } catch (error) {
+    console.error("Resume generation error:", error);
+    const message = process.env.NODE_ENV === "development"
+      ? `Resume generation failed: ${error instanceof Error ? error.message : "Unknown error"}`
+      : "Failed to generate resume";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

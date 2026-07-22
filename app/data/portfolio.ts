@@ -131,7 +131,7 @@ export const portfolioData: PortfolioData = {
     resumeUrl: "/api/resume",
     bioShort: "Electronics and Communication Engineer with practical experience in Embedded Systems, IoT, AI powered applications, Android Development, PCB Design and Full Stack Development. Seeking full time opportunities to contribute to innovative engineering teams while continuously learning advanced technologies.",
     bioLong: "Electronics and Communication Engineer with practical experience in Embedded Systems, IoT, AI powered applications, Android Development, PCB Design and Full Stack Development. Seeking full time opportunities to contribute to innovative engineering teams while continuously learning advanced technologies. Passionate about building intelligent systems that bridge hardware and software, from sensor networks to edge AI deployments.",
-    profileImage: "/images/profile.png",
+    profileImage: "/images/profile.jpg",
     portfolioUrl: "https://arshid-portfolio.vercel.app"
   },
   diploma: {

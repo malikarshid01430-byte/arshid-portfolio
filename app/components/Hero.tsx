@@ -171,7 +171,7 @@ export default function Hero() {
               <div className="relative mb-6 flex justify-center">
                 <div className="relative h-48 w-48 sm:h-56 sm:w-56 lg:h-64 lg:w-64">
                   <Image
-                    src={portfolioData.personalInfo.profileImage || "/images/profile.png"}
+                    src={portfolioData.personalInfo.profileImage || "/images/profile.jpg"}
                     alt={portfolioData.personalInfo.name}
                     fill
                     priority
