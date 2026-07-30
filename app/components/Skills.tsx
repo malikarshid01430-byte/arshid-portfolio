@@ -34,7 +34,7 @@ export default function Skills() {
   };
 
   return (
-    <section id="skills" className="relative py-24 border-t border-zinc-900 scroll-mt-16 bg-black/40">
+    <section id="skills" className="relative isolate py-24 lg:py-32 border-t border-zinc-900 scroll-mt-16 bg-black/40 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center text-center mb-16">
           <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest" aria-hidden="true">{'>'} REGISTER::TECHNICAL_SKILLS</span>

@@ -46,10 +46,10 @@ export default function RecruiterDashboard() {
   ];
 
   return (
-    <section className="relative py-16 border-t border-zinc-900 scroll-mt-16 lg:sticky lg:top-20 lg:z-30" aria-labelledby="recruiter-dashboard-heading">
+    <section className="relative isolate py-24 lg:py-32 border-t border-zinc-900 scroll-mt-16 overflow-hidden" aria-labelledby="recruiter-dashboard-heading">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-12">
+        <div className="flex flex-col items-center text-center mb-16">
           <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest" aria-hidden="true">{'>'} RECRUITER::DASHBOARD</span>
           <h2 id="recruiter-dashboard-heading" className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Recruiter Overview
@@ -77,10 +77,11 @@ export default function RecruiterDashboard() {
               return (
                 <motion.div
                   key={idx}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: idx * 0.05, duration: 0.3 }}
-                  className="flex items-center gap-3 rounded-lg border border-zinc-800 bg-zinc-950/50 p-4"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ delay: idx * 0.05, duration: 0.3 }}
+                    className="flex items-center gap-3 rounded-lg border border-zinc-800 bg-zinc-950/50 p-4"
                 >
                   <div className={`flex h-10 w-10 items-center justify-center rounded-lg border bg-black/40 text-cyan-400 ${info.className}`}>
                     <Icon className="h-5 w-5" />
@@ -114,6 +115,7 @@ export default function RecruiterDashboard() {
                     rel="noopener noreferrer"
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
                     transition={{ delay: idx * 0.05, duration: 0.3 }}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -148,6 +150,7 @@ export default function RecruiterDashboard() {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.3 }}
               className="rounded-lg border border-zinc-800 bg-zinc-950/50 p-6"
             >
@@ -160,6 +163,7 @@ export default function RecruiterDashboard() {
                     key={idx}
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true, amount: 0.2 }}
                     transition={{ delay: idx * 0.05, duration: 0.2 }}
                     className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-3 py-1.5 font-mono text-xs text-emerald-400"
                   >
@@ -192,6 +196,7 @@ export default function RecruiterDashboard() {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{ delay: 0.2, duration: 0.3 }}
               className="rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-4 flex items-center gap-3"
             >

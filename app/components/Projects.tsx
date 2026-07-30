@@ -29,7 +29,7 @@ export default function Projects() {
   );
 
   return (
-    <section id="projects" className="relative py-24 border-t border-zinc-900 scroll-mt-16">
+    <section id="projects" className="relative isolate py-24 lg:py-32 border-t border-zinc-900 scroll-mt-16 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center text-center mb-12">
           <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest">{'>'} REGISTER::REPOSITORIES</span>

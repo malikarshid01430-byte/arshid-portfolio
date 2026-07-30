@@ -33,7 +33,7 @@ export default function Header() {
       initial={{ y: -60 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.3 }}
-      className="fixed top-0 left-0 right-0 z-40 border-b border-cyan-500/10 py-3 bg-[#030712]/95"
+      className="fixed top-0 left-0 right-0 z-40 h-16 border-b border-cyan-500/10 bg-[#030712]/95 backdrop-blur-md"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-12 items-center justify-between">
@@ -46,10 +46,10 @@ export default function Header() {
               <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-wider -mt-1">ECE Core // System</span>
             </div>
           </a>
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-6">
             <div className="flex items-center gap-6 rounded-full border border-cyan-500/10 bg-zinc-950/40 px-6 py-2">
               {navItems.map((item) => (
-                <a key={item.name} href={item.href} className="font-mono text-xs tracking-wider text-zinc-400 hover:text-cyan-400 transition-colors">{item.name}</a>
+                <a key={item.name} href={item.href} className="font-mono text-xs tracking-wider text-zinc-400 hover:text-cyan-400 focus:text-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:rounded px-1 transition-colors">{item.name}</a>
               ))}
             </div>
             <div className="flex items-center gap-2">

@@ -19,7 +19,7 @@ const BackgroundGridComponent = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 -z-50 overflow-hidden bg-black">
+    <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-black">
       {/* Base Grid - static, no animations */}
       <div 
         className="absolute inset-0 opacity-[0.07]"

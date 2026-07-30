@@ -8,7 +8,7 @@ export default function Footer() {
   const year = 2025;
 
   return (
-    <footer className="relative border-t border-zinc-900 bg-black/80 py-12 font-mono text-xs">
+    <footer className="relative isolate border-t border-zinc-900 bg-black/80 py-12 font-mono text-xs overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pb-8 border-b border-zinc-900">
           <div className="md:col-span-4 flex flex-col gap-1.5">

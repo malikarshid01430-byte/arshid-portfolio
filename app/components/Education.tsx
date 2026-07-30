@@ -4,7 +4,7 @@ import { portfolioData } from "../data/portfolio";
 
 export default function Education() {
   return (
-    <section id="education" className="relative py-24 border-t border-zinc-900 scroll-mt-16">
+    <section id="education" className="relative isolate py-24 lg:py-32 border-t border-zinc-900 scroll-mt-16 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
         {/* Section Title */}

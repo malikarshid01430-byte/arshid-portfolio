@@ -52,7 +52,7 @@ export default function Hero() {
   ];
 
   return (
-    <section ref={ref} className="relative flex min-h-screen w-full flex-col items-center justify-center pt-28 pb-16 overflow-hidden">
+    <section ref={ref} className="relative isolate flex min-h-screen w-full flex-col items-center justify-center pt-28 pb-16 overflow-hidden">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           

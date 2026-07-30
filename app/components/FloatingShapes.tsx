@@ -2,7 +2,7 @@
 // Static decorative shapes only
 export default function FloatingShapes() {
   return (
-    <div className="fixed inset-0 -z-30 pointer-events-none overflow-hidden">
+    <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
       {/* Static decorative shapes - no animations */}
       <div
         className="absolute top-20 left-10 w-64 h-64 rounded-full border border-cyan-500/10 bg-cyan-500/5 blur-3xl"
