@@ -18,12 +18,12 @@ import { portfolioData } from "../data/portfolio";
 
 export default function RecruiterDashboard() {
   const quickInfo = [
-    { icon: Briefcase, label: "Current Status", value: "Actively Seeking Full Time Roles", className: "text-emerald-400 border-emerald-500/20 bg-emerald-500/5" },
-    { icon: MapPin, label: "Current Location", value: "Bangalore, Karnataka", className: "text-cyan-400 border-cyan-500/20 bg-cyan-500/5" },
-    { icon: MapPin, label: "Home State", value: "Jammu and Kashmir", className: "text-violet-400 border-violet-500/20 bg-violet-500/5" },
-    { icon: Calendar, label: "Graduation", value: "2026", className: "text-emerald-400 border-emerald-500/20 bg-emerald-500/5" },
-    { icon: CheckCircle, label: "Willing to Relocate", value: "Yes", className: "text-cyan-400 border-cyan-500/20 bg-cyan-500/5" },
-    { icon: MessageSquare, label: "Response Time", value: "Within 24 Hours", className: "text-violet-400 border-violet-500/20 bg-violet-500/5" },
+    { icon: Briefcase, label: "Current Status", value: "Actively Seeking Full Time Roles", className: "text-emerald-400 border-emerald-500/30 bg-emerald-500/5" },
+    { icon: MapPin, label: "Current Location", value: "Bangalore, Karnataka", className: "text-cyan-400 border-cyan-500/30 bg-cyan-500/5" },
+    { icon: MapPin, label: "Home State", value: "Jammu and Kashmir", className: "text-violet-400 border-violet-500/30 bg-violet-500/5" },
+    { icon: Calendar, label: "Graduation", value: "2026", className: "text-emerald-400 border-emerald-500/30 bg-emerald-500/5" },
+    { icon: CheckCircle, label: "Willing to Relocate", value: "Yes", className: "text-cyan-400 border-cyan-500/30 bg-cyan-500/5" },
+    { icon: MessageSquare, label: "Response Time", value: "Within 24 Hours", className: "text-violet-400 border-violet-500/30 bg-violet-500/5" },
   ];
 
   const primaryRoles = [
@@ -37,18 +37,17 @@ export default function RecruiterDashboard() {
   ];
 
   const quickActions = [
-    { icon: Download, label: "Download Resume", href: portfolioData.personalInfo.resumeUrl, className: "border-cyan-500/20 bg-cyan-500/5 text-cyan-400 hover:border-cyan-400" },
-    { icon: ExternalLink, label: "LinkedIn", href: portfolioData.personalInfo.linkedin, className: "border-blue-500/20 bg-blue-500/5 text-blue-400 hover:border-blue-400" },
-    { icon: ExternalLink, label: "GitHub", href: portfolioData.personalInfo.github, className: "border-zinc-700 bg-zinc-900/50 text-zinc-300 hover:text-cyan-400 hover:border-cyan-500/20" },
-    { icon: Mail, label: "Email", href: `mailto:${portfolioData.personalInfo.email}`, className: "border-violet-500/20 bg-violet-500/5 text-violet-400 hover:border-violet-400" },
-    { icon: Phone, label: "Call", href: `tel:${portfolioData.personalInfo.phone}`, className: "border-emerald-500/20 bg-emerald-500/5 text-emerald-400 hover:border-emerald-400" },
-    { icon: ExternalLink, label: "Portfolio", href: portfolioData.personalInfo.portfolioUrl, className: "border-cyan-500/20 bg-cyan-500/5 text-cyan-400 hover:border-cyan-400" },
+    { icon: Download, label: "Download Resume", href: portfolioData.personalInfo.resumeUrl, className: "border-cyan-500/30 bg-cyan-500/5 text-cyan-400 hover:border-cyan-400 hover:bg-cyan-500/10" },
+    { icon: ExternalLink, label: "LinkedIn", href: portfolioData.personalInfo.linkedin, className: "border-blue-500/30 bg-blue-500/5 text-blue-400 hover:border-blue-400 hover:bg-blue-500/10" },
+    { icon: ExternalLink, label: "GitHub", href: portfolioData.personalInfo.github, className: "border-zinc-700 bg-zinc-900/50 text-zinc-300 hover:text-cyan-400 hover:border-cyan-500/30" },
+    { icon: Mail, label: "Email", href: `mailto:${portfolioData.personalInfo.email}`, className: "border-violet-500/30 bg-violet-500/5 text-violet-400 hover:border-violet-400 hover:bg-violet-500/10" },
+    { icon: Phone, label: "Call", href: `tel:${portfolioData.personalInfo.phone}`, className: "border-emerald-500/30 bg-emerald-500/5 text-emerald-400 hover:border-emerald-400 hover:bg-emerald-500/10" },
+    { icon: ExternalLink, label: "Portfolio", href: portfolioData.personalInfo.portfolioUrl, className: "border-cyan-500/30 bg-cyan-500/5 text-cyan-400 hover:border-cyan-400 hover:bg-cyan-500/10" },
   ];
 
   return (
-    <section className="relative isolate py-24 lg:py-32 border-t border-zinc-900 scroll-mt-16 overflow-hidden" aria-labelledby="recruiter-dashboard-heading">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
+    <section className="relative py-24 lg:py-32 border-t border-zinc-900 scroll-mt-16" aria-labelledby="recruiter-dashboard-heading">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12">
         <div className="flex flex-col items-center text-center mb-16">
           <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest" aria-hidden="true">{'>'} RECRUITER::DASHBOARD</span>
           <h2 id="recruiter-dashboard-heading" className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
@@ -60,8 +59,7 @@ export default function RecruiterDashboard() {
           </p>
         </div>
 
-        {/* Dashboard Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           {/* Left Column: Quick Info */}
           <div className="lg:col-span-4 space-y-4">
@@ -77,11 +75,11 @@ export default function RecruiterDashboard() {
               return (
                 <motion.div
                   key={idx}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    transition={{ delay: idx * 0.05, duration: 0.3 }}
-                    className="flex items-center gap-3 rounded-lg border border-zinc-800 bg-zinc-950/50 p-4"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ delay: idx * 0.05, duration: 0.3 }}
+                  className="flex items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-950/50 p-4"
                 >
                   <div className={`flex h-10 w-10 items-center justify-center rounded-lg border bg-black/40 text-cyan-400 ${info.className}`}>
                     <Icon className="h-5 w-5" />
@@ -119,7 +117,7 @@ export default function RecruiterDashboard() {
                     transition={{ delay: idx * 0.05, duration: 0.3 }}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`flex items-center gap-3 rounded-lg border p-4 transition-colors group ${action.className}`}
+                    className={`flex items-center gap-3 rounded-xl border p-4 transition-colors group ${action.className}`}
                   >
                     <div className={`flex h-10 w-10 items-center justify-center rounded-lg border bg-black/40 transition-colors ${action.className}`}>
                       <Icon className="h-5 w-5" />
@@ -152,7 +150,7 @@ export default function RecruiterDashboard() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.3 }}
-              className="rounded-lg border border-zinc-800 bg-zinc-950/50 p-6"
+              className="rounded-xl border border-zinc-800 bg-zinc-950/50 p-6"
             >
               <p className="text-xs text-zinc-500 font-mono uppercase tracking-wider mb-3">
                 Primary Roles
@@ -165,7 +163,7 @@ export default function RecruiterDashboard() {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true, amount: 0.2 }}
                     transition={{ delay: idx * 0.05, duration: 0.2 }}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-3 py-1.5 font-mono text-xs text-emerald-400"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/5 px-3 py-1.5 font-mono text-xs text-emerald-400"
                   >
                     <CheckCircle className="h-3 w-3" />
                     {role}
@@ -198,7 +196,7 @@ export default function RecruiterDashboard() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ delay: 0.2, duration: 0.3 }}
-              className="rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-4 flex items-center gap-3"
+              className="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-4 flex items-center gap-3"
             >
               <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-emerald-500/30 bg-emerald-500/10">
                 <div className="h-3 w-3 animate-pulse rounded-full bg-emerald-400" />

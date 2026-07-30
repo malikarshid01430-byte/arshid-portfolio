@@ -4,8 +4,8 @@ import { portfolioData } from "../data/portfolio";
 
 export default function Education() {
   return (
-    <section id="education" className="relative isolate py-24 lg:py-32 border-t border-zinc-900 scroll-mt-16 overflow-hidden">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="education" className="relative py-24 lg:py-32 border-t border-zinc-900 scroll-mt-16">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12">
         
         {/* Section Title */}
         <div className="flex flex-col items-center text-center mb-16">
@@ -29,7 +29,7 @@ export default function Education() {
             {portfolioData.education.map((edu, idx) => (
                 <div 
                   key={idx}
-                  className="rounded-xl border border-zinc-900 bg-zinc-950/40 p-6 transition-all hover:border-cyan-500/20"
+                  className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-6 transition-all hover:border-cyan-500/30"
                 >
                   <div className="flex justify-between items-start gap-4">
                     <div>
@@ -50,7 +50,7 @@ export default function Education() {
                   </ul>
 
                   {edu.coursework && edu.coursework.length > 0 && (
-                    <div className="mt-4 pt-4 border-t border-zinc-900">
+                    <div className="mt-4 pt-4 border-t border-zinc-800">
                       <h4 className="font-mono text-[10px] text-cyan-400 uppercase tracking-widest mb-2">{'>'} RELEVANT_COURSEWORK</h4>
                       <div className="flex flex-wrap gap-1.5">
                         {edu.coursework.map((course, cIdx) => (
@@ -61,7 +61,7 @@ export default function Education() {
                   )}
 
                   {edu.laboratories && edu.laboratories.length > 0 && (
-                    <div className="mt-4 pt-4 border-t border-zinc-900">
+                    <div className="mt-4 pt-4 border-t border-zinc-800">
                       <h4 className="font-mono text-[10px] text-cyan-400 uppercase tracking-widest mb-2">{'>'} LABORATORIES</h4>
                       <ul className="space-y-1.5 text-xs text-zinc-400">
                         {edu.laboratories.map((lab, labIdx) => (
@@ -75,7 +75,7 @@ export default function Education() {
                   )}
 
                   {edu.technicalSkillsLearned && edu.technicalSkillsLearned.length > 0 && (
-                    <div className="mt-4 pt-4 border-t border-zinc-900">
+                    <div className="mt-4 pt-4 border-t border-zinc-800">
                       <h4 className="font-mono text-[10px] text-violet-400 uppercase tracking-widest mb-2">{'>'} TECHNICAL_SKILLS_ACQUIRED</h4>
                       <div className="flex flex-wrap gap-1.5">
                         {edu.technicalSkillsLearned.map((skill, skillIdx) => (
@@ -86,7 +86,7 @@ export default function Education() {
                   )}
 
                   {edu.certifications && edu.certifications.length > 0 && (
-                    <div className="mt-4 pt-4 border-t border-zinc-900">
+                    <div className="mt-4 pt-4 border-t border-zinc-800">
                       <h4 className="font-mono text-[10px] text-teal-400 uppercase tracking-widest mb-2">{'>'} CERTIFICATIONS_EARNED</h4>
                       <ul className="space-y-1.5 text-xs text-zinc-400">
                         {edu.certifications.map((cert, certIdx) => (
@@ -100,7 +100,7 @@ export default function Education() {
                   )}
 
                   {edu.achievements && edu.achievements.length > 0 && (
-                    <div className="mt-4 pt-4 border-t border-zinc-900">
+                    <div className="mt-4 pt-4 border-t border-zinc-800">
                       <h4 className="font-mono text-[10px] text-amber-400 uppercase tracking-widest mb-2">{'>'} ACHIEVEMENTS</h4>
                       <ul className="space-y-1.5 text-xs text-zinc-400">
                         {edu.achievements.map((achievement, aIdx) => (
@@ -116,7 +116,7 @@ export default function Education() {
             ))}
 
             {/* Research interests segment under education */}
-            <div className="rounded-xl border border-violet-500/10 bg-violet-950/5 p-6 mt-6">
+            <div className="rounded-xl border border-violet-500/20 bg-violet-950/5 p-6 mt-6">
               <h4 className="font-mono text-xs text-violet-400 uppercase tracking-widest mb-3">{"// RESEARCH_INTERESTS"}</h4>
               <ul className="space-y-2 text-xs text-zinc-400">
                 {portfolioData.researchInterests.map((interest, iidx) => (
@@ -140,7 +140,7 @@ export default function Education() {
               {portfolioData.certifications.map((cert, idx) => (
                 <div 
                   key={idx}
-                  className="rounded-xl border border-zinc-900 bg-zinc-950/40 p-5 transition-all flex flex-col justify-between"
+                  className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-5 transition-all flex flex-col justify-between"
                 >
                   <div>
                     <h4 className="text-sm font-bold text-white tracking-wide leading-snug">{cert.name}</h4>
@@ -176,7 +176,7 @@ export default function Education() {
               {portfolioData.achievements.map((ach, idx) => (
                 <div 
                   key={idx}
-                  className="rounded-xl border border-zinc-900 bg-zinc-950/40 p-5 transition-all"
+                  className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-5 transition-all"
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <Star className="h-4 w-4 text-amber-400 fill-amber-400/20" />

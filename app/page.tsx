@@ -3,7 +3,7 @@ import { HeroSkeleton, SectionSkeleton } from "./components/SkeletonLoader";
 
 // Dynamic imports for code splitting with skeletons
 const Header = dynamic(() => import("./components/Header"), {
-  loading: () => <div className="h-16" />,
+  loading: () => <div className="h-20" />,
   ssr: true,
 });
 
@@ -95,7 +95,7 @@ export default function Home() {
       <Header />
 
       {/* Main content flow */}
-      <main id="main-content" className="flex-1" tabIndex={-1}>
+      <main id="main-content" className="flex-1">
         {/* Landing segment - load immediately */}
         <Hero />
 

@@ -6,10 +6,10 @@ import { portfolioData } from "../data/portfolio";
 
 export default function Experience() {
   return (
-    <section id="experience" className="relative isolate py-24 lg:py-32 border-t border-zinc-900 scroll-mt-16 bg-black/40 overflow-hidden">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="experience" className="relative py-24 lg:py-32 border-t border-zinc-900 scroll-mt-16">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12">
         <div className="flex flex-col items-center text-center mb-16">
-          <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest">{'>'} REGISTER::EXPERIENCE_LOG</span>
+          <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest" aria-hidden="true">{'>'} REGISTER::EXPERIENCE_LOG</span>
           <h2 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Internships & Experience</h2>
           <div className="mt-3 h-[2px] w-24 bg-gradient-to-r from-cyan-500 to-violet-500" />
         </div>
@@ -22,7 +22,8 @@ export default function Experience() {
                 <motion.div
                   key={`${exp.company}-${exp.role}`}
                   initial={{ opacity: 0, x: isEven ? -20 : 20 }}
-                  animate={{ opacity: 1, x: 0 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
                   transition={{ delay: idx * 0.1, duration: 0.3 }}
                   className={`relative flex flex-col sm:flex-row items-stretch ${isEven ? "sm:flex-row-reverse" : ""}`}
                   itemScope
@@ -33,7 +34,7 @@ export default function Experience() {
                   </div>
                   <div className="hidden sm:block w-1/2 px-8" />
                   <div className="w-full sm:w-1/2 px-8 pl-12 sm:pl-8">
-                    <div className="rounded-xl border border-zinc-900 bg-zinc-950/40 p-6 transition-colors hover:border-cyan-500/20">
+                    <div className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-6 transition-colors hover:border-cyan-500/30">
                       <span className="font-mono text-[10px] text-cyan-400 tracking-wider">{"// INTERNSHIP_0"}{idx + 1}</span>
                       <h3 className="text-lg font-bold text-white tracking-wide mt-1">{exp.role}</h3>
                       <div className="flex items-center gap-1 mt-1 text-sm font-semibold text-zinc-300">
@@ -69,14 +70,14 @@ export default function Experience() {
                         </div>
                       )}
                       {exp.impact && (
-                        <div className="mt-4 rounded-lg border border-emerald-500/10 bg-emerald-950/5 p-3">
+                        <div className="mt-4 rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-3">
                           <h4 className="font-mono text-[10px] text-emerald-400 uppercase tracking-widest mb-1">{'>'} IMPACT</h4>
                           <p className="text-xs text-zinc-400 leading-relaxed">{exp.impact}</p>
                         </div>
                       )}
-                      <div className="mt-6 pt-4 border-t border-zinc-900 flex flex-wrap gap-1.5">
+                      <div className="mt-6 pt-4 border-t border-zinc-800 flex flex-wrap gap-1.5">
                         {exp.technologies.map((tech) => (
-                          <span key={tech} className="px-2 py-0.5 rounded bg-zinc-900/60 border border-zinc-900 text-[9px] font-mono text-zinc-400">{tech}</span>
+                          <span key={tech} className="px-2 py-0.5 rounded bg-zinc-900/60 border border-zinc-800 text-[9px] font-mono text-zinc-400">{tech}</span>
                         ))}
                       </div>
                     </div>

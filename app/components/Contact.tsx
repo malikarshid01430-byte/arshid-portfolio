@@ -65,7 +65,7 @@ export default function Contact() {
     setSentLines([]);
     setIsCompleted(false);
 
-      for (let i = 0; i < logs.length; i++) {
+    for (let i = 0; i < logs.length; i++) {
       const line = logs[i].replace("%EMAIL%", formData.email).replace("%LEN%", formData.message.length.toString());
       await new Promise((r) => setTimeout(r, 150 + i * 40));
       setSentLines((prev) => [...prev, line]);
@@ -81,8 +81,8 @@ export default function Contact() {
   const whatsappLink = `https://wa.me/${portfolioData.personalInfo.phone.replace(/\D/g, "")}`;
 
   return (
-    <section id="contact" className="relative isolate py-24 lg:py-32 border-t border-zinc-900 scroll-mt-16 bg-black/40 overflow-hidden">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="relative py-24 lg:py-32 border-t border-zinc-900 scroll-mt-16">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12">
             <div className="flex flex-col items-center text-center mb-16">
               <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest" aria-hidden="true">{'>'} REGISTER::TRANSCEIVER</span>
               <h2 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Get In Touch</h2>
@@ -103,8 +103,8 @@ export default function Contact() {
             <p className="text-zinc-400 text-sm leading-relaxed">I am currently looking for full-time opportunities in Embedded Systems, IoT, VLSI, and Full Stack Development. Feel free to reach out!</p>
 
             {/* Contact Info Card */}
-            <div className="rounded-xl border border-zinc-900 bg-zinc-950/40 p-6 font-mono text-xs text-zinc-400 space-y-4">
-              <span className="text-cyan-400 font-bold block border-b border-zinc-900 pb-2 mb-2">{"// CONTACT_INFO:"}</span>
+            <div className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-6 font-mono text-xs text-zinc-400 space-y-4">
+              <span className="text-cyan-400 font-bold block border-b border-zinc-800 pb-2 mb-2">{"// CONTACT_INFO:"}</span>
 
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
@@ -140,7 +140,7 @@ export default function Contact() {
               <a href={portfolioData.personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-blue-500/20 bg-blue-950/5 font-mono text-xs text-blue-400 hover:border-blue-400 transition-colors">
                 <FaLinkedin className="h-4 w-4" /> LinkedIn
               </a>
-              <a href={portfolioData.personalInfo.github} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-zinc-700 bg-zinc-900/50 font-mono text-xs text-zinc-300 hover:text-cyan-400 transition-colors">
+              <a href={portfolioData.personalInfo.github} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-zinc-800 bg-zinc-900/50 font-mono text-xs text-zinc-300 hover:text-cyan-400 transition-colors">
                 <FaGithub className="h-4 w-4" /> GitHub
               </a>
               <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-emerald-500/20 bg-emerald-950/5 font-mono text-xs text-emerald-400 hover:border-emerald-400 transition-colors">
@@ -155,30 +155,30 @@ export default function Contact() {
             </div>
 
             {/* Portfolio Link */}
-            <a href={portfolioData.personalInfo.portfolioUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-900 bg-zinc-950/20 font-mono text-xs text-zinc-400 hover:text-cyan-400 transition-colors">
+            <a href={portfolioData.personalInfo.portfolioUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-800 bg-zinc-950/20 font-mono text-xs text-zinc-400 hover:text-cyan-400 transition-colors">
               <Globe className="h-4 w-4" /> {portfolioData.personalInfo.portfolioUrl}
             </a>
           </div>
           <div className="lg:col-span-7">
-            <div className="rounded-xl border border-cyan-500/10 bg-black/60 p-6">
+            <div className="rounded-xl border border-cyan-500/20 bg-black/60 p-6">
               {!isSending && !isCompleted && (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <label htmlFor="name" className="block font-mono text-[10px] text-zinc-500 uppercase">Your Name</label>
                       <input id="name" type="text" name="name" required value={formData.name} onChange={handleChange}
-                        className="w-full rounded-lg border border-zinc-900 bg-zinc-950/80 px-4 py-2.5 font-mono text-xs text-white focus:border-cyan-500/50 focus:outline-none transition-colors" placeholder="John Doe" />
+                        className="w-full rounded-lg border border-zinc-800 bg-zinc-950/80 px-4 py-2.5 font-mono text-xs text-white focus:border-cyan-500/50 focus:outline-none transition-colors" placeholder="John Doe" />
                     </div>
                     <div className="space-y-1.5">
                       <label htmlFor="email" className="block font-mono text-[10px] text-zinc-500 uppercase">Your Email</label>
                       <input id="email" type="email" name="email" required value={formData.email} onChange={handleChange}
-                        className="w-full rounded-lg border border-zinc-900 bg-zinc-950/80 px-4 py-2.5 font-mono text-xs text-white focus:border-cyan-500/50 focus:outline-none transition-colors" placeholder="john@example.com" />
+                        className="w-full rounded-lg border border-zinc-800 bg-zinc-950/80 px-4 py-2.5 font-mono text-xs text-white focus:border-cyan-500/50 focus:outline-none transition-colors" placeholder="john@example.com" />
                     </div>
                   </div>
                   <div className="space-y-1.5">
                     <label htmlFor="message" className="block font-mono text-[10px] text-zinc-500 uppercase">Message</label>
                     <textarea id="message" name="message" rows={5} required value={formData.message} onChange={handleChange}
-                      className="w-full rounded-lg border border-zinc-900 bg-zinc-950/80 px-4 py-2.5 font-mono text-xs text-white focus:border-cyan-500/50 focus:outline-none transition-colors resize-none" placeholder="Your message here..." />
+                      className="w-full rounded-lg border border-zinc-800 bg-zinc-950/80 px-4 py-2.5 font-mono text-xs text-white focus:border-cyan-500/50 focus:outline-none transition-colors resize-none" placeholder="Your message here..." />
                   </div>
                   <button type="submit" className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-cyan-500 to-violet-600 font-mono text-xs tracking-wider font-semibold text-white hover:brightness-110 transition-all"><Send className="h-4 w-4" /> Send Message</button>
                 </form>

@@ -8,9 +8,9 @@ export default function Footer() {
   const year = 2025;
 
   return (
-    <footer className="relative isolate border-t border-zinc-900 bg-black/80 py-12 font-mono text-xs overflow-hidden">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pb-8 border-b border-zinc-900">
+    <footer className="relative border-t border-zinc-900 bg-black py-16">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pb-8 border-b border-zinc-800">
           <div className="md:col-span-4 flex flex-col gap-1.5">
             <span className="text-sm font-bold text-white tracking-widest uppercase">{portfolioData.personalInfo.name}</span>
             <span className="text-[10px] text-zinc-500">&copy; {year} Arshid Ahmad Malik. All Rights Reserved.</span>
@@ -23,9 +23,9 @@ export default function Footer() {
           </div>
           <div className="md:col-span-4 flex flex-col items-start md:items-end gap-3">
             <div className="flex gap-3">
-              <a href={portfolioData.personalInfo.github} target="_blank" rel="noopener noreferrer" className="flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-900 text-zinc-400 hover:text-cyan-400 transition-colors" aria-label="GitHub"><FaGithub className="h-4 w-4" /></a>
-              <a href={portfolioData.personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-900 text-zinc-400 hover:text-cyan-400 transition-colors" aria-label="LinkedIn"><FaLinkedin className="h-4 w-4" /></a>
-              <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-900 text-zinc-400 hover:text-cyan-400 transition-colors" aria-label="Scroll to top"><ArrowUp className="h-4 w-4" /></button>
+              <a href={portfolioData.personalInfo.github} target="_blank" rel="noopener noreferrer" className="flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-800 text-zinc-400 hover:text-cyan-400 transition-colors" aria-label="GitHub"><FaGithub className="h-4 w-4" /></a>
+              <a href={portfolioData.personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-800 text-zinc-400 hover:text-cyan-400 transition-colors" aria-label="LinkedIn"><FaLinkedin className="h-4 w-4" /></a>
+              <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-800 text-zinc-400 hover:text-cyan-400 transition-colors" aria-label="Scroll to top"><ArrowUp className="h-4 w-4" /></button>
             </div>
             <span className="text-[9px] text-zinc-600 text-left md:text-right">Platform: Next.js 16 // React 19 // Tailwind v4</span>
           </div>

@@ -29,10 +29,10 @@ export default function Projects() {
   );
 
   return (
-    <section id="projects" className="relative isolate py-24 lg:py-32 border-t border-zinc-900 scroll-mt-16 overflow-hidden">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="projects" className="relative py-24 lg:py-32 border-t border-zinc-900 scroll-mt-16">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12">
         <div className="flex flex-col items-center text-center mb-12">
-          <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest">{'>'} REGISTER::REPOSITORIES</span>
+          <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest" aria-hidden="true">{'>'} REGISTER::REPOSITORIES</span>
           <h2 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Featured Projects</h2>
           <div className="mt-3 h-[2px] w-24 bg-gradient-to-r from-cyan-500 to-violet-500" />
         </div>
@@ -43,7 +43,7 @@ export default function Projects() {
               key={cat} 
               onClick={() => setSelectedCategory(cat)}
               className={`px-4 py-1.5 rounded-full border font-mono text-[10px] sm:text-xs tracking-wider transition-colors ${
-                selectedCategory === cat ? "bg-cyan-500/20 border-cyan-400 text-cyan-400" : "bg-zinc-950/30 border-zinc-900 text-zinc-400 hover:text-white"
+                selectedCategory === cat ? "bg-cyan-500/20 border-cyan-400 text-cyan-400" : "bg-zinc-950/30 border-zinc-800 text-zinc-400 hover:text-white"
               }`}
               role="tab"
               aria-selected={selectedCategory === cat}

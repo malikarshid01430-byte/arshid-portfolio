@@ -214,7 +214,7 @@ function ResumeDocument() {
           <View style={styles.headerContent}>
             <View style={styles.headerLeft}>
               {profileImageSrc && (
-                <Image src={profileImageSrc} style={styles.profileImage} alt="" />
+                <Image src={profileImageSrc} style={styles.profileImage} />
               )}
               <View style={styles.headerText}>
                 <Text style={styles.name}>{personalInfo.name}</Text>

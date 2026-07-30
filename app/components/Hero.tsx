@@ -31,8 +31,8 @@ export default function Hero() {
   const isInView = useInView(ref, { once: true });
 
   const getDelay = useCallback((idx: number) => {
-    if (idx === 0) return 800;
-    return 400 + (idx - 1) * 80;
+    if (idx === 0) return 600;
+    return 300 + (idx - 1) * 60;
   }, []);
 
   useEffect(() => {
@@ -45,181 +45,167 @@ export default function Hero() {
     }
   }, [isInView, currentLineIdx, getDelay]);
 
-  const socialLinks = [
-    { href: portfolioData.personalInfo.github, icon: FaGithub, label: "GitHub Link" },
-    { href: portfolioData.personalInfo.linkedin, icon: FaLinkedin, label: "LinkedIn Link" },
-    { href: `mailto:${portfolioData.personalInfo.email}`, icon: Mail, label: "Email Address" }
-  ];
-
   return (
-    <section ref={ref} className="relative isolate flex min-h-screen w-full flex-col items-center justify-center pt-28 pb-16 overflow-hidden">
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+    <section
+      ref={ref}
+      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden"
+      style={{ paddingTop: '5rem', paddingBottom: '5rem' }}
+    >
+      <div className="w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 xl:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
-          {/* Left Column: Heading and CTAs */}
+          {/* Left Column */}
           <motion.div
-            className="lg:col-span-7 flex flex-col justify-center text-left"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] as const }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+            transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+            className="flex flex-col gap-6"
           >
-            {/* Availability Badge */}
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-              transition={{ delay: 0.1, duration: 0.3 }}
-              className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-950/20 px-3 py-1 font-mono text-xs text-emerald-400 mb-6 w-fit"
+              initial={{ opacity: 0, y: 12 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+              transition={{ delay: 0.1, duration: 0.4 }}
+              className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-950/20 px-4 py-2 w-fit"
             >
               <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>AVAILABLE FOR FULL-TIME OPPORTUNITIES</span>
+              <span className="text-xs font-medium text-emerald-400 tracking-wide">
+                Available for Full-Time Opportunities
+              </span>
             </motion.div>
 
-            {/* Title */}
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: 0.15, duration: 0.3 }}
-              className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl leading-tight"
+              transition={{ delay: 0.15, duration: 0.4 }}
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight"
             >
               {portfolioData.personalInfo.name}
             </motion.h1>
             
             <motion.h2
-              initial={{ opacity: 0, y: 15 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
-              transition={{ delay: 0.2, duration: 0.3 }}
-              className="mt-4 text-xl font-medium tracking-tight text-zinc-300 sm:text-2xl font-mono"
+              initial={{ opacity: 0, y: 16 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+              transition={{ delay: 0.2, duration: 0.4 }}
+              className="text-xl sm:text-2xl font-mono text-zinc-300"
             >
               {'>'} {portfolioData.personalInfo.title}
             </motion.h2>
 
             <motion.p
-              initial={{ opacity: 0, y: 15 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
-              transition={{ delay: 0.25, duration: 0.3 }}
-              className="mt-6 max-w-xl text-base leading-7 text-zinc-400 sm:text-lg"
+              initial={{ opacity: 0, y: 16 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+              transition={{ delay: 0.25, duration: 0.4 }}
+              className="text-base sm:text-lg text-zinc-400 leading-relaxed max-w-2xl"
             >
               {portfolioData.personalInfo.bioShort}
             </motion.p>
 
-            {/* Action Buttons */}
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
-              transition={{ delay: 0.3, duration: 0.3 }}
-              className="mt-8 flex flex-wrap gap-3 sm:gap-4 items-center"
+              initial={{ opacity: 0, y: 16 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+              transition={{ delay: 0.3, duration: 0.4 }}
+              className="flex flex-wrap gap-4"
             >
               <DownloadResumeButton variant="primary" label="Download Resume" />
               <a
                 href={portfolioData.personalInfo.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-12 items-center justify-center gap-2 rounded-lg border border-cyan-500/20 bg-cyan-950/5 px-4 sm:px-6 font-mono text-sm tracking-wider font-medium text-cyan-400 hover:border-cyan-400 hover:bg-cyan-500/5 transition-colors"
+                className="flex h-12 items-center justify-center gap-2 rounded-lg border border-cyan-500/20 bg-cyan-950/5 px-6 font-mono text-sm tracking-wider font-medium text-cyan-400 hover:border-cyan-400 hover:bg-cyan-500/5 transition-colors"
               >
+                <FaGithub className="h-4 w-4" />
                 GitHub
               </a>
               <a
                 href={portfolioData.personalInfo.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-12 items-center justify-center gap-2 rounded-lg border border-cyan-500/20 bg-cyan-950/5 px-4 sm:px-6 font-mono text-sm tracking-wider font-medium text-cyan-400 hover:border-cyan-400 hover:bg-cyan-500/5 transition-colors"
+                className="flex h-12 items-center justify-center gap-2 rounded-lg border border-cyan-500/20 bg-cyan-950/5 px-6 font-mono text-sm tracking-wider font-medium text-cyan-400 hover:border-cyan-400 hover:bg-cyan-500/5 transition-colors"
               >
+                <FaLinkedin className="h-4 w-4" />
                 LinkedIn
               </a>
               <a
                 href="#contact"
-                className="flex h-12 items-center justify-center gap-2 rounded-lg border border-cyan-500/20 bg-cyan-950/5 px-4 sm:px-6 font-mono text-sm tracking-wider font-medium text-cyan-400 hover:border-cyan-400 hover:bg-cyan-500/5 transition-colors"
+                className="flex h-12 items-center justify-center gap-2 rounded-lg border border-cyan-500/20 bg-cyan-950/5 px-6 font-mono text-sm tracking-wider font-medium text-cyan-400 hover:border-cyan-400 hover:bg-cyan-500/5 transition-colors"
               >
+                <Mail className="h-4 w-4" />
                 Contact
               </a>
             </motion.div>
 
-            {/* Social Icons */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-              transition={{ delay: 0.35, duration: 0.3 }}
-              className="mt-10 flex gap-6 items-center"
+              transition={{ delay: 0.35, duration: 0.4 }}
+              className="flex gap-6 items-center"
             >
-              {socialLinks.map((link) => {
-                const Icon = link.icon;
-                return (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-zinc-500 hover:text-cyan-400 transition-colors"
-                    aria-label={link.label}
-                  >
-                    <Icon className="h-6 w-6" />
-                  </a>
-                );
-              })}
+              <a href={portfolioData.personalInfo.github} target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-cyan-400 transition-colors" aria-label="GitHub">
+                <FaGithub className="h-6 w-6" />
+              </a>
+              <a href={portfolioData.personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-cyan-400 transition-colors" aria-label="LinkedIn">
+                <FaLinkedin className="h-6 w-6" />
+              </a>
+              <a href={`mailto:${portfolioData.personalInfo.email}`} className="text-zinc-500 hover:text-cyan-400 transition-colors" aria-label="Email">
+                <Mail className="h-6 w-6" />
+              </a>
             </motion.div>
           </motion.div>
 
-          {/* Right Column: Profile Image with Terminal */}
+          {/* Right Column: Profile Image + Terminal */}
           <motion.div
-            className="lg:col-span-5 flex justify-center w-full"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.3, delay: 0.3 }}
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.96 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="flex flex-col items-center gap-6"
           >
-            <div className="relative w-full max-w-md flex flex-col items-center">
-              {/* Profile Image */}
-              <div className="relative mb-6 flex justify-center w-full">
-                <div className="relative h-48 w-48 sm:h-56 sm:w-56 lg:h-64 lg:w-64">
-                  <Image
-                    src={portfolioData.personalInfo.profileImage || "/images/profile.jpg"}
-                    alt={portfolioData.personalInfo.name}
-                    fill
-                    priority
-                    sizes="(max-width: 640px) 192px, (max-width: 1024px) 224px, 256px"
-                    className="rounded-full border-2 border-cyan-500/30 object-cover"
-                  />
-                  <div className="absolute -bottom-2 -right-2 flex h-16 w-16 items-center justify-center rounded-full border-2 border-emerald-500/30 bg-emerald-500/10">
-                    <div className="h-3 w-3 animate-pulse rounded-full bg-emerald-400" />
-                  </div>
+            <div className="relative aspect-square w-full max-w-sm sm:max-w-md lg:max-w-lg">
+              <Image
+                src={portfolioData.personalInfo.profileImage || "/images/profile.jpg"}
+                alt={portfolioData.personalInfo.name}
+                fill
+                priority
+                sizes="(max-width: 640px) 320px, (max-width: 1024px) 400px, 480px"
+                className="rounded-full border-2 border-cyan-500/30 object-cover"
+              />
+              <div className="absolute bottom-4 right-4 flex h-16 w-16 items-center justify-center rounded-full border-2 border-emerald-500/30 bg-emerald-500/10">
+                <div className="h-3 w-3 animate-pulse rounded-full bg-emerald-400" />
+              </div>
+            </div>
+
+            <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg rounded-xl border border-cyan-500/20 bg-black/80 overflow-hidden font-mono">
+              <div className="flex items-center justify-between border-b border-cyan-500/10 bg-cyan-950/10 px-4 py-3">
+                <div className="flex items-center gap-2">
+                  <Terminal className="h-4 w-4 text-cyan-400" aria-hidden="true" />
+                  <span className="text-xs text-cyan-400 font-bold tracking-wide">firmware_debug.elf</span>
+                </div>
+                <div className="flex gap-1.5" aria-hidden="true">
+                  <div className="h-2 w-2 rounded-full bg-rose-500/50" />
+                  <div className="h-2 w-2 rounded-full bg-amber-500/50" />
+                  <div className="h-2 w-2 rounded-full bg-emerald-500/50" />
                 </div>
               </div>
-
-              {/* Terminal Emulator */}
-              <div className="w-full rounded-xl border border-cyan-500/20 bg-black/80 overflow-hidden font-mono" role="region" aria-label="Terminal output">
-                <div className="flex items-center justify-between border-b border-cyan-500/10 bg-cyan-950/10 px-4 py-3">
-                  <div className="flex items-center gap-2">
-                    <Terminal className="h-4 w-4 text-cyan-400" aria-hidden="true" />
-                    <span className="text-xs text-cyan-400 font-bold tracking-wide">firmware_debug.elf</span>
+              <div className="h-64 sm:h-72 lg:h-80 overflow-y-auto p-4 text-[10px] sm:text-[11px] leading-6 text-cyan-500/90" aria-live="polite" aria-atomic="false">
+                {consoleLines.map((line, idx) => (
+                  <div key={idx} className="flex items-start gap-1">
+                    <span className="text-cyan-600 select-none">{'>'}{'>'}</span>
+                    <span>{line}</span>
                   </div>
-                  <div className="flex gap-1.5" aria-hidden="true">
-                    <div className="h-2 w-2 rounded-full bg-rose-500/50" />
-                    <div className="h-2 w-2 rounded-full bg-amber-500/50" />
-                    <div className="h-2 w-2 rounded-full bg-emerald-500/50" />
+                ))}
+                {currentLineIdx < logs.length ? (
+                  <div className="flex items-center gap-1">
+                    <span className="text-cyan-600 select-none">{'>'}{'>'}</span>
+                    <span className="h-4 w-1.5 bg-cyan-400" />
                   </div>
-                </div>
-                <div className="h-64 sm:h-72 lg:h-80 overflow-y-auto p-4 text-[10px] sm:text-[11px] leading-6 text-cyan-500/90 flex flex-col justify-start" aria-live="polite" aria-atomic="false">
-                  {consoleLines.map((line, idx) => (
-                    <div key={idx} className="flex items-start gap-1">
-                      <span className="text-cyan-600 select-none">{'>'}{'>'}</span>
-                      <span>{line}</span>
-                    </div>
-                  ))}
-                  {currentLineIdx < logs.length ? (
-                    <div className="flex items-center gap-1">
-                      <span className="text-cyan-600 select-none">{'>'}{'>'}</span>
-                      <span className="h-4 w-1.5 bg-cyan-400" />
-                    </div>
-                  ) : (
-                    <div className="mt-4 flex items-center justify-between border-t border-cyan-500/10 pt-2 text-zinc-500 text-[9px]">
-                      <span>LINK RATE: 100 Mbps</span>
-                      <span className="text-emerald-400 font-semibold">ONLINE // SYNCED</span>
-                    </div>
-                  )}
-                </div>
+                ) : (
+                  <div className="mt-4 flex items-center justify-between border-t border-cyan-500/10 pt-2 text-zinc-500 text-[9px]">
+                    <span>LINK RATE: 100 Mbps</span>
+                    <span className="text-emerald-400 font-semibold">ONLINE // SYNCED</span>
+                  </div>
+                )}
               </div>
             </div>
           </motion.div>
-
         </div>
       </div>
     </section>
