@@ -1,133 +1,101 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme {
-  --color-background: #030712;
-  --color-foreground: #f3f4f6;
-  --font-sans: var(--font-geist-sans), sans-serif;
-  --font-mono: var(--font-geist-mono), monospace;
-}
-
-:root {
-  --background: #030712;
-  --foreground: #f3f4f6;
-}
-
-.light {
-  --background: #f8fafc;
-  --foreground: #0f172a;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans);
-}
-
-/* Light mode overrides */
-.light body {
-  background-color: #f8fafc;
-  color: #0f172a;
-}
-
-.light .glass-panel {
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(6, 182, 212, 0.2);
-}
-
-.light .glass-panel-hover:hover {
-  border-color: rgba(6, 182, 212, 0.4);
-  background: rgba(255, 255, 255, 0.8);
-}
-
-/* Custom Webkit Scrollbars for high-tech aesthetic */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(3, 7, 18, 0.5);
-}
-
-.light ::-webkit-scrollbar-track {
-  background: rgba(248, 250, 252, 0.5);
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(6, 182, 212, 0.2);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(6, 182, 212, 0.5);
-}
-
-/* Reduced motion support */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+@layer base {
+  :root {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 98%;
   }
-  
+
   html {
-    scroll-behavior: auto;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: rgb(0 0 0);
+    color: rgb(248 250 252);
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Focus styles for accessibility */
+  :focus-visible {
+    outline: 2px solid rgb(6 182 212);
+    outline-offset: 2px;
   }
 }
 
-/* Custom glows - reduced for performance */
-.glow-cyan {
-  box-shadow: 0 0 10px rgba(6, 182, 212, 0.15);
+@layer components {
+  /* Container system */
+  .container-custom {
+    width: 100%;
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .container-custom {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container-custom {
+      padding-left: 2.5rem;
+      padding-right: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .container-custom {
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+  }
+
+  @media (min-width: 1536px) {
+    .container-custom {
+      padding-left: 4rem;
+      padding-right: 4rem;
+    }
+  }
 }
 
-.glow-cyan-lg {
-  box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
-}
+@layer utilities {
+  /* Safe area insets for mobile */
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
 
-.glow-violet {
-  box-shadow: 0 0 10px rgba(139, 92, 246, 0.15);
-}
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 
-/* Glassmorphism panel base - optimized for performance */
-.glass-panel {
-  background: rgba(10, 15, 30, 0.7);
-  border: 1px solid rgba(6, 182, 212, 0.1);
-}
+  /* Prevent layout shift */
+  .no-layout-shift {
+    contain: layout style;
+  }
 
-.light .glass-panel {
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(6, 182, 212, 0.2);
-}
+  /* Hide scrollbar but allow scrolling */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 
-.glass-panel-hover:hover {
-  border-color: rgba(6, 182, 212, 0.3);
-  background: rgba(10, 15, 30, 0.8);
-}
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 
-.light .glass-panel-hover:hover {
-  border-color: rgba(6, 182, 212, 0.4);
-  background: rgba(255, 255, 255, 0.8);
-}
-
-/* Selection styling */
-::selection {
-  background-color: rgba(6, 182, 212, 0.3);
-  color: inherit;
-}
-
-.light ::selection {
-  background-color: rgba(6, 182, 212, 0.4);
-}
-
-/* GPU acceleration for transforms only */
-.gpu-accelerated {
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  perspective: 1000px;
+  /* Smooth scrolling for Safari */
+  @supports (-webkit-touch-callout: none) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
 }

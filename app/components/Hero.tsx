@@ -48,10 +48,9 @@ export default function Hero() {
   return (
     <section
       ref={ref}
-      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden"
-      style={{ paddingTop: '5rem', paddingBottom: '5rem' }}
+      className="relative isolate min-h-screen w-full flex items-center justify-center overflow-hidden scroll-mt-32"
     >
-      <div className="w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 xl:px-12">
+      <div className="w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 pt-24 pb-16 lg:pt-28 lg:pb-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
           {/* Left Column */}
@@ -159,7 +158,7 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="flex flex-col items-center gap-6"
           >
-            <div className="relative aspect-square w-full max-w-sm sm:max-w-md lg:max-w-lg">
+            <div className="relative aspect-square w-full max-w-xs sm:max-w-md lg:max-w-lg">
               <Image
                 src={portfolioData.personalInfo.profileImage || "/images/profile.jpg"}
                 alt={portfolioData.personalInfo.name}
@@ -173,7 +172,7 @@ export default function Hero() {
               </div>
             </div>
 
-            <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg rounded-xl border border-cyan-500/20 bg-black/80 overflow-hidden font-mono">
+            <div className="w-full max-w-xs sm:max-w-md lg:max-w-lg rounded-xl border border-cyan-500/20 bg-black/80 overflow-hidden font-mono">
               <div className="flex items-center justify-between border-b border-cyan-500/10 bg-cyan-950/10 px-4 py-3">
                 <div className="flex items-center gap-2">
                   <Terminal className="h-4 w-4 text-cyan-400" aria-hidden="true" />
