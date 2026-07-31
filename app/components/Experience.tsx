@@ -6,8 +6,8 @@ import { portfolioData } from "../data/portfolio";
 
 export default function Experience() {
   return (
-    <section id="experience" className="relative py-24 lg:py-32 border-t border-zinc-900 scroll-mt-16">
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12">
+    <section id="experience" className="relative isolate py-28 lg:py-36 border-t border-zinc-900 scroll-mt-32 overflow-hidden">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
         <div className="flex flex-col items-center text-center mb-16">
           <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest" aria-hidden="true">{'>'} REGISTER::EXPERIENCE_LOG</span>
           <h2 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Internships & Experience</h2>

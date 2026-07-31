@@ -9,7 +9,7 @@ export default function Footer() {
 
   return (
     <footer className="relative border-t border-zinc-900 bg-black py-16">
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pb-8 border-b border-zinc-800">
           <div className="md:col-span-4 flex flex-col gap-1.5">
             <span className="text-sm font-bold text-white tracking-widest uppercase">{portfolioData.personalInfo.name}</span>

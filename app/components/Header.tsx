@@ -36,7 +36,7 @@ export default function Header() {
       transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
       className="fixed top-0 left-0 right-0 z-40 h-20 border-b border-zinc-800/80 bg-black/80 backdrop-blur-xl"
     >
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12 h-full">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 h-full">
         <div className="flex h-full items-center justify-between">
           <a href="#" className="flex items-center gap-3 group">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-500/30 bg-cyan-950/20 text-cyan-400 group-hover:border-cyan-400 transition-colors">

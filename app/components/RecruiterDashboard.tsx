@@ -46,9 +46,9 @@ export default function RecruiterDashboard() {
   ];
 
   return (
-    <section className="relative py-24 lg:py-32 border-t border-zinc-900 scroll-mt-16" aria-labelledby="recruiter-dashboard-heading">
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12">
-        <div className="flex flex-col items-center text-center mb-16">
+    <section className="relative isolate py-28 lg:py-36 border-t border-zinc-900 scroll-mt-32 overflow-hidden" aria-labelledby="recruiter-dashboard-heading">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
+        <div className="flex flex-col items-center text-center mb-20">
           <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest" aria-hidden="true">{'>'} RECRUITER::DASHBOARD</span>
           <h2 id="recruiter-dashboard-heading" className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Recruiter Overview

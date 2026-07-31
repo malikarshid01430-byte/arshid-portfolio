@@ -81,28 +81,19 @@ export default function Contact() {
   const whatsappLink = `https://wa.me/${portfolioData.personalInfo.phone.replace(/\D/g, "")}`;
 
   return (
-    <section id="contact" className="relative py-24 lg:py-32 border-t border-zinc-900 scroll-mt-16">
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12">
+    <section id="contact" className="relative isolate py-28 lg:py-36 border-t border-zinc-900 scroll-mt-32 overflow-hidden">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
             <div className="flex flex-col items-center text-center mb-16">
               <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest" aria-hidden="true">{'>'} REGISTER::TRANSCEIVER</span>
               <h2 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Get In Touch</h2>
               <div className="mt-3 h-[2px] w-24 bg-gradient-to-r from-cyan-500 to-violet-500" />
             </div>
 
-        {/* Availability Badge */}
-        <div className="flex justify-center mb-12">
-          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/5 px-4 py-2">
-            <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
-            <span className="text-xs font-mono text-emerald-400">Open for Opportunities • Response within 24 hours</span>
-          </div>
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start max-w-5xl mx-auto">
           <div className="lg:col-span-5 space-y-6">
             <h3 className="font-mono text-sm font-bold text-cyan-400 tracking-widest uppercase flex items-center gap-2 mb-4"><Mail className="h-5 w-5 text-cyan-400" aria-hidden="true" />{"// CONNECTION_PORTS"}</h3>
             <p className="text-zinc-400 text-sm leading-relaxed">I am currently looking for full-time opportunities in Embedded Systems, IoT, VLSI, and Full Stack Development. Feel free to reach out!</p>
 
-            {/* Contact Info Card */}
             <div className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-6 font-mono text-xs text-zinc-400 space-y-4">
               <span className="text-cyan-400 font-bold block border-b border-zinc-800 pb-2 mb-2">{"// CONTACT_INFO:"}</span>
 
@@ -132,7 +123,6 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Quick Action Buttons */}
             <div className="grid grid-cols-2 gap-3">
               <a href={portfolioData.personalInfo.resumeUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-cyan-500/20 bg-cyan-950/5 font-mono text-xs text-cyan-400 hover:border-cyan-400 transition-colors">
                 <Download className="h-4 w-4" /> Resume
@@ -154,7 +144,6 @@ export default function Contact() {
               </a>
             </div>
 
-            {/* Portfolio Link */}
             <a href={portfolioData.personalInfo.portfolioUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-800 bg-zinc-950/20 font-mono text-xs text-zinc-400 hover:text-cyan-400 transition-colors">
               <Globe className="h-4 w-4" /> {portfolioData.personalInfo.portfolioUrl}
             </a>
@@ -208,7 +197,6 @@ export default function Contact() {
         </div>
       </div>
 
-      {/* Toast Notification */}
       <AnimatePresence>
         {showToast && (
           <motion.div
