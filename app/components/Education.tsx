@@ -1,122 +1,138 @@
-import React from "react";
+"use client";
+
+import { motion } from "framer-motion";
 import { GraduationCap, Award, BadgeCheck, ExternalLink, Calendar, Star } from "lucide-react";
 import { portfolioData } from "../data/portfolio";
 
 export default function Education() {
   return (
     <section id="education" className="relative isolate py-28 lg:py-36 border-t border-zinc-900 scroll-mt-20 overflow-hidden">
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
-        
+      {/* Background accents */}
+      <div className="absolute top-0 right-1/4 h-96 w-96 rounded-full bg-cyan-500/5 blur-[120px]" />
+      <div className="absolute bottom-0 left-1/4 h-96 w-96 rounded-full bg-violet-500/5 blur-[120px]" />
+
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 relative z-10">
         {/* Section Title */}
-        <div className="flex flex-col items-center text-center mb-16">
+        <div className="flex flex-col items-center text-center mb-20">
           <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest" aria-hidden="true">Education</span>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          <h2 className="mt-3 text-4xl sm:text-5xl font-bold tracking-tight text-white">
             Education & Credentials
           </h2>
-          <div className="mt-3 h-[2px] w-24 bg-gradient-to-r from-cyan-500 to-violet-500" />
+          <p className="mt-4 text-base text-zinc-400 max-w-2xl">Academic foundation and continuous learning journey.</p>
+          <div className="mt-4 h-[2px] w-24 bg-gradient-to-r from-cyan-500 to-violet-500" />
         </div>
 
         {/* 3-Column Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
+
           {/* Column 1: Education */}
           <div className="lg:col-span-5 space-y-6">
             <h3 className="font-mono text-sm font-bold text-cyan-400 tracking-widest uppercase flex items-center gap-2 mb-4">
               <GraduationCap className="h-5 w-5 text-cyan-400" aria-hidden="true" />
               {"// 01_ACADEMIC_RECORD"}
             </h3>
-            
+
             {portfolioData.education.map((edu, idx) => (
-                <div 
-                  key={idx}
-                  className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-6 transition-all hover:border-cyan-500/30"
-                >
-                  <div className="flex justify-between items-start gap-4">
-                    <div>
-                      <h4 className="text-base font-bold text-white tracking-wide">{edu.degree}</h4>
-                      <p className="text-sm font-semibold text-zinc-300 mt-1">{edu.institution}</p>
-                    </div>
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ delay: idx * 0.1, duration: 0.3 }}
+                className="rounded-2xl border border-zinc-800 bg-zinc-950/40 p-6 transition-all hover:border-cyan-500/30"
+              >
+                <div className="flex justify-between items-start gap-4">
+                  <div>
+                    <h4 className="text-base font-bold text-white tracking-wide">{edu.degree}</h4>
+                    <p className="text-sm font-semibold text-zinc-300 mt-1">{edu.institution}</p>
                   </div>
-
-                  <div className="flex items-center gap-1 mt-3 font-mono text-[10px] text-zinc-500">
-                    <Calendar className="h-3.5 w-3.5" />
-                    <span>{edu.period} | {edu.location}</span>
-                  </div>
-
-                  <ul className="mt-4 space-y-2 text-xs text-zinc-400 leading-relaxed list-disc list-inside">
-                    {edu.details.map((detail, didx) => (
-                      <li key={didx} className="indent-[-12px] pl-[12px]">{detail}</li>
-                    ))}
-                  </ul>
-
-                  {edu.coursework && edu.coursework.length > 0 && (
-                    <div className="mt-4 pt-4 border-t border-zinc-800">
-                      <h4 className="font-mono text-[10px] text-cyan-400 uppercase tracking-widest mb-2">{'>'} RELEVANT_COURSEWORK</h4>
-                      <div className="flex flex-wrap gap-1.5">
-                        {edu.coursework.map((course, cIdx) => (
-                          <span key={cIdx} className="px-2 py-0.5 rounded bg-zinc-900/60 border border-zinc-800 text-[10px] font-mono text-zinc-400">{course}</span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {edu.laboratories && edu.laboratories.length > 0 && (
-                    <div className="mt-4 pt-4 border-t border-zinc-800">
-                      <h4 className="font-mono text-[10px] text-cyan-400 uppercase tracking-widest mb-2">{'>'} LABORATORIES</h4>
-                      <ul className="space-y-1.5 text-xs text-zinc-400">
-                        {edu.laboratories.map((lab, labIdx) => (
-                          <li key={labIdx} className="flex items-start gap-2">
-                            <span className="text-cyan-400 mt-0.5">▹</span>
-                            <span>{lab}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  {edu.technicalSkillsLearned && edu.technicalSkillsLearned.length > 0 && (
-                    <div className="mt-4 pt-4 border-t border-zinc-800">
-                      <h4 className="font-mono text-[10px] text-violet-400 uppercase tracking-widest mb-2">{'>'} TECHNICAL_SKILLS_ACQUIRED</h4>
-                      <div className="flex flex-wrap gap-1.5">
-                        {edu.technicalSkillsLearned.map((skill, skillIdx) => (
-                          <span key={skillIdx} className="px-2 py-0.5 rounded bg-zinc-900/60 border border-zinc-800 text-[10px] font-mono text-zinc-400">{skill}</span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {edu.certifications && edu.certifications.length > 0 && (
-                    <div className="mt-4 pt-4 border-t border-zinc-800">
-                      <h4 className="font-mono text-[10px] text-teal-400 uppercase tracking-widest mb-2">{'>'} CERTIFICATIONS_EARNED</h4>
-                      <ul className="space-y-1.5 text-xs text-zinc-400">
-                        {edu.certifications.map((cert, certIdx) => (
-                          <li key={certIdx} className="flex items-start gap-2">
-                            <BadgeCheck className="h-3.5 w-3.5 text-teal-400 shrink-0 mt-0.5" />
-                            <span>{cert}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  {edu.achievements && edu.achievements.length > 0 && (
-                    <div className="mt-4 pt-4 border-t border-zinc-800">
-                      <h4 className="font-mono text-[10px] text-amber-400 uppercase tracking-widest mb-2">{'>'} ACHIEVEMENTS</h4>
-                      <ul className="space-y-1.5 text-xs text-zinc-400">
-                        {edu.achievements.map((achievement, aIdx) => (
-                          <li key={aIdx} className="flex items-start gap-2">
-                            <Star className="h-3.5 w-3.5 text-amber-400 shrink-0 mt-0.5" />
-                            <span>{achievement}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
                 </div>
+
+                <div className="flex items-center gap-1 mt-3 font-mono text-[10px] text-zinc-500">
+                  <Calendar className="h-3.5 w-3.5" />
+                  <span>{edu.period} | {edu.location}</span>
+                </div>
+
+                <ul className="mt-4 space-y-2 text-xs text-zinc-400 leading-relaxed list-disc list-inside">
+                  {edu.details.map((detail, didx) => (
+                    <li key={didx} className="indent-[-12px] pl-[12px]">{detail}</li>
+                  ))}
+                </ul>
+
+                {edu.coursework && edu.coursework.length > 0 && (
+                  <div className="mt-4 pt-4 border-t border-zinc-800">
+                    <h4 className="font-mono text-[10px] text-cyan-400 uppercase tracking-widest mb-2">{'>'} RELEVANT_COURSEWORK</h4>
+                    <div className="flex flex-wrap gap-1.5">
+                      {edu.coursework.map((course, cIdx) => (
+                        <span key={cIdx} className="px-2 py-0.5 rounded bg-zinc-900/60 border border-zinc-800 text-[10px] font-mono text-zinc-400">{course}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {edu.laboratories && edu.laboratories.length > 0 && (
+                  <div className="mt-4 pt-4 border-t border-zinc-800">
+                    <h4 className="font-mono text-[10px] text-cyan-400 uppercase tracking-widest mb-2">{'>'} LABORATORIES</h4>
+                    <ul className="space-y-1.5 text-xs text-zinc-400">
+                      {edu.laboratories.map((lab, labIdx) => (
+                        <li key={labIdx} className="flex items-start gap-2">
+                          <span className="text-cyan-400 mt-0.5">▹</span>
+                          <span>{lab}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {edu.technicalSkillsLearned && edu.technicalSkillsLearned.length > 0 && (
+                  <div className="mt-4 pt-4 border-t border-zinc-800">
+                    <h4 className="font-mono text-[10px] text-violet-400 uppercase tracking-widest mb-2">{'>'} TECHNICAL_SKILLS_ACQUIRED</h4>
+                    <div className="flex flex-wrap gap-1.5">
+                      {edu.technicalSkillsLearned.map((skill, skillIdx) => (
+                        <span key={skillIdx} className="px-2 py-0.5 rounded bg-zinc-900/60 border border-zinc-800 text-[10px] font-mono text-zinc-400">{skill}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {edu.certifications && edu.certifications.length > 0 && (
+                  <div className="mt-4 pt-4 border-t border-zinc-800">
+                    <h4 className="font-mono text-[10px] text-teal-400 uppercase tracking-widest mb-2">{'>'} CERTIFICATIONS_EARNED</h4>
+                    <ul className="space-y-1.5 text-xs text-zinc-400">
+                      {edu.certifications.map((cert, certIdx) => (
+                        <li key={certIdx} className="flex items-start gap-2">
+                          <BadgeCheck className="h-3.5 w-3.5 text-teal-400 shrink-0 mt-0.5" />
+                          <span>{cert}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {edu.achievements && edu.achievements.length > 0 && (
+                  <div className="mt-4 pt-4 border-t border-zinc-800">
+                    <h4 className="font-mono text-[10px] text-amber-400 uppercase tracking-widest mb-2">{'>'} ACHIEVEMENTS</h4>
+                    <ul className="space-y-1.5 text-xs text-zinc-400">
+                      {edu.achievements.map((achievement, aIdx) => (
+                        <li key={aIdx} className="flex items-start gap-2">
+                          <Star className="h-3.5 w-3.5 text-amber-400 shrink-0 mt-0.5" />
+                          <span>{achievement}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </motion.div>
             ))}
 
             {/* Research interests segment under education */}
-            <div className="rounded-xl border border-violet-500/20 bg-violet-950/5 p-6 mt-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ delay: 0.2, duration: 0.3 }}
+              className="rounded-2xl border border-violet-500/20 bg-violet-950/5 p-6 mt-6"
+            >
               <h4 className="font-mono text-xs text-violet-400 uppercase tracking-widest mb-3">{"// RESEARCH_INTERESTS"}</h4>
               <ul className="space-y-2 text-xs text-zinc-400">
                 {portfolioData.researchInterests.map((interest, iidx) => (
@@ -126,7 +142,7 @@ export default function Education() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           </div>
 
           {/* Column 2: Certifications */}
@@ -138,9 +154,13 @@ export default function Education() {
 
             <div className="space-y-4">
               {portfolioData.certifications.map((cert, idx) => (
-                <div 
+                <motion.div
                   key={idx}
-                  className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-5 transition-all flex flex-col justify-between"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ delay: idx * 0.05, duration: 0.3 }}
+                  className="rounded-2xl border border-zinc-800 bg-zinc-950/40 p-5 transition-all flex flex-col justify-between hover:border-cyan-500/30"
                 >
                   <div>
                     <h4 className="text-sm font-bold text-white tracking-wide leading-snug">{cert.name}</h4>
@@ -150,9 +170,9 @@ export default function Education() {
                   <div className="mt-4 flex items-center justify-between font-mono text-[9px]">
                     <span className="text-zinc-500">ISSUED: {cert.date}</span>
                     {cert.link && (
-                      <a 
+                      <a
                         href={cert.link}
-                        target="_blank" 
+                        target="_blank"
                         rel="noopener noreferrer"
                         className="text-cyan-400 hover:underline flex items-center gap-1 font-semibold"
                       >
@@ -160,7 +180,7 @@ export default function Education() {
                       </a>
                     )}
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -174,9 +194,13 @@ export default function Education() {
 
             <div className="space-y-4">
               {portfolioData.achievements.map((ach, idx) => (
-                <div 
+                <motion.div
                   key={idx}
-                  className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-5 transition-all"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ delay: idx * 0.05, duration: 0.3 }}
+                  className="rounded-2xl border border-zinc-800 bg-zinc-950/40 p-5 transition-all hover:border-cyan-500/30"
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <Star className="h-4 w-4 text-amber-400 fill-amber-400/20" />
@@ -186,7 +210,7 @@ export default function Education() {
                   <p className="text-xs text-zinc-400 leading-normal mt-2">
                     {ach.description}
                   </p>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>

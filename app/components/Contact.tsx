@@ -64,19 +64,27 @@ export default function Contact() {
 
   return (
     <section id="contact" className="relative isolate py-28 lg:py-36 border-t border-zinc-900 scroll-mt-20 overflow-hidden">
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
-            <div className="flex flex-col items-center text-center mb-16">
-              <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest" aria-hidden="true">Contact</span>
-              <h2 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Get In Touch</h2>
-              <div className="mt-3 h-[2px] w-24 bg-gradient-to-r from-cyan-500 to-violet-500" />
-            </div>
+      {/* Background accents */}
+      <div className="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-cyan-500/5 blur-[120px]" />
+      <div className="absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-violet-500/5 blur-[120px]" />
+
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 relative z-10">
+        <div className="flex flex-col items-center text-center mb-20">
+          <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest" aria-hidden="true">Contact</span>
+          <h2 className="mt-3 text-4xl sm:text-5xl font-bold tracking-tight text-white">Get In Touch</h2>
+          <p className="mt-4 text-base text-zinc-400 max-w-2xl">Lets discuss opportunities, collaborations, or just say hello.</p>
+          <div className="mt-4 h-[2px] w-24 bg-gradient-to-r from-cyan-500 to-violet-500" />
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start max-w-5xl mx-auto">
           <div className="lg:col-span-5 space-y-6">
-            <h3 className="font-mono text-sm font-bold text-cyan-400 tracking-widest uppercase flex items-center gap-2 mb-4"><Mail className="h-5 w-5 text-cyan-400" aria-hidden="true" />Contact Information</h3>
+            <h3 className="font-mono text-sm font-bold text-cyan-400 tracking-widest uppercase flex items-center gap-2 mb-4">
+              <Mail className="h-5 w-5 text-cyan-400" aria-hidden="true" />
+              Contact Information
+            </h3>
             <p className="text-zinc-400 text-sm leading-relaxed">I am currently looking for full-time opportunities. Feel free to reach out!</p>
 
-            <div className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-6 font-mono text-xs text-zinc-400 space-y-4">
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-950/40 p-6 font-mono text-xs text-zinc-400 space-y-4">
               <span className="text-cyan-400 font-bold block border-b border-zinc-800 pb-2 mb-2">{"// CONTACT_INFO:"}</span>
 
               <div className="flex items-center justify-between gap-3">
@@ -106,42 +114,44 @@ export default function Contact() {
             </div>
 
             <div className="grid grid-cols-2 gap-3">
-              <a href={portfolioData.personalInfo.resumeUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-cyan-500/20 bg-cyan-950/5 font-mono text-xs text-cyan-400 hover:border-cyan-400 transition-colors">
+              <a href={portfolioData.personalInfo.resumeUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-cyan-500/20 bg-cyan-950/5 font-mono text-xs text-cyan-400 hover:border-cyan-400 transition-colors">
                 Resume
               </a>
-              <a href={portfolioData.personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-blue-500/20 bg-blue-950/5 font-mono text-xs text-blue-400 hover:border-blue-400 transition-colors">
+              <a href={portfolioData.personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-blue-500/20 bg-blue-950/5 font-mono text-xs text-blue-400 hover:border-blue-400 transition-colors">
                 <FaLinkedin className="h-4 w-4" /> LinkedIn
               </a>
-              <a href={portfolioData.personalInfo.github} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-zinc-800 bg-zinc-900/50 font-mono text-xs text-zinc-300 hover:text-cyan-400 transition-colors">
+              <a href={portfolioData.personalInfo.github} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-zinc-800 bg-zinc-900/50 font-mono text-xs text-zinc-300 hover:text-cyan-400 transition-colors">
                 <FaGithub className="h-4 w-4" /> GitHub
               </a>
-              <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-emerald-500/20 bg-emerald-950/5 font-mono text-xs text-emerald-400 hover:border-emerald-400 transition-colors">
+              <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-emerald-500/20 bg-emerald-950/5 font-mono text-xs text-emerald-400 hover:border-emerald-400 transition-colors">
                 <FaWhatsapp className="h-4 w-4" /> WhatsApp
               </a>
             </div>
           </div>
           <div className="lg:col-span-7">
-            <div className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-6">
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-950/40 p-6 sm:p-8">
               {!isSending && !isCompleted && (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <label htmlFor="name" className="block font-mono text-[10px] text-zinc-500 uppercase">Your Name</label>
                       <input id="name" type="text" name="name" required value={formData.name} onChange={handleChange}
-                        className="w-full rounded-lg border border-zinc-800 bg-zinc-950/80 px-4 py-2.5 font-mono text-xs text-white focus:border-cyan-500/50 focus:outline-none transition-colors" placeholder="John Doe" />
+                        className="w-full rounded-xl border border-zinc-800 bg-zinc-950/80 px-4 py-2.5 font-mono text-xs text-white focus:border-cyan-500/50 focus:outline-none transition-colors" placeholder="John Doe" />
                     </div>
                     <div className="space-y-1.5">
                       <label htmlFor="email" className="block font-mono text-[10px] text-zinc-500 uppercase">Your Email</label>
                       <input id="email" type="email" name="email" required value={formData.email} onChange={handleChange}
-                        className="w-full rounded-lg border border-zinc-800 bg-zinc-950/80 px-4 py-2.5 font-mono text-xs text-white focus:border-cyan-500/50 focus:outline-none transition-colors" placeholder="john@example.com" />
+                        className="w-full rounded-xl border border-zinc-800 bg-zinc-950/80 px-4 py-2.5 font-mono text-xs text-white focus:border-cyan-500/50 focus:outline-none transition-colors" placeholder="john@example.com" />
                     </div>
                   </div>
                   <div className="space-y-1.5">
                     <label htmlFor="message" className="block font-mono text-[10px] text-zinc-500 uppercase">Message</label>
                     <textarea id="message" name="message" rows={5} required value={formData.message} onChange={handleChange}
-                      className="w-full rounded-lg border border-zinc-800 bg-zinc-950/80 px-4 py-2.5 font-mono text-xs text-white focus:border-cyan-500/50 focus:outline-none transition-colors resize-none" placeholder="Your message here..." />
+                      className="w-full rounded-xl border border-zinc-800 bg-zinc-950/80 px-4 py-2.5 font-mono text-xs text-white focus:border-cyan-500/50 focus:outline-none transition-colors resize-none" placeholder="Your message here..." />
                   </div>
-                  <button type="submit" className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-cyan-500 to-violet-600 font-mono text-xs tracking-wider font-semibold text-white hover:brightness-110 transition-all"><Send className="h-4 w-4" /> Send Message</button>
+                  <button type="submit" className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-violet-600 font-mono text-xs tracking-wider font-semibold text-white hover:brightness-110 transition-all">
+                    <Send className="h-4 w-4" /> Send Message
+                  </button>
                 </form>
               )}
               {isSending && (
@@ -153,10 +163,12 @@ export default function Contact() {
               {isCompleted && (
                 <div className="flex flex-col items-center justify-center text-center py-8 min-h-[220px]">
                   <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", duration: 0.5 }}
-                    className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 mb-4"><CheckCircle className="h-7 w-7" /></motion.div>
+                    className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 mb-4">
+                    <CheckCircle className="h-7 w-7" />
+                  </motion.div>
                   <h4 className="text-base font-bold text-white font-mono uppercase tracking-wide">Message Sent Successfully</h4>
                   <p className="mt-2 text-xs text-zinc-400 font-mono">Thank you for reaching out! I will get back to you as soon as possible.</p>
-                  <button onClick={() => setIsCompleted(false)} className="mt-6 px-4 py-2 rounded-lg border border-zinc-800 text-zinc-400 font-mono text-[10px] hover:text-white transition-colors">SEND NEW MESSAGE</button>
+                  <button onClick={() => setIsCompleted(false)} className="mt-6 px-4 py-2 rounded-xl border border-zinc-800 text-zinc-400 font-mono text-[10px] hover:text-white transition-colors">SEND NEW MESSAGE</button>
                 </div>
               )}
             </div>
@@ -170,7 +182,7 @@ export default function Contact() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
-            className="fixed bottom-8 right-8 z-50 flex items-center gap-2 rounded-lg border border-emerald-500/20 bg-emerald-500/10 px-4 py-3 font-mono text-xs text-emerald-400 shadow-lg"
+            className="fixed bottom-8 right-8 z-50 flex items-center gap-2 rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-4 py-3 font-mono text-xs text-emerald-400 shadow-lg"
           >
             <CheckCircle className="h-4 w-4" />
             {toastMessage}

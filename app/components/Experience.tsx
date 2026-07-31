@@ -7,11 +7,16 @@ import { portfolioData } from "../data/portfolio";
 export default function Experience() {
   return (
     <section id="experience" className="relative isolate py-28 lg:py-36 border-t border-zinc-900 scroll-mt-20 overflow-hidden">
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
-        <div className="flex flex-col items-center text-center mb-16">
+      {/* Background accents */}
+      <div className="absolute top-0 right-1/4 h-96 w-96 rounded-full bg-cyan-500/5 blur-[120px]" />
+      <div className="absolute bottom-0 left-1/4 h-96 w-96 rounded-full bg-violet-500/5 blur-[120px]" />
+
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 relative z-10">
+        <div className="flex flex-col items-center text-center mb-20">
           <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest" aria-hidden="true">Experience</span>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Professional Experience</h2>
-          <div className="mt-3 h-[2px] w-24 bg-gradient-to-r from-cyan-500 to-violet-500" />
+          <h2 className="mt-3 text-4xl sm:text-5xl font-bold tracking-tight text-white">Professional Experience</h2>
+          <p className="mt-4 text-base text-zinc-400 max-w-2xl">Hands-on internships and real-world engineering impact.</p>
+          <div className="mt-4 h-[2px] w-24 bg-gradient-to-r from-cyan-500 to-violet-500" />
         </div>
         <div className="relative max-w-4xl mx-auto">
           <div className="absolute left-4 sm:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-cyan-500 via-violet-500 to-zinc-900 transform sm:-translate-x-1/2" aria-hidden="true" />
@@ -26,15 +31,13 @@ export default function Experience() {
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ delay: idx * 0.1, duration: 0.3 }}
                   className={`relative flex flex-col sm:flex-row items-stretch ${isEven ? "sm:flex-row-reverse" : ""}`}
-                  itemScope
-                  itemType="https://schema.org/JobPosting"
                 >
-                  <div className="absolute left-4 sm:left-1/2 top-6 h-4.5 w-4.5 rounded-full border-2 border-cyan-400 bg-black transform -translate-x-1/2 flex items-center justify-center">
+                  <div className="absolute left-4 sm:left-1/2 top-6 h-4 w-4 rounded-full border-2 border-cyan-400 bg-black transform -translate-x-1/2 flex items-center justify-center">
                     <div className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
                   </div>
                   <div className="hidden sm:block w-1/2 px-8" />
                   <div className="w-full sm:w-1/2 px-8 pl-12 sm:pl-8">
-                    <div className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-6 transition-colors hover:border-cyan-500/30">
+                    <div className="rounded-2xl border border-zinc-800 bg-zinc-950/40 p-6 transition-colors hover:border-cyan-500/30">
                       <span className="font-mono text-[10px] text-cyan-400 tracking-wider">INTERNSHIP_0{idx + 1}</span>
                       <h3 className="text-lg font-bold text-white tracking-wide mt-1">{exp.role}</h3>
                       <div className="flex items-center gap-1 mt-1 text-sm font-semibold text-zinc-300">

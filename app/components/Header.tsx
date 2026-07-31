@@ -46,7 +46,7 @@ export default function Header() {
             </div>
             <div className="flex flex-col">
               <span className="font-mono text-sm tracking-widest text-white uppercase font-semibold">
-                {portfolioData.personalInfo.name.split(' ').slice(0, 2).join(' ')}
+                {portfolioData.personalInfo.name.split(" ").slice(0, 2).join(" ")}
               </span>
               <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider">
                 ECE Engineer
