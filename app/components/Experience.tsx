@@ -6,11 +6,11 @@ import { portfolioData } from "../data/portfolio";
 
 export default function Experience() {
   return (
-    <section id="experience" className="relative isolate py-28 lg:py-36 border-t border-zinc-900 scroll-mt-32 overflow-hidden">
+    <section id="experience" className="relative isolate py-28 lg:py-36 border-t border-zinc-900 scroll-mt-20 overflow-hidden">
       <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
         <div className="flex flex-col items-center text-center mb-16">
-          <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest" aria-hidden="true">{'>'} REGISTER::EXPERIENCE_LOG</span>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Internships & Experience</h2>
+          <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest" aria-hidden="true">Experience</span>
+          <h2 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Professional Experience</h2>
           <div className="mt-3 h-[2px] w-24 bg-gradient-to-r from-cyan-500 to-violet-500" />
         </div>
         <div className="relative max-w-4xl mx-auto">
@@ -35,7 +35,7 @@ export default function Experience() {
                   <div className="hidden sm:block w-1/2 px-8" />
                   <div className="w-full sm:w-1/2 px-8 pl-12 sm:pl-8">
                     <div className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-6 transition-colors hover:border-cyan-500/30">
-                      <span className="font-mono text-[10px] text-cyan-400 tracking-wider">{"// INTERNSHIP_0"}{idx + 1}</span>
+                      <span className="font-mono text-[10px] text-cyan-400 tracking-wider">INTERNSHIP_0{idx + 1}</span>
                       <h3 className="text-lg font-bold text-white tracking-wide mt-1">{exp.role}</h3>
                       <div className="flex items-center gap-1 mt-1 text-sm font-semibold text-zinc-300">
                         <Briefcase className="h-4 w-4 text-cyan-400" /><span>{exp.company}</span>

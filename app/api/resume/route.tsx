@@ -214,6 +214,7 @@ function ResumeDocument() {
           <View style={styles.headerContent}>
             <View style={styles.headerLeft}>
               {profileImageSrc && (
+                // eslint-disable-next-line jsx-a11y/alt-text
                 <Image src={profileImageSrc} style={styles.profileImage} />
               )}
               <View style={styles.headerText}>

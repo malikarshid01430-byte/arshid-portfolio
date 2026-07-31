@@ -22,38 +22,32 @@ export default function Skills() {
   const category = portfolioData.skillCategories[activeIdx];
   const Icon = icons[category.title] || Cpu;
 
-  const handleCategoryChange = (index: number) => {
-    setActiveIdx(index);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      handleCategoryChange(index);
-    }
-  };
-
   return (
-    <section id="skills" className="relative isolate py-28 lg:py-36 border-t border-zinc-900 scroll-mt-32 overflow-hidden">
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
-        <div className="flex flex-col items-center text-center mb-16">
-          <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest" aria-hidden="true">{'>'} REGISTER::TECHNICAL_SKILLS</span>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Technical Competency Index</h2>
-          <div className="mt-3 h-[2px] w-24 bg-gradient-to-r from-cyan-500 to-violet-500" />
+    <section id="skills" className="relative isolate py-28 lg:py-36 border-t border-zinc-900 scroll-mt-20 overflow-hidden">
+      {/* Background accents */}
+      <div className="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-cyan-500/5 blur-[120px]" />
+      <div className="absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-violet-500/5 blur-[120px]" />
+      
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 relative z-10">
+        <div className="flex flex-col items-center text-center mb-20">
+          <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest" aria-hidden="true">Technical Skills</span>
+          <h2 className="mt-3 text-4xl sm:text-5xl font-bold tracking-tight text-white">Competency Matrix</h2>
+          <p className="mt-4 text-base text-zinc-400 max-w-2xl">Proficiency levels across embedded, electronics, AI, and full-stack domains.</p>
+          <div className="mt-4 h-[2px] w-24 bg-gradient-to-r from-cyan-500 to-violet-500" />
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          <div className="lg:col-span-4 flex flex-col gap-2 w-full" role="tablist" aria-label="Skill categories">
-            <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-wider pl-3 mb-2">Select Subsystem Domain</span>
+          <div className="lg:col-span-4 flex flex-col gap-3 w-full" role="tablist" aria-label="Skill categories">
+            <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-wider pl-3 mb-2">Select Domain</span>
             {portfolioData.skillCategories.map((cat, i) => {
               const CatIcon = icons[cat.title] || Cpu;
               const isSelected = i === activeIdx;
               return (
                 <button 
                   key={cat.title} 
-                  onClick={() => handleCategoryChange(i)}
-                  onKeyDown={(e) => handleKeyDown(e, i)}
-                  className={`flex items-center gap-3 px-4 py-3.5 rounded-xl border text-left font-mono text-xs tracking-wider transition-colors ${
-                    isSelected ? "bg-cyan-950/30 border-cyan-400 text-cyan-400 font-semibold" : "bg-zinc-950/20 border-zinc-800 text-zinc-400 hover:text-white"
+                  onClick={() => setActiveIdx(i)}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveIdx(i); } }}
+                  className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl border text-left font-mono text-xs tracking-wider transition-all ${
+                    isSelected ? "bg-cyan-950/30 border-cyan-400/50 text-cyan-400 font-semibold" : "bg-zinc-950/20 border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700"
                   }`}
                   role="tab"
                   aria-selected={isSelected}
@@ -69,7 +63,7 @@ export default function Skills() {
           </div>
           <div className="lg:col-span-8">
             <div 
-              className="rounded-xl border border-cyan-500/20 bg-black/60 p-6 sm:p-8 min-h-[380px] flex flex-col"
+              className="rounded-2xl border border-zinc-800 bg-zinc-950/40 p-6 sm:p-8 min-h-[380px] flex flex-col"
               role="tabpanel"
               id="skills-panel"
               aria-labelledby={`skills-tab-${activeIdx}`}
@@ -98,8 +92,8 @@ export default function Skills() {
                 </div>
               </div>
               <div className="mt-8 pt-4 border-t border-zinc-800 flex items-center justify-between text-[10px] font-mono text-zinc-500 gap-2">
-                <span className="flex items-center gap-1.5"><span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> DMA channels loaded</span>
-                <span>REGISTER VALIDATED</span>
+                <span className="flex items-center gap-1.5"><span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> Systems validated</span>
+                <span>READY</span>
               </div>
             </div>
           </div>

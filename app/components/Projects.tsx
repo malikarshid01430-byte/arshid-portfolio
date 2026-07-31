@@ -29,12 +29,17 @@ export default function Projects() {
   );
 
   return (
-    <section id="projects" className="relative isolate py-28 lg:py-36 border-t border-zinc-900 scroll-mt-32 overflow-hidden">
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
-        <div className="flex flex-col items-center text-center mb-12">
-          <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest" aria-hidden="true">{'>'} REGISTER::REPOSITORIES</span>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Featured Projects</h2>
-          <div className="mt-3 h-[2px] w-24 bg-gradient-to-r from-cyan-500 to-violet-500" />
+    <section id="projects" className="relative isolate py-28 lg:py-36 border-t border-zinc-900 scroll-mt-20 overflow-hidden">
+      {/* Background accents */}
+      <div className="absolute top-0 right-1/4 h-96 w-96 rounded-full bg-cyan-500/5 blur-[120px]" />
+      <div className="absolute bottom-0 left-1/4 h-96 w-96 rounded-full bg-violet-500/5 blur-[120px]" />
+      
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 relative z-10">
+        <div className="flex flex-col items-center text-center mb-20">
+          <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest" aria-hidden="true">Projects</span>
+          <h2 className="mt-3 text-4xl sm:text-5xl font-bold tracking-tight text-white">Featured Projects</h2>
+          <p className="mt-4 text-base text-zinc-400 max-w-2xl">A selection of embedded, IoT, AI, and full-stack engineering work.</p>
+          <div className="mt-4 h-[2px] w-24 bg-gradient-to-r from-cyan-500 to-violet-500" />
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-2 mb-12" role="tablist" aria-label="Project categories">
@@ -42,7 +47,7 @@ export default function Projects() {
             <button 
               key={cat} 
               onClick={() => setSelectedCategory(cat)}
-              className={`px-4 py-1.5 rounded-full border font-mono text-[10px] sm:text-xs tracking-wider transition-colors ${
+              className={`px-4 py-2 rounded-full border font-mono text-xs tracking-wider transition-all ${
                 selectedCategory === cat ? "bg-cyan-500/20 border-cyan-400 text-cyan-400" : "bg-zinc-950/30 border-zinc-800 text-zinc-400 hover:text-white"
               }`}
               role="tab"
@@ -61,11 +66,12 @@ export default function Projects() {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.3 }}
                 onClick={() => setActiveProject(project)}
-                className="group relative rounded-xl border border-zinc-900 bg-zinc-950/40 p-6 cursor-pointer transition-colors hover:border-cyan-500/30">
-                <div className="absolute top-4 right-4 text-zinc-800 group-hover:text-cyan-500/20 transition-colors"><CircuitBoard className="h-10 w-10 stroke-[1]" /></div>
+                className="group relative rounded-2xl border border-zinc-800 bg-zinc-950/40 p-6 cursor-pointer transition-all hover:border-cyan-500/30"
+              >
+                <div className="absolute top-4 right-4 text-zinc-800 group-hover:text-cyan-500/30 transition-colors"><CircuitBoard className="h-10 w-10 stroke-[1]" /></div>
                 <div className="font-mono text-[10px] text-cyan-400 tracking-widest uppercase mb-2">{"// "}{project.category}</div>
                 <h3 className="text-xl font-bold text-white tracking-wide group-hover:text-cyan-400 transition-colors">{project.title}</h3>
-                <p className="mt-2 text-sm text-zinc-400 font-mono leading-relaxed line-clamp-3">{project.subtitle}</p>
+                <p className="mt-2 text-sm text-zinc-400 font-mono leading-relaxed">{project.subtitle}</p>
                 <p className="mt-4 text-xs text-zinc-500 leading-relaxed line-clamp-3">{project.description}</p>
                 <div className="mt-6 flex flex-wrap gap-1.5">
                   {project.technologies.slice(0, 4).map((tech) => (
@@ -96,7 +102,7 @@ export default function Projects() {
                   <p className="text-sm text-zinc-400 font-mono mt-1">{activeProject.subtitle}</p>
                   {activeProject.timeline && (
                     <div className="flex items-center gap-2 mt-2 text-xs text-zinc-500 font-mono">
-                      <span>⏱ {activeProject.timeline}</span>
+                      <span>Timeline: {activeProject.timeline}</span>
                     </div>
                   )}
                 </div>
@@ -112,12 +118,12 @@ export default function Projects() {
                     {activeProject.results && (
                       <div><h4 className="font-mono text-xs text-amber-400 uppercase tracking-widest mb-3">{'>'} RESULTS_&_IMPACT</h4>
                         <ul className="space-y-2 text-xs text-zinc-400">{activeProject.results.map((r, i) => (
-                          <li key={i} className="flex items-start gap-2"><ShieldCheck className="h-4.5 w-4.5 text-amber-400 shrink-0 mt-0.5" /><span>{r}</span></li>
+                          <li key={i} className="flex items-start gap-2"><ShieldCheck className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" /><span>{r}</span></li>
                         ))}</ul></div>
                     )}
                     <div><h4 className="font-mono text-xs text-teal-400 uppercase tracking-widest mb-3">{'>'} KEY_HIGHLIGHTS</h4>
                       <ul className="space-y-2 text-xs text-zinc-400">{activeProject.highlights.map((h, i) => (
-                        <li key={i} className="flex items-start gap-2"><ShieldCheck className="h-4.5 w-4.5 text-cyan-400 shrink-0 mt-0.5" /><span>{h}</span></li>
+                        <li key={i} className="flex items-start gap-2"><ShieldCheck className="h-4 w-4 text-cyan-400 shrink-0 mt-0.5" /><span>{h}</span></li>
                       ))}</ul></div>
                     <div><h4 className="font-mono text-xs text-violet-400 uppercase tracking-widest mb-3">{'>'} FEATURES</h4>
                       <ul className="space-y-2 text-xs text-zinc-400">{activeProject.features.map((f, i) => (
@@ -130,7 +136,7 @@ export default function Projects() {
                     {activeProject.technicalChallenges.length > 0 && (
                       <div><h4 className="font-mono text-xs text-orange-400 uppercase tracking-widest mb-3">{'>'} TECHNICAL_CHALLENGES</h4>
                         <ul className="space-y-2 text-xs text-zinc-400">{activeProject.technicalChallenges.map((c, i) => (
-                          <li key={i} className="flex items-start gap-2"><span className="text-orange-400 mt-0.5">⚠</span><span>{c}</span></li>
+                          <li key={i} className="flex items-start gap-2"><span className="text-orange-400 mt-0.5">*</span><span>{c}</span></li>
                         ))}</ul></div>
                     )}
                     {activeProject.github && (

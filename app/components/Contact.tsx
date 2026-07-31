@@ -2,25 +2,13 @@
 
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Terminal, Send, CheckCircle, Phone, MapPin, Copy, Check, Download, Globe } from "lucide-react";
+import { Mail, Send, CheckCircle, Phone, MapPin, Copy, Check } from "lucide-react";
 import { FaGithub, FaLinkedin, FaWhatsapp } from "react-icons/fa";
 import { portfolioData } from "../data/portfolio";
-
-const logs = [
-  "Establishing peer connection to host...",
-  "Encrypting payload with TLS 1.3... Done.",
-  "Formulating packet header: [SENDER_EMAIL: %EMAIL%]",
-  "Assembling body payload: (%LEN% bytes)",
-  "Transmitting TCP frames...",
-  "Sending signal via virtual MQTT gateway... Done.",
-  "HTTP 200 OK. Response received.",
-  "Transmission successfully completed!"
-];
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [isSending, setIsSending] = useState(false);
-  const [sentLines, setSentLines] = useState<string[]>([]);
   const [isCompleted, setIsCompleted] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
@@ -62,16 +50,10 @@ export default function Contact() {
     }
 
     setIsSending(true);
-    setSentLines([]);
-    setIsCompleted(false);
-
-    for (let i = 0; i < logs.length; i++) {
-      const line = logs[i].replace("%EMAIL%", formData.email).replace("%LEN%", formData.message.length.toString());
-      await new Promise((r) => setTimeout(r, 150 + i * 40));
-      setSentLines((prev) => [...prev, line]);
-    }
-
-    await new Promise((r) => setTimeout(r, 300));
+    
+    // Simulate sending
+    await new Promise((r) => setTimeout(r, 2000));
+    
     setIsSending(false);
     setIsCompleted(true);
     setFormData({ name: "", email: "", message: "" });
@@ -81,18 +63,18 @@ export default function Contact() {
   const whatsappLink = `https://wa.me/${portfolioData.personalInfo.phone.replace(/\D/g, "")}`;
 
   return (
-    <section id="contact" className="relative isolate py-28 lg:py-36 border-t border-zinc-900 scroll-mt-32 overflow-hidden">
+    <section id="contact" className="relative isolate py-28 lg:py-36 border-t border-zinc-900 scroll-mt-20 overflow-hidden">
       <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16">
             <div className="flex flex-col items-center text-center mb-16">
-              <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest" aria-hidden="true">{'>'} REGISTER::TRANSCEIVER</span>
+              <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest" aria-hidden="true">Contact</span>
               <h2 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Get In Touch</h2>
               <div className="mt-3 h-[2px] w-24 bg-gradient-to-r from-cyan-500 to-violet-500" />
             </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start max-w-5xl mx-auto">
           <div className="lg:col-span-5 space-y-6">
-            <h3 className="font-mono text-sm font-bold text-cyan-400 tracking-widest uppercase flex items-center gap-2 mb-4"><Mail className="h-5 w-5 text-cyan-400" aria-hidden="true" />{"// CONNECTION_PORTS"}</h3>
-            <p className="text-zinc-400 text-sm leading-relaxed">I am currently looking for full-time opportunities in Embedded Systems, IoT, VLSI, and Full Stack Development. Feel free to reach out!</p>
+            <h3 className="font-mono text-sm font-bold text-cyan-400 tracking-widest uppercase flex items-center gap-2 mb-4"><Mail className="h-5 w-5 text-cyan-400" aria-hidden="true" />Contact Information</h3>
+            <p className="text-zinc-400 text-sm leading-relaxed">I am currently looking for full-time opportunities. Feel free to reach out!</p>
 
             <div className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-6 font-mono text-xs text-zinc-400 space-y-4">
               <span className="text-cyan-400 font-bold block border-b border-zinc-800 pb-2 mb-2">{"// CONTACT_INFO:"}</span>
@@ -125,7 +107,7 @@ export default function Contact() {
 
             <div className="grid grid-cols-2 gap-3">
               <a href={portfolioData.personalInfo.resumeUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-cyan-500/20 bg-cyan-950/5 font-mono text-xs text-cyan-400 hover:border-cyan-400 transition-colors">
-                <Download className="h-4 w-4" /> Resume
+                Resume
               </a>
               <a href={portfolioData.personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-blue-500/20 bg-blue-950/5 font-mono text-xs text-blue-400 hover:border-blue-400 transition-colors">
                 <FaLinkedin className="h-4 w-4" /> LinkedIn
@@ -136,20 +118,10 @@ export default function Contact() {
               <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-emerald-500/20 bg-emerald-950/5 font-mono text-xs text-emerald-400 hover:border-emerald-400 transition-colors">
                 <FaWhatsapp className="h-4 w-4" /> WhatsApp
               </a>
-              <a href={`mailto:${portfolioData.personalInfo.email}`} className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-violet-500/20 bg-violet-950/5 font-mono text-xs text-violet-400 hover:border-violet-400 transition-colors">
-                <Mail className="h-4 w-4" /> Email
-              </a>
-              <a href={`tel:${portfolioData.personalInfo.phone}`} className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-green-500/20 bg-green-950/5 font-mono text-xs text-green-400 hover:border-green-400 transition-colors">
-                <Phone className="h-4 w-4" /> Call
-              </a>
             </div>
-
-            <a href={portfolioData.personalInfo.portfolioUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-800 bg-zinc-950/20 font-mono text-xs text-zinc-400 hover:text-cyan-400 transition-colors">
-              <Globe className="h-4 w-4" /> {portfolioData.personalInfo.portfolioUrl}
-            </a>
           </div>
           <div className="lg:col-span-7">
-            <div className="rounded-xl border border-cyan-500/20 bg-black/60 p-6">
+            <div className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-6">
               {!isSending && !isCompleted && (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -173,14 +145,9 @@ export default function Contact() {
                 </form>
               )}
               {isSending && (
-                <div className="font-mono text-xs text-cyan-400 min-h-[220px] flex flex-col justify-between">
-                  <div className="flex items-center gap-2 border-b border-cyan-500/10 pb-2 mb-4"><Terminal className="h-4 w-4" /><span className="font-bold uppercase tracking-wide">packet_sender.sh</span></div>
-                  <div className="flex-1 space-y-2 max-h-[180px] overflow-y-auto">
-                    {sentLines.map((line, idx) => (
-                      <div key={idx} className="flex gap-1.5"><span className="text-cyan-600 select-none">{'>'}{'>'}</span><span>{line}</span></div>
-                    ))}
-                    <div className="flex items-center gap-1"><span className="text-cyan-600 select-none">{'>'}{'>'}</span><span className="h-4 w-1.5 bg-cyan-400" /></div>
-                  </div>
+                <div className="flex flex-col items-center justify-center text-center py-8 min-h-[220px]">
+                  <div className="h-8 w-8 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mb-4" />
+                  <p className="text-sm text-zinc-400 font-mono">Sending message...</p>
                 </div>
               )}
               {isCompleted && (
