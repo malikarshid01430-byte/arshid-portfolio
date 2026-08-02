@@ -7,25 +7,18 @@ import { portfolioData } from "../data/portfolio";
 export default function Education() {
   return (
     <section id="education" className="relative isolate py-28 lg:py-36 border-t border-zinc-900 scroll-mt-20 overflow-hidden">
-      {/* Background accents */}
       <div className="absolute top-0 right-1/4 h-96 w-96 rounded-full bg-cyan-500/5 blur-[120px]" />
       <div className="absolute bottom-0 left-1/4 h-96 w-96 rounded-full bg-violet-500/5 blur-[120px]" />
 
       <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 relative z-10">
-        {/* Section Title */}
         <div className="flex flex-col items-center text-center mb-20">
           <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest" aria-hidden="true">Education</span>
-          <h2 className="mt-3 text-4xl sm:text-5xl font-bold tracking-tight text-white">
-            Education & Credentials
-          </h2>
+          <h2 className="mt-3 text-4xl sm:text-5xl font-bold tracking-tight text-white">Education & Credentials</h2>
           <p className="mt-4 text-base text-zinc-400 max-w-2xl">Academic foundation and continuous learning journey.</p>
           <div className="mt-4 h-[2px] w-24 bg-gradient-to-r from-cyan-500 to-violet-500" />
         </div>
 
-        {/* 3-Column Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-
-          {/* Column 1: Education */}
           <div className="lg:col-span-5 space-y-6">
             <h3 className="font-mono text-sm font-bold text-cyan-400 tracking-widest uppercase flex items-center gap-2 mb-4">
               <GraduationCap className="h-5 w-5 text-cyan-400" aria-hidden="true" />
@@ -125,7 +118,6 @@ export default function Education() {
               </motion.div>
             ))}
 
-            {/* Research interests segment under education */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -145,7 +137,6 @@ export default function Education() {
             </motion.div>
           </div>
 
-          {/* Column 2: Certifications */}
           <div className="lg:col-span-4 space-y-6">
             <h3 className="font-mono text-sm font-bold text-cyan-400 tracking-widest uppercase flex items-center gap-2 mb-4">
               <BadgeCheck className="h-5 w-5 text-cyan-400" aria-hidden="true" />
@@ -185,7 +176,6 @@ export default function Education() {
             </div>
           </div>
 
-          {/* Column 3: Achievements */}
           <div className="lg:col-span-3 space-y-6">
             <h3 className="font-mono text-sm font-bold text-cyan-400 tracking-widest uppercase flex items-center gap-2 mb-4">
               <Award className="h-5 w-5 text-cyan-400" aria-hidden="true" />

@@ -7,7 +7,6 @@ import { portfolioData } from "../data/portfolio";
 export default function Experience() {
   return (
     <section id="experience" className="relative isolate py-28 lg:py-36 border-t border-zinc-900 scroll-mt-20 overflow-hidden">
-      {/* Background accents */}
       <div className="absolute top-0 right-1/4 h-96 w-96 rounded-full bg-cyan-500/5 blur-[120px]" />
       <div className="absolute bottom-0 left-1/4 h-96 w-96 rounded-full bg-violet-500/5 blur-[120px]" />
 
