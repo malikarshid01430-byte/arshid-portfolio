@@ -11,8 +11,8 @@ const styles = StyleSheet.create({
     fontFamily: "Helvetica",
     fontSize: 9,
     lineHeight: 1.5,
-    color: "#1a1a1a",
-    padding: 32,
+    color: "#111827",
+    padding: 34,
     backgroundColor: "#ffffff",
   },
   header: {
@@ -32,9 +32,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   profileImage: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
+    width: 54,
+    height: 54,
+    borderRadius: 27,
     objectFit: "cover",
   },
   headerText: {
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   name: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 700,
     color: "#0f172a",
     marginBottom: 2,
@@ -63,31 +63,31 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   section: {
-    marginBottom: 12,
+    marginBottom: 14,
   },
   sectionTitle: {
-    fontSize: 10,
+    fontSize: 11,
     fontWeight: 700,
     color: "#2563eb",
     textTransform: "uppercase",
     letterSpacing: 0.8,
-    marginBottom: 6,
+    marginBottom: 8,
     borderBottom: "0.5 solid #e5e7eb",
-    paddingBottom: 3,
+    paddingBottom: 4,
   },
   summary: {
     fontSize: 9,
     color: "#334155",
-    lineHeight: 1.55,
+    lineHeight: 1.6,
   },
   skillCategory: {
-    marginBottom: 6,
+    marginBottom: 8,
   },
   skillCategoryTitle: {
-    fontSize: 9,
+    fontSize: 10,
     fontWeight: 600,
     color: "#0f172a",
-    marginBottom: 2,
+    marginBottom: 3,
   },
   skillItem: {
     fontSize: 8,
@@ -96,87 +96,87 @@ const styles = StyleSheet.create({
     marginBottom: 1,
   },
   project: {
-    marginBottom: 8,
+    marginBottom: 10,
   },
   projectTitle: {
-    fontSize: 10,
+    fontSize: 11,
     fontWeight: 600,
     color: "#0f172a",
-    marginBottom: 1,
+    marginBottom: 2,
   },
   projectSubtitle: {
-    fontSize: 8,
+    fontSize: 9,
     color: "#475569",
     marginBottom: 2,
   },
   projectDescription: {
-    fontSize: 8,
+    fontSize: 9,
     color: "#334155",
-    lineHeight: 1.4,
-    marginBottom: 2,
+    lineHeight: 1.5,
+    marginBottom: 3,
   },
   techStack: {
     fontSize: 8,
     color: "#2563eb",
-    marginTop: 2,
+    marginTop: 3,
   },
   experience: {
-    marginBottom: 10,
+    marginBottom: 12,
   },
   experienceHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 1,
+    marginBottom: 2,
   },
   experienceRole: {
-    fontSize: 10,
+    fontSize: 11,
     fontWeight: 600,
     color: "#0f172a",
   },
   experiencePeriod: {
-    fontSize: 8,
+    fontSize: 9,
     color: "#475569",
   },
   experienceCompany: {
-    fontSize: 9,
+    fontSize: 10,
     color: "#334155",
-    marginBottom: 2,
+    marginBottom: 3,
   },
   experienceDescription: {
-    fontSize: 8,
+    fontSize: 9,
     color: "#334155",
-    lineHeight: 1.4,
+    lineHeight: 1.5,
     marginLeft: 6,
   },
   education: {
-    marginBottom: 8,
+    marginBottom: 10,
   },
   educationDegree: {
-    fontSize: 10,
+    fontSize: 11,
     fontWeight: 600,
     color: "#0f172a",
-    marginBottom: 1,
+    marginBottom: 2,
   },
   educationInstitution: {
-    fontSize: 9,
+    fontSize: 10,
     color: "#334155",
-    marginBottom: 1,
+    marginBottom: 2,
   },
   educationPeriod: {
-    fontSize: 8,
+    fontSize: 9,
     color: "#475569",
-    marginBottom: 2,
+    marginBottom: 3,
   },
   certification: {
-    fontSize: 8,
+    fontSize: 9,
     color: "#334155",
-    marginBottom: 2,
+    marginBottom: 3,
     marginLeft: 6,
   },
   achievement: {
-    fontSize: 8,
+    fontSize: 9,
     color: "#334155",
-    marginBottom: 2,
+    marginBottom: 3,
     marginLeft: 6,
   },
   link: {
@@ -205,7 +205,6 @@ function ResumeDocument() {
           <View style={styles.headerContent}>
             <View style={styles.headerLeft}>
               {profileImageSrc && (
-                // eslint-disable-next-line jsx-a11y/alt-text
                 <Image src={profileImageSrc} style={styles.profileImage} />
               )}
               <View style={styles.headerText}>
