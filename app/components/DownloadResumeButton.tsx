@@ -8,17 +8,20 @@ import ResumePreview from "./ResumePreview";
 
 const RESUME_PATH = "/api/resume";
 const RESUME_FILENAME = "Arshid_Ahmad_Malik_Resume.pdf";
+const RESUME_FILENAME_1PAGE = "Arshid_Ahmad_Malik_Resume_1Page.pdf";
 
 interface DownloadResumeButtonProps {
   variant?: "primary" | "secondary";
   className?: string;
   label?: string;
+  format?: "2page" | "1page";
 }
 
 const DownloadResumeButton = memo(function DownloadResumeButton({
   variant = "secondary",
   className = "",
   label = "Download CV",
+  format = "2page",
 }: DownloadResumeButtonProps) {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const { trackResumeDownload } = useAnalytics();
@@ -31,6 +34,9 @@ const DownloadResumeButton = memo(function DownloadResumeButton({
   const handleClose = useCallback(() => {
     setIsPreviewOpen(false);
   }, []);
+
+  const resumeUrl = `${RESUME_PATH}${format === "1page" ? "?format=1page" : ""}`;
+  const filename = format === "1page" ? RESUME_FILENAME_1PAGE : RESUME_FILENAME;
 
   const baseClasses =
     variant === "primary"
@@ -53,8 +59,8 @@ const DownloadResumeButton = memo(function DownloadResumeButton({
       <ResumePreview
         isOpen={isPreviewOpen}
         onClose={handleClose}
-        resumeUrl={RESUME_PATH}
-        filename={RESUME_FILENAME}
+        resumeUrl={resumeUrl}
+        filename={filename}
       />
     </>
   );

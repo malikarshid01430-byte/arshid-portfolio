@@ -335,17 +335,24 @@ function ResumeDocument() {
 
 const pdfDoc = <ResumeDocument />;
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     const { pdf } = await import("@react-pdf/renderer");
 
+    const url = new URL(request.url);
+    const format = url.searchParams.get("format");
+
     const blob = await pdf(pdfDoc).toBlob();
+
+    const filename = format === "1page"
+      ? "Arshid_Ahmad_Malik_Resume_1Page.pdf"
+      : "Arshid_Ahmad_Malik_Resume.pdf";
 
     return new NextResponse(blob, {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Disposition": `attachment; filename="Arshid_Ahmad_Malik_Resume.pdf"`,
+        "Content-Disposition": `attachment; filename="${filename}"`,
         "Cache-Control": "no-cache",
       },
     });
