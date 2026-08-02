@@ -4,28 +4,27 @@ import { portfolioData } from "@/app/data/portfolio";
 import fs from "fs";
 import path from "path";
 
-// Use standard PDF fonts to avoid network font fetches in serverless environments
 Font.register({ family: "Helvetica", fonts: [{ src: "", fontWeight: 400 }] });
 
 const styles = StyleSheet.create({
   page: {
     fontFamily: "Helvetica",
-    fontSize: 10,
+    fontSize: 9,
     lineHeight: 1.5,
     color: "#1a1a1a",
-    padding: 40,
+    padding: 32,
     backgroundColor: "#ffffff",
   },
   header: {
-    marginBottom: 20,
-    borderBottom: "2 solid #00d2ff",
-    paddingBottom: 15,
+    marginBottom: 14,
+    borderBottom: "1.5 solid #2563eb",
+    paddingBottom: 10,
   },
   headerContent: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 12,
-    justifyContent: "space-between",
+    marginBottom: 8,
+    gap: 10,
   },
   headerLeft: {
     flexDirection: "row",
@@ -33,10 +32,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   profileImage: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    marginRight: 12,
+    width: 52,
+    height: 52,
+    borderRadius: 26,
     objectFit: "cover",
   },
   headerText: {
@@ -44,159 +42,152 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   name: {
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: 700,
-    color: "#0a0a0a",
-    marginBottom: 4,
+    color: "#0f172a",
+    marginBottom: 2,
   },
   title: {
-    fontSize: 11,
-    color: "#666666",
-    marginBottom: 8,
+    fontSize: 10,
+    color: "#475569",
+    marginBottom: 4,
   },
   contact: {
-    fontSize: 9,
-    color: "#444444",
+    fontSize: 8,
+    color: "#475569",
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 8,
+    gap: 6,
   },
   contactItem: {
-    marginRight: 12,
+    marginRight: 8,
   },
   section: {
-    marginBottom: 18,
-  },
-  sectionTitle: {
-    fontSize: 12,
-    fontWeight: 700,
-    color: "#00d2ff",
-    textTransform: "uppercase",
-    letterSpacing: 1,
-    marginBottom: 8,
-    borderBottom: "1 solid #e5e5e5",
-    paddingBottom: 4,
-  },
-  summary: {
-    fontSize: 10,
-    color: "#333333",
-    lineHeight: 1.6,
-  },
-  skillCategory: {
-    marginBottom: 8,
-  },
-  skillCategoryTitle: {
-    fontSize: 10,
-    fontWeight: 600,
-    color: "#0a0a0a",
-    marginBottom: 4,
-  },
-  skillItem: {
-    fontSize: 9,
-    color: "#444444",
-    marginLeft: 8,
-    marginBottom: 2,
-  },
-  project: {
     marginBottom: 12,
   },
-  projectTitle: {
-    fontSize: 11,
+  sectionTitle: {
+    fontSize: 10,
+    fontWeight: 700,
+    color: "#2563eb",
+    textTransform: "uppercase",
+    letterSpacing: 0.8,
+    marginBottom: 6,
+    borderBottom: "0.5 solid #e5e7eb",
+    paddingBottom: 3,
+  },
+  summary: {
+    fontSize: 9,
+    color: "#334155",
+    lineHeight: 1.55,
+  },
+  skillCategory: {
+    marginBottom: 6,
+  },
+  skillCategoryTitle: {
+    fontSize: 9,
     fontWeight: 600,
-    color: "#0a0a0a",
+    color: "#0f172a",
     marginBottom: 2,
   },
+  skillItem: {
+    fontSize: 8,
+    color: "#475569",
+    marginLeft: 6,
+    marginBottom: 1,
+  },
+  project: {
+    marginBottom: 8,
+  },
+  projectTitle: {
+    fontSize: 10,
+    fontWeight: 600,
+    color: "#0f172a",
+    marginBottom: 1,
+  },
   projectSubtitle: {
-    fontSize: 9,
-    color: "#666666",
-    fontStyle: "italic",
-    marginBottom: 4,
+    fontSize: 8,
+    color: "#475569",
+    marginBottom: 2,
   },
   projectDescription: {
-    fontSize: 9,
-    color: "#444444",
-    lineHeight: 1.5,
-    marginBottom: 4,
+    fontSize: 8,
+    color: "#334155",
+    lineHeight: 1.4,
+    marginBottom: 2,
   },
   techStack: {
     fontSize: 8,
-    color: "#00d2ff",
-    marginTop: 4,
+    color: "#2563eb",
+    marginTop: 2,
   },
   experience: {
-    marginBottom: 12,
+    marginBottom: 10,
   },
   experienceHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 2,
+    marginBottom: 1,
   },
   experienceRole: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: 600,
-    color: "#0a0a0a",
+    color: "#0f172a",
   },
   experiencePeriod: {
-    fontSize: 9,
-    color: "#666666",
+    fontSize: 8,
+    color: "#475569",
   },
   experienceCompany: {
-    fontSize: 10,
-    color: "#444444",
-    marginBottom: 4,
+    fontSize: 9,
+    color: "#334155",
+    marginBottom: 2,
   },
   experienceDescription: {
-    fontSize: 9,
-    color: "#444444",
-    lineHeight: 1.5,
-    marginLeft: 8,
+    fontSize: 8,
+    color: "#334155",
+    lineHeight: 1.4,
+    marginLeft: 6,
   },
   education: {
-    marginBottom: 10,
+    marginBottom: 8,
   },
   educationDegree: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: 600,
-    color: "#0a0a0a",
-    marginBottom: 2,
+    color: "#0f172a",
+    marginBottom: 1,
   },
   educationInstitution: {
-    fontSize: 10,
-    color: "#444444",
-    marginBottom: 2,
+    fontSize: 9,
+    color: "#334155",
+    marginBottom: 1,
   },
   educationPeriod: {
-    fontSize: 9,
-    color: "#666666",
-    marginBottom: 4,
+    fontSize: 8,
+    color: "#475569",
+    marginBottom: 2,
   },
   certification: {
-    fontSize: 9,
-    color: "#444444",
-    marginBottom: 3,
-    marginLeft: 8,
+    fontSize: 8,
+    color: "#334155",
+    marginBottom: 2,
+    marginLeft: 6,
   },
   achievement: {
-    fontSize: 9,
-    color: "#444444",
-    marginBottom: 3,
-    marginLeft: 8,
+    fontSize: 8,
+    color: "#334155",
+    marginBottom: 2,
+    marginLeft: 6,
   },
   link: {
-    fontSize: 9,
-    color: "#00d2ff",
-  },
-  qrCode: {
-    width: 56,
-    height: 56,
-    marginTop: 8,
+    fontSize: 8,
+    color: "#2563eb",
   },
 });
 
 function ResumeDocument() {
   const { personalInfo, skillCategories, projects, experience, education, certifications, achievements } = portfolioData;
 
-  // Load profile image from public folder
   let profileImageSrc: string | undefined;
   try {
     const imagePath = path.join(process.cwd(), "public", personalInfo.profileImage || "/images/profile.jpg");
@@ -220,7 +211,7 @@ function ResumeDocument() {
               <View style={styles.headerText}>
                 <Text style={styles.name}>{personalInfo.name}</Text>
                 <Text style={styles.title}>{personalInfo.title}</Text>
-                <Text style={styles.contactItem}>Generated: {new Date().toLocaleDateString()}</Text>
+                <Text style={{ fontSize: 8, color: "#64748b" }}>Generated: {new Date().toLocaleDateString()}</Text>
               </View>
             </View>
           </View>
@@ -328,7 +319,7 @@ function ResumeDocument() {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Connect</Text>
-          <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8, marginTop: 4 }}>
+          <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 6, marginTop: 4 }}>
             <Text style={styles.link}>GitHub: {personalInfo.github.replace("https://", "")}</Text>
             <Text style={styles.link}>LinkedIn: {personalInfo.linkedin.replace("https://", "")}</Text>
             <Text style={styles.link}>Portfolio: {personalInfo.portfolioUrl.replace("https://", "")}</Text>
