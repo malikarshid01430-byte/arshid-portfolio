@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import Image from "next/image";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
-import { Terminal, Mail } from "lucide-react";
+import { Terminal, Mail, ArrowDown, Briefcase, Code, Database } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { portfolioData } from "../data/portfolio";
 import DownloadResumeButton from "./DownloadResumeButton";
@@ -152,6 +152,25 @@ export default function Hero() {
                 <Mail className="h-5 w-5" />
               </a>
             </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+              className="grid grid-cols-3 gap-4 pt-6 border-t border-zinc-800"
+            >
+              {[
+                { icon: Briefcase, label: "Internships", value: "4+" },
+                { icon: Code, label: "Projects", value: "7+" },
+                { icon: Database, label: "Certifications", value: "20+" },
+              ].map((stat, idx) => (
+                <div key={idx} className="text-center">
+                  <stat.icon className="h-5 w-5 text-cyan-400 mx-auto mb-1" />
+                  <div className="text-lg font-bold text-white">{stat.value}</div>
+                  <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider">{stat.label}</div>
+                </div>
+              ))}
+            </motion.div>
           </motion.div>
 
           <motion.div
@@ -160,27 +179,32 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="flex flex-col items-center gap-8"
           >
-            <div className="relative">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-500/30 to-violet-500/30 blur-3xl opacity-60" />
-              <div className="relative aspect-square w-full max-w-sm sm:max-w-md lg:max-w-lg">
-                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-500 to-violet-600 p-[2px]">
-                  <div className="w-full h-full rounded-full bg-black p-1">
-                    <Image
-                      src={portfolioData.personalInfo.profileImage || "/images/profile.jpg"}
-                      alt={portfolioData.personalInfo.name}
-                      width={480}
-                      height={480}
-                      priority
-                      className="relative rounded-full object-cover w-full h-full"
-                    />
+              <div className="relative">
+                <div className="absolute -inset-4 rounded-full bg-gradient-to-br from-cyan-500/20 to-violet-500/20 blur-3xl opacity-60" />
+                <div className="relative aspect-square w-full max-w-sm sm:max-w-md lg:max-w-lg">
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-500 to-violet-600 p-[2px]">
+                    <div className="w-full h-full rounded-full bg-black p-1">
+                      <Image
+                        src={portfolioData.personalInfo.profileImage || "/images/profile.jpg"}
+                        alt={portfolioData.personalInfo.name}
+                        width={480}
+                        height={480}
+                        priority
+                        className="relative rounded-full object-cover w-full h-full"
+                      />
+                    </div>
                   </div>
                 </div>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                  transition={{ delay: 1, duration: 0.5 }}
+                  className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full border border-emerald-500/30 bg-black/80 backdrop-blur-xl px-3 py-1.5"
+                >
+                  <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="text-xs font-mono text-emerald-400">Open to Work</span>
+                </motion.div>
               </div>
-              <div className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full border border-emerald-500/30 bg-black/80 backdrop-blur-xl px-3 py-1.5">
-                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-xs font-mono text-emerald-400">Open to Work</span>
-              </div>
-            </div>
 
             <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg rounded-2xl border border-zinc-800 bg-zinc-950/90 backdrop-blur-xl overflow-hidden shadow-2xl shadow-cyan-500/10">
               <div className="flex items-center justify-between border-b border-zinc-800 bg-zinc-900/50 px-4 py-3">
@@ -213,6 +237,18 @@ export default function Hero() {
                 )}
               </div>
             </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ delay: 1.2, duration: 0.6 }}
+            className="flex justify-center mt-8"
+          >
+            <a href="#about" className="flex flex-col items-center gap-2 text-zinc-500 hover:text-cyan-400 transition-colors" aria-label="Scroll down">
+              <span className="text-[10px] font-mono uppercase tracking-widest">Scroll</span>
+              <ArrowDown className="h-4 w-4 animate-bounce" />
+            </a>
           </motion.div>
         </div>
       </motion.div>
