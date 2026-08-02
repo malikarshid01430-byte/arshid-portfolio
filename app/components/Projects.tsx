@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Code, Info, ArrowRight, ShieldCheck, CircuitBoard } from "lucide-react";
+import { X, Code, Info, ArrowRight, ShieldCheck, CircuitBoard, ImageIcon, FileText } from "lucide-react";
 import { portfolioData, Project } from "../data/portfolio";
 
 const categories = ["All", "Embedded & IoT", "Electronics & VLSI", "AI & Edge Computer Vision", "Full Stack Web"];
@@ -145,10 +145,11 @@ export default function Projects() {
                       </div>
                     )}
                   </div>
-                  <div className="lg:col-span-6 flex flex-col">
-                    <h4 className="font-mono text-xs text-violet-400 uppercase tracking-widest mb-4 flex items-center gap-2"><CircuitBoard className="h-4 w-4" /> SYSTEM ARCHITECTURE</h4>
+                  <div className="lg:col-span-6 flex flex-col space-y-6">
+                    <div>
+                      <h4 className="font-mono text-xs text-violet-400 uppercase tracking-widest mb-4 flex items-center gap-2"><CircuitBoard className="h-4 w-4" /> SYSTEM ARCHITECTURE</h4>
                     {activeProject.architecture ? (
-                      <div className="flex-1 rounded-xl border border-zinc-900 bg-black/60 p-4 font-mono text-[10px] sm:text-xs">
+                      <div className="rounded-xl border border-zinc-900 bg-black/60 p-4 font-mono text-[10px] sm:text-xs">
                         <div className="flex flex-wrap gap-3 justify-center mb-6">
                           {activeProject.architecture.nodes.map((n) => (
                             <div key={n.id} className={`px-3 py-2 rounded-lg border flex flex-col items-center text-center max-w-[140px] ${getNodeColor(n.type)}`}>
@@ -173,8 +174,43 @@ export default function Projects() {
                         </div>
                       </div>
                     ) : (
-                      <div className="flex-1 flex items-center justify-center border border-dashed border-zinc-800 rounded-xl p-8 text-zinc-600">No system block diagram available.</div>
+                      <div className="flex items-center justify-center border border-dashed border-zinc-800 rounded-xl p-8 text-zinc-600">No system block diagram available.</div>
                     )}
+
+                    {activeProject.images && activeProject.images.length > 0 && (
+                      <div>
+                        <h4 className="font-mono text-xs text-cyan-400 uppercase tracking-widest mb-3 flex items-center gap-2"><ImageIcon className="h-4 w-4" /> MEDIA</h4>
+                        <div className="grid grid-cols-2 gap-2">
+                          {activeProject.images.slice(0, 4).map((img, i) => (
+                            <div key={i} className="rounded-lg border border-zinc-800 bg-zinc-900/60 p-2 text-[10px] text-zinc-500 font-mono flex items-center justify-center h-24">{img}</div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {activeProject.circuitDiagram && (
+                      <div>
+                        <h4 className="font-mono text-xs text-emerald-400 uppercase tracking-widest mb-3">CIRCUIT DIAGRAM</h4>
+                        <div className="rounded-lg border border-zinc-800 bg-zinc-900/60 p-3 text-[10px] text-zinc-500 font-mono flex items-center justify-center h-32">{activeProject.circuitDiagram}</div>
+                      </div>
+                    )}
+
+                    {activeProject.flowchart && (
+                      <div>
+                        <h4 className="font-mono text-xs text-amber-400 uppercase tracking-widest mb-3">FLOWCHART</h4>
+                        <div className="rounded-lg border border-zinc-800 bg-zinc-900/60 p-3 text-[10px] text-zinc-500 font-mono flex items-center justify-center h-32">{activeProject.flowchart}</div>
+                      </div>
+                    )}
+
+                    {activeProject.codeSnippets && activeProject.codeSnippets.length > 0 && (
+                      <div>
+                        <h4 className="font-mono text-xs text-teal-400 uppercase tracking-widest mb-3 flex items-center gap-2"><FileText className="h-4 w-4" /> CODE SNIPPET</h4>
+                        <div className="rounded-xl border border-zinc-800 bg-black/60 p-4 font-mono text-[10px] sm:text-xs text-zinc-300 overflow-x-auto">
+                          <pre>{activeProject.codeSnippets[0].code}</pre>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                   </div>
                 </div>
               </motion.div>
