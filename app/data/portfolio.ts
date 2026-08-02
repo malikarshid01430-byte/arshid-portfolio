@@ -45,6 +45,10 @@ export interface Project {
   results?: string[];
   timeline?: string;
   images?: string[];
+  research?: string;
+  circuitDiagram?: string;
+  flowchart?: string;
+  codeSnippets?: { language: string; code: string }[];
 }
 
 export interface Experience {
