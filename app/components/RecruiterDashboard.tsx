@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   Briefcase,
@@ -11,37 +12,59 @@ import {
   Calendar,
   MessageSquare,
   CheckCircle,
+  Code,
+  Database,
+  Award,
+  Terminal,
 } from "lucide-react";
 import { portfolioData } from "../data/portfolio";
 
+const quickInfo = [
+  { icon: Briefcase, label: "Current Status", value: "Actively Seeking Full Time Roles", color: "text-emerald-400 border-emerald-500/30 bg-emerald-500/5" },
+  { icon: MapPin, label: "Current Location", value: "Bangalore, Karnataka", color: "text-cyan-400 border-cyan-500/30 bg-cyan-500/5" },
+  { icon: MapPin, label: "Home State", value: "Jammu and Kashmir", color: "text-violet-400 border-violet-500/30 bg-violet-500/5" },
+  { icon: Calendar, label: "Graduation", value: "2026", color: "text-emerald-400 border-emerald-500/30 bg-emerald-500/5" },
+  { icon: CheckCircle, label: "Willing to Relocate", value: "Yes", color: "text-cyan-400 border-cyan-500/30 bg-cyan-500/5" },
+  { icon: MessageSquare, label: "Response Time", value: "Within 24 Hours", color: "text-violet-400 border-violet-500/30 bg-violet-500/5" },
+];
+
+const primaryRoles = [
+  "Embedded Systems Engineer",
+  "IoT Engineer",
+  "Electronics Engineer",
+  "VLSI Engineer",
+  "Firmware Engineer",
+  "Android Developer",
+  "Full Stack Developer",
+];
+
+const quickActions = [
+  { icon: Download, label: "Download Resume", href: portfolioData.personalInfo.resumeUrl, color: "border-cyan-500/30 bg-cyan-500/5 text-cyan-400 hover:border-cyan-400 hover:bg-cyan-500/10" },
+  { icon: ExternalLink, label: "LinkedIn", href: portfolioData.personalInfo.linkedin, color: "border-blue-500/30 bg-blue-500/5 text-blue-400 hover:border-blue-400 hover:bg-blue-500/10" },
+  { icon: ExternalLink, label: "GitHub", href: portfolioData.personalInfo.github, color: "border-zinc-700 bg-zinc-900/50 text-zinc-300 hover:text-cyan-400 hover:border-cyan-500/30" },
+  { icon: Mail, label: "Email", href: `mailto:${portfolioData.personalInfo.email}`, color: "border-violet-500/30 bg-violet-500/5 text-violet-400 hover:border-violet-400 hover:bg-violet-500/10" },
+  { icon: Phone, label: "Call", href: `tel:${portfolioData.personalInfo.phone}`, color: "border-emerald-500/30 bg-emerald-500/5 text-emerald-400 hover:border-emerald-400 hover:bg-emerald-500/10" },
+  { icon: ExternalLink, label: "Portfolio", href: portfolioData.personalInfo.portfolioUrl, color: "border-cyan-500/30 bg-cyan-500/5 text-cyan-400 hover:border-cyan-400 hover:bg-cyan-500/10" },
+];
+
+const stats = [
+  { icon: Briefcase, label: "Internships", value: "4+", color: "text-cyan-400" },
+  { icon: Code, label: "Projects", value: "7+", color: "text-violet-400" },
+  { icon: Database, label: "Certifications", value: "20+", color: "text-emerald-400" },
+  { icon: Award, label: "Achievements", value: "7+", color: "text-amber-400" },
+];
+
+const technologies = portfolioData.skillCategories.slice(0, 5).flatMap((cat) =>
+  cat.skills.slice(0, 4).map((skill) => skill.name)
+);
+
 export default function RecruiterDashboard() {
-  const quickInfo = [
-    { icon: Briefcase, label: "Current Status", value: "Actively Seeking Full Time Roles", color: "text-emerald-400 border-emerald-500/30 bg-emerald-500/5" },
-    { icon: MapPin, label: "Current Location", value: "Bangalore, Karnataka", color: "text-cyan-400 border-cyan-500/30 bg-cyan-500/5" },
-    { icon: MapPin, label: "Home State", value: "Jammu and Kashmir", color: "text-violet-400 border-violet-500/30 bg-violet-500/5" },
-    { icon: Calendar, label: "Graduation", value: "2026", color: "text-emerald-400 border-emerald-500/30 bg-emerald-500/5" },
-    { icon: CheckCircle, label: "Willing to Relocate", value: "Yes", color: "text-cyan-400 border-cyan-500/30 bg-cyan-500/5" },
-    { icon: MessageSquare, label: "Response Time", value: "Within 24 Hours", color: "text-violet-400 border-violet-500/30 bg-violet-500/5" },
-  ];
+  const [currentTime, setCurrentTime] = useState(new Date());
 
-  const primaryRoles = [
-    "Embedded Systems Engineer",
-    "IoT Engineer",
-    "Electronics Engineer",
-    "VLSI Engineer",
-    "Firmware Engineer",
-    "Android Developer",
-    "Full Stack Developer",
-  ];
-
-  const quickActions = [
-    { icon: Download, label: "Download Resume", href: portfolioData.personalInfo.resumeUrl, color: "border-cyan-500/30 bg-cyan-500/5 text-cyan-400 hover:border-cyan-400 hover:bg-cyan-500/10" },
-    { icon: ExternalLink, label: "LinkedIn", href: portfolioData.personalInfo.linkedin, color: "border-blue-500/30 bg-blue-500/5 text-blue-400 hover:border-blue-400 hover:bg-blue-500/10" },
-    { icon: ExternalLink, label: "GitHub", href: portfolioData.personalInfo.github, color: "border-zinc-700 bg-zinc-900/50 text-zinc-300 hover:text-cyan-400 hover:border-cyan-500/30" },
-    { icon: Mail, label: "Email", href: `mailto:${portfolioData.personalInfo.email}`, color: "border-violet-500/30 bg-violet-500/5 text-violet-400 hover:border-violet-400 hover:bg-violet-500/10" },
-    { icon: Phone, label: "Call", href: `tel:${portfolioData.personalInfo.phone}`, color: "border-emerald-500/30 bg-emerald-500/5 text-emerald-400 hover:border-emerald-400 hover:bg-emerald-500/10" },
-    { icon: ExternalLink, label: "Portfolio", href: portfolioData.personalInfo.portfolioUrl, color: "border-cyan-500/30 bg-cyan-500/5 text-cyan-400 hover:border-cyan-400 hover:bg-cyan-500/10" },
-  ];
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <section className="relative isolate py-28 lg:py-36 border-t border-zinc-900 scroll-mt-32 overflow-hidden" aria-labelledby="recruiter-dashboard-heading">
@@ -164,19 +187,17 @@ export default function RecruiterDashboard() {
 
               <div className="mt-6 pt-6 border-t border-zinc-800">
                 <p className="text-xs text-zinc-500 font-mono uppercase tracking-wider mb-3">
-                  Additional Skills
+                  Key Technologies
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {portfolioData.skillCategories.slice(0, 3).map((category, catIdx) =>
-                    category.skills.slice(0, 3).map((skill, skillIdx) => (
-                      <span
-                        key={`${catIdx}-${skillIdx}`}
-                        className="inline-flex items-center rounded-full border border-zinc-700 bg-zinc-900/50 px-2.5 py-1 font-mono text-[10px] text-zinc-400"
-                      >
-                        {skill.name}
-                      </span>
-                    ))
-                  )}
+                  {technologies.map((tech, idx) => (
+                    <span
+                      key={idx}
+                      className="inline-flex items-center rounded-full border border-zinc-700 bg-zinc-900/50 px-2.5 py-1 font-mono text-[10px] text-zinc-400"
+                    >
+                      {tech}
+                    </span>
+                  ))}
                 </div>
               </div>
             </motion.div>
@@ -198,6 +219,61 @@ export default function RecruiterDashboard() {
             </motion.div>
           </div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ delay: 0.3, duration: 0.4 }}
+          className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4"
+        >
+          {stats.map((stat, idx) => {
+            const Icon = stat.icon;
+            return (
+              <div key={idx} className="rounded-xl border border-zinc-800 bg-zinc-950/50 p-4 text-center">
+                <Icon className={`h-6 w-6 mx-auto mb-2 ${stat.color}`} />
+                <div className="text-2xl font-bold text-white">{stat.value}</div>
+                <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider">{stat.label}</div>
+              </div>
+            );
+          })}
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ delay: 0.4, duration: 0.4 }}
+          className="mt-8 rounded-2xl border border-zinc-800 bg-zinc-950/40 p-6"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-mono text-sm font-semibold text-white uppercase tracking-wide flex items-center gap-2">
+              <Terminal className="h-4 w-4 text-cyan-400" />
+              System Status
+            </h3>
+            <span className="text-[10px] font-mono text-zinc-500">
+              {currentTime.toLocaleTimeString()}
+            </span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="flex items-center gap-3">
+              <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-xs text-zinc-400">Portfolio Online</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-xs text-zinc-400">Resume Ready</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-xs text-zinc-400">Open to Work</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-xs text-zinc-400">Immediate Joiner</span>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
