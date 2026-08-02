@@ -63,6 +63,8 @@ export const metadata: Metadata = {
 };
 
 import SkipLink from "./components/SkipLink";
+import CursorGlow from "./components/effects/CursorGlow";
+import ScrollProgress from "./components/effects/ScrollProgress";
 
 export default function RootLayout({
   children,
@@ -80,6 +82,8 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-black text-foreground">
         <SkipLink />
+        <ScrollProgress />
+        <CursorGlow />
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
