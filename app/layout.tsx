@@ -78,7 +78,10 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#030712" />
         <link rel="manifest" href="/manifest.json" />
+        <link rel="canonical" href="https://arshid-portfolio.vercel.app" />
       </head>
       <body className="min-h-full flex flex-col bg-black text-foreground">
         <SkipLink />
