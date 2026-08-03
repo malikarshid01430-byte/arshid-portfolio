@@ -4,7 +4,14 @@ import { portfolioData } from "@/app/data/portfolio";
 import fs from "fs";
 import path from "path";
 
-Font.register({ family: "Helvetica", fonts: [{ src: "", fontWeight: 400 }] });
+// Register fonts for professional typography
+Font.register({
+  family: "Helvetica",
+  fonts: [
+    { src: "https://fonts.gstatic.com/s/helveticaneue/v78/1PtsGG9SDusqNw8UA2gKjH.woff2", fontWeight: 400 },
+    { src: "https://fonts.gstatic.com/s/helveticaneue/v78/1PtsGG9SDusqNw8UA2gKjH.woff2", fontWeight: 700 },
+  ],
+});
 
 const styles = StyleSheet.create({
   page: {
@@ -12,12 +19,12 @@ const styles = StyleSheet.create({
     fontSize: 9,
     lineHeight: 1.5,
     color: "#111827",
-    padding: 34,
+    padding: 32,
     backgroundColor: "#ffffff",
   },
   header: {
     marginBottom: 14,
-    borderBottom: "1.5 solid #2563eb",
+    borderBottom: "2 solid #2563eb",
     paddingBottom: 10,
   },
   headerContent: {
@@ -32,17 +39,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   profileImage: {
-    width: 54,
-    height: 54,
-    borderRadius: 27,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     objectFit: "cover",
   },
   headerText: {
     flex: 1,
-    marginLeft: 12,
+    marginLeft: 10,
   },
   name: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 700,
     color: "#0f172a",
     marginBottom: 2,
@@ -50,7 +57,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 10,
     color: "#475569",
-    marginBottom: 4,
+    marginBottom: 3,
   },
   contact: {
     fontSize: 8,
@@ -60,10 +67,10 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   contactItem: {
-    marginRight: 8,
+    marginRight: 6,
   },
   section: {
-    marginBottom: 14,
+    marginBottom: 12,
   },
   sectionTitle: {
     fontSize: 11,
@@ -71,35 +78,35 @@ const styles = StyleSheet.create({
     color: "#2563eb",
     textTransform: "uppercase",
     letterSpacing: 0.8,
-    marginBottom: 8,
-    borderBottom: "0.5 solid #e5e7eb",
-    paddingBottom: 4,
+    marginBottom: 6,
+    borderBottom: "1 solid #e5e7eb",
+    paddingBottom: 3,
   },
   summary: {
     fontSize: 9,
     color: "#334155",
-    lineHeight: 1.6,
+    lineHeight: 1.5,
   },
   skillCategory: {
-    marginBottom: 8,
+    marginBottom: 6,
   },
   skillCategoryTitle: {
-    fontSize: 10,
+    fontSize: 9,
     fontWeight: 600,
     color: "#0f172a",
-    marginBottom: 3,
+    marginBottom: 2,
   },
   skillItem: {
     fontSize: 8,
     color: "#475569",
-    marginLeft: 6,
+    marginLeft: 4,
     marginBottom: 1,
   },
   project: {
     marginBottom: 10,
   },
   projectTitle: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: 600,
     color: "#0f172a",
     marginBottom: 2,
@@ -110,18 +117,18 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   projectDescription: {
-    fontSize: 9,
+    fontSize: 8,
     color: "#334155",
-    lineHeight: 1.5,
-    marginBottom: 3,
+    lineHeight: 1.4,
+    marginBottom: 2,
   },
   techStack: {
     fontSize: 8,
     color: "#2563eb",
-    marginTop: 3,
+    marginTop: 2,
   },
   experience: {
-    marginBottom: 12,
+    marginBottom: 10,
   },
   experienceHeader: {
     flexDirection: "row",
@@ -129,7 +136,7 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   experienceRole: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: 600,
     color: "#0f172a",
   },
@@ -138,50 +145,55 @@ const styles = StyleSheet.create({
     color: "#475569",
   },
   experienceCompany: {
-    fontSize: 10,
-    color: "#334155",
-    marginBottom: 3,
-  },
-  experienceDescription: {
     fontSize: 9,
     color: "#334155",
-    lineHeight: 1.5,
-    marginLeft: 6,
+    marginBottom: 2,
+  },
+  experienceDescription: {
+    fontSize: 8,
+    color: "#334155",
+    lineHeight: 1.4,
+    marginLeft: 4,
   },
   education: {
-    marginBottom: 10,
+    marginBottom: 8,
   },
   educationDegree: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: 600,
     color: "#0f172a",
     marginBottom: 2,
   },
   educationInstitution: {
-    fontSize: 10,
+    fontSize: 9,
     color: "#334155",
     marginBottom: 2,
   },
   educationPeriod: {
-    fontSize: 9,
+    fontSize: 8,
     color: "#475569",
-    marginBottom: 3,
+    marginBottom: 2,
   },
   certification: {
-    fontSize: 9,
+    fontSize: 8,
     color: "#334155",
-    marginBottom: 3,
-    marginLeft: 6,
+    marginBottom: 2,
+    marginLeft: 4,
   },
   achievement: {
-    fontSize: 9,
+    fontSize: 8,
     color: "#334155",
-    marginBottom: 3,
-    marginLeft: 6,
+    marginBottom: 2,
+    marginLeft: 4,
   },
   link: {
     fontSize: 8,
     color: "#2563eb",
+  },
+  qrCode: {
+    width: 40,
+    height: 40,
+    marginTop: 8,
   },
 });
 
@@ -199,19 +211,19 @@ function ResumeDocument() {
   }
 
   return (
-    <Document title={`${personalInfo.name} - Resume`} author={personalInfo.name}>
+      <Document title={`${personalInfo.name} - Resume`} author={personalInfo.name}>
       <Page size="A4" style={styles.page}>
+        {/* Header */}
         <View style={styles.header}>
           <View style={styles.headerContent}>
             <View style={styles.headerLeft}>
               {profileImageSrc && (
-                // eslint-disable-next-line jsx-a11y/alt-text
                 <Image src={profileImageSrc} style={styles.profileImage} />
               )}
               <View style={styles.headerText}>
                 <Text style={styles.name}>{personalInfo.name}</Text>
                 <Text style={styles.title}>{personalInfo.title}</Text>
-                <Text style={{ fontSize: 8, color: "#64748b" }}>Generated: {new Date().toLocaleDateString()}</Text>
+                <Text style={{ fontSize: 7, color: "#64748b" }}>Generated: {new Date().toLocaleDateString()}</Text>
               </View>
             </View>
           </View>
@@ -225,17 +237,19 @@ function ResumeDocument() {
           </View>
         </View>
 
+        {/* Professional Summary */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Professional Summary</Text>
           <Text style={styles.summary}>{personalInfo.bioShort}</Text>
         </View>
 
+        {/* Technical Skills */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Technical Skills</Text>
-          {skillCategories.map((category, idx) => (
+          {skillCategories.slice(0, 6).map((category, idx) => (
             <View key={idx} style={styles.skillCategory}>
               <Text style={styles.skillCategoryTitle}>{category.title}</Text>
-              {category.skills.map((skill, sIdx) => (
+              {category.skills.slice(0, 5).map((skill, sIdx) => (
                 <Text key={sIdx} style={styles.skillItem}>
                   {skill.name} ({skill.level}%)
                 </Text>
@@ -244,21 +258,10 @@ function ResumeDocument() {
           ))}
         </View>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Projects</Text>
-          {projects.map((project, idx) => (
-            <View key={idx} style={styles.project}>
-              <Text style={styles.projectTitle}>{project.title}</Text>
-              <Text style={styles.projectSubtitle}>{project.subtitle}</Text>
-              <Text style={styles.projectDescription}>{project.longDescription}</Text>
-              <Text style={styles.techStack}>Technologies: {project.technologies.join(", ")}</Text>
-            </View>
-          ))}
-        </View>
-
+        {/* Experience */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Experience</Text>
-          {experience.map((exp, idx) => (
+          {experience.slice(0, 3).map((exp, idx) => (
             <View key={idx} style={styles.experience}>
               <View style={styles.experienceHeader}>
                 <Text style={styles.experienceRole}>{exp.role}</Text>
@@ -267,37 +270,47 @@ function ResumeDocument() {
               <Text style={styles.experienceCompany}>
                 {exp.company} | {exp.location}
               </Text>
-              {exp.description.map((desc, dIdx) => (
+              {exp.description.slice(0, 3).map((desc, dIdx) => (
                 <Text key={dIdx} style={styles.experienceDescription}>
                   {desc}
                 </Text>
               ))}
-              <Text style={styles.techStack}>Technologies: {exp.technologies.join(", ")}</Text>
+              <Text style={styles.techStack}>Technologies: {exp.technologies.slice(0, 5).join(", ")}</Text>
             </View>
           ))}
         </View>
 
+        {/* Projects */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Projects</Text>
+          {projects.slice(0, 3).map((project, idx) => (
+            <View key={idx} style={styles.project}>
+              <Text style={styles.projectTitle}>{project.title}</Text>
+              <Text style={styles.projectSubtitle}>{project.subtitle}</Text>
+              <Text style={styles.projectDescription}>{project.longDescription?.slice(0, 200)}</Text>
+              <Text style={styles.techStack}>Technologies: {project.technologies.slice(0, 5).join(", ")}</Text>
+            </View>
+          ))}
+        </View>
+
+        {/* Education */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Education</Text>
-          {education.map((edu, idx) => (
+          {education.slice(0, 2).map((edu, idx) => (
             <View key={idx} style={styles.education}>
               <Text style={styles.educationDegree}>{edu.degree}</Text>
               <Text style={styles.educationInstitution}>{edu.institution}</Text>
               <Text style={styles.educationPeriod}>
                 {edu.period} | {edu.location}
               </Text>
-              {edu.details.map((detail, dIdx) => (
-                <Text key={dIdx} style={styles.certification}>
-                  {detail}
-                </Text>
-              ))}
             </View>
           ))}
         </View>
 
+        {/* Certifications */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Certifications</Text>
-          {certifications.map((cert, idx) => (
+          {certifications.slice(0, 5).map((cert, idx) => (
             <View key={idx} style={styles.certification}>
               <Text>
                 {cert.name} - {cert.issuer} ({cert.date})
@@ -306,23 +319,24 @@ function ResumeDocument() {
           ))}
         </View>
 
+        {/* Achievements */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Achievements</Text>
-          {achievements.map((achievement, idx) => (
+          {achievements.slice(0, 3).map((achievement, idx) => (
             <View key={idx} style={styles.achievement}>
               <Text>
-                {achievement.title} - {achievement.description} ({achievement.date})
+                {achievement.title} - {achievement.description}
               </Text>
             </View>
           ))}
         </View>
 
+        {/* Connect */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Connect</Text>
           <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 6, marginTop: 4 }}>
             <Text style={styles.link}>GitHub: {personalInfo.github.replace("https://", "")}</Text>
             <Text style={styles.link}>LinkedIn: {personalInfo.linkedin.replace("https://", "")}</Text>
-            <Text style={styles.link}>Portfolio: {personalInfo.portfolioUrl.replace("https://", "")}</Text>
             <Text style={styles.link}>Email: {personalInfo.email}</Text>
             <Text style={styles.link}>Phone: {personalInfo.phone}</Text>
             <Text style={styles.link}>Location: {personalInfo.location}</Text>
