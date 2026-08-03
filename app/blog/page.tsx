@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import Link from "next/link";
 import BlogClient from "./BlogClient";
 
 export const metadata: Metadata = {
