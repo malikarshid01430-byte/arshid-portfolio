@@ -3,19 +3,22 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
-  Briefcase,
   Download,
   ExternalLink,
   Mail,
   Phone,
   MapPin,
   Calendar,
-  MessageSquare,
   CheckCircle,
+  Briefcase,
   Code,
   Database,
   Award,
   Terminal,
+  Clock,
+  TrendingUp,
+  Users,
+  Globe,
 } from "lucide-react";
 import { portfolioData } from "../data/portfolio";
 
@@ -25,17 +28,13 @@ const quickInfo = [
   { icon: MapPin, label: "Home State", value: "Jammu and Kashmir", color: "text-violet-400 border-violet-500/30 bg-violet-500/5" },
   { icon: Calendar, label: "Graduation", value: "2026", color: "text-emerald-400 border-emerald-500/30 bg-emerald-500/5" },
   { icon: CheckCircle, label: "Willing to Relocate", value: "Yes", color: "text-cyan-400 border-cyan-500/30 bg-cyan-500/5" },
-  { icon: MessageSquare, label: "Response Time", value: "Within 24 Hours", color: "text-violet-400 border-violet-500/30 bg-violet-500/5" },
-];
-
-const primaryRoles = [
-  "Embedded Systems Engineer",
-  "IoT Engineer",
-  "Electronics Engineer",
-  "VLSI Engineer",
-  "Firmware Engineer",
-  "Android Developer",
-  "Full Stack Developer",
+  { icon: Clock, label: "Response Time", value: "Within 24 Hours", color: "text-violet-400 border-violet-500/30 bg-violet-500/5" },
+  { icon: TrendingUp, label: "Years of Learning", value: "4+ Years", color: "text-amber-400 border-amber-500/30 bg-amber-500/5" },
+  { icon: Code, label: "Projects Completed", value: "7+", color: "text-blue-400 border-blue-500/30 bg-blue-500/5" },
+  { icon: Globe, label: "Core Domains", value: "Embedded, IoT, VLSI, AI", color: "text-pink-400 border-pink-500/30 bg-pink-500/5" },
+  { icon: Users, label: "Current Focus", value: "Edge AI & IoT", color: "text-teal-400 border-teal-500/30 bg-teal-500/5" },
+  { icon: MapPin, label: "Expected Role", value: "Embedded / IoT Engineer", color: "text-orange-400 border-orange-500/30 bg-orange-500/5" },
+  { icon: CheckCircle, label: "Open to Relocation", value: "Yes", color: "text-emerald-400 border-emerald-500/30 bg-emerald-500/5" },
 ];
 
 const quickActions = [
@@ -53,10 +52,6 @@ const stats = [
   { icon: Database, label: "Certifications", value: "20+", color: "text-emerald-400" },
   { icon: Award, label: "Achievements", value: "7+", color: "text-amber-400" },
 ];
-
-const technologies = portfolioData.skillCategories.slice(0, 5).flatMap((cat) =>
-  cat.skills.slice(0, 4).map((skill) => skill.name)
-);
 
 export default function RecruiterDashboard() {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -80,144 +75,61 @@ export default function RecruiterDashboard() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          <div className="lg:col-span-4 space-y-4">
-            <div className="flex items-center gap-2 mb-4">
-              <h3 className="font-mono text-sm font-semibold text-white uppercase tracking-wide">
-                Candidate Information
-              </h3>
-            </div>
-
-            {quickInfo.map((info, idx) => {
-              const Icon = info.icon;
-              return (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ delay: idx * 0.05, duration: 0.3 }}
-                  className="flex items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-950/50 p-4"
-                >
-                  <div className={`flex h-10 w-10 items-center justify-center rounded-lg border bg-black/40 ${info.color}`}>
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs text-zinc-500 font-mono uppercase tracking-wider">{info.label}</p>
-                    <p className="text-sm font-medium text-white mt-0.5">{info.value}</p>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          <div className="lg:col-span-4 space-y-4">
-            <div className="flex items-center gap-2 mb-4">
-              <h3 className="font-mono text-sm font-semibold text-white uppercase tracking-wide">
-                Quick Actions
-              </h3>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
-              {quickActions.map((action, idx) => {
-                const Icon = action.icon;
-                return (
-                  <motion.a
-                    key={idx}
-                    href={action.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    transition={{ delay: idx * 0.05, duration: 0.3 }}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className={`flex items-center gap-3 rounded-xl border p-4 transition-colors group ${action.color}`}
-                  >
-                    <div className={`flex h-10 w-10 items-center justify-center rounded-lg border bg-black/40 transition-colors ${action.color}`}>
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-white">{action.label}</p>
-                    </div>
-                    <div className="text-zinc-500 group-hover:text-cyan-400 transition-colors">
-                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </motion.a>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="lg:col-span-4 space-y-4">
-            <div className="flex items-center gap-2 mb-4">
-              <h3 className="font-mono text-sm font-semibold text-white uppercase tracking-wide">
-                Core Competencies
-              </h3>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.3 }}
-              className="rounded-xl border border-zinc-800 bg-zinc-950/50 p-6"
-            >
-              <p className="text-xs text-zinc-500 font-mono uppercase tracking-wider mb-3">
-                Primary Roles
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {primaryRoles.map((role, idx) => (
-                  <motion.span
-                    key={idx}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    transition={{ delay: idx * 0.05, duration: 0.2 }}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/5 px-3 py-1.5 font-mono text-xs text-emerald-400"
-                  >
-                    <CheckCircle className="h-3 w-3" />
-                    {role}
-                  </motion.span>
-                ))}
-              </div>
-
-              <div className="mt-6 pt-6 border-t border-zinc-800">
-                <p className="text-xs text-zinc-500 font-mono uppercase tracking-wider mb-3">
-                  Key Technologies
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {technologies.map((tech, idx) => (
-                    <span
-                      key={idx}
-                      className="inline-flex items-center rounded-full border border-zinc-700 bg-zinc-900/50 px-2.5 py-1 font-mono text-[10px] text-zinc-400"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-12">
+          {quickInfo.map((info, idx) => {
+            const Icon = info.icon;
+            return (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ delay: idx * 0.05, duration: 0.3 }}
+                className="flex items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-950/50 p-4 hover:border-cyan-500/30 transition-colors"
+              >
+                <div className={`flex h-10 w-10 items-center justify-center rounded-lg border bg-black/40 ${info.color}`}>
+                  <Icon className="h-5 w-5" />
                 </div>
-              </div>
-            </motion.div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[10px] text-zinc-500 font-mono uppercase tracking-wider">{info.label}</p>
+                  <p className="text-sm font-medium text-white mt-0.5 truncate">{info.value}</p>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ delay: 0.2, duration: 0.3 }}
-              className="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-4 flex items-center gap-3"
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-emerald-500/30 bg-emerald-500/10">
-                <div className="h-3 w-3 animate-pulse rounded-full bg-emerald-400" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-emerald-400">Available for Opportunities</p>
-                <p className="text-xs text-zinc-400 mt-0.5">Open to full-time roles starting 2026</p>
-              </div>
-            </motion.div>
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
+          {quickActions.map((action, idx) => {
+            const Icon = action.icon;
+            return (
+              <motion.a
+                key={idx}
+                href={action.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ delay: idx * 0.05, duration: 0.3 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className={`flex items-center gap-3 rounded-xl border p-4 transition-colors group ${action.color}`}
+              >
+                <div className={`flex h-10 w-10 items-center justify-center rounded-lg border bg-black/40 transition-colors ${action.color}`}>
+                  <Icon className="h-5 w-5" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-white">{action.label}</p>
+                </div>
+                <div className="text-zinc-500 group-hover:text-cyan-400 transition-colors">
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </motion.a>
+            );
+          })}
         </div>
 
         <motion.div
@@ -225,7 +137,7 @@ export default function RecruiterDashboard() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ delay: 0.3, duration: 0.4 }}
-          className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4"
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12"
         >
           {stats.map((stat, idx) => {
             const Icon = stat.icon;
@@ -244,7 +156,7 @@ export default function RecruiterDashboard() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ delay: 0.4, duration: 0.4 }}
-          className="mt-8 rounded-2xl border border-zinc-800 bg-zinc-950/40 p-6"
+          className="rounded-2xl border border-zinc-800 bg-zinc-950/40 p-6"
         >
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-mono text-sm font-semibold text-white uppercase tracking-wide flex items-center gap-2">

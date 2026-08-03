@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Cpu, CircuitBoard, Code2, Wrench, Smartphone, Brain, Printer } from "lucide-react";
+import { Cpu, CircuitBoard, Code2, Wrench, Smartphone, Brain } from "lucide-react";
 import { portfolioData } from "../data/portfolio";
 
 const icons: Record<string, typeof Code2> = {
@@ -12,7 +12,7 @@ const icons: Record<string, typeof Code2> = {
   "Android Development": Smartphone,
   "AI & Machine Learning": Brain,
   "VLSI & Digital Design": CircuitBoard,
-  "PCB Design": Printer,
+  "PCB Design": CircuitBoard,
   "Tools & Software": Wrench,
   "Full Stack Development": Code2,
 };
@@ -24,8 +24,8 @@ export default function Skills() {
 
   return (
     <section id="skills" className="relative isolate py-28 lg:py-36 border-t border-zinc-900 scroll-mt-20 overflow-hidden">
-      <div className="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-cyan-500/5 blur-[120px]" />
-      <div className="absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-violet-500/5 blur-[120px]" />
+      <div className="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-cyan-500/5 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-violet-500/5 blur-[120px] pointer-events-none" />
       
       <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 relative z-10">
         <div className="flex flex-col items-center text-center mb-20">
@@ -54,7 +54,7 @@ export default function Skills() {
                   id={`skills-tab-${i}`}
                   tabIndex={isSelected ? 0 : -1}
                 >
-                  <CatIcon className={`h-4.5 w-4.5 ${isSelected ? "text-cyan-400" : "text-zinc-500"}`} aria-hidden="true" />
+                  <CatIcon className={`h-4 w-4 ${isSelected ? "text-cyan-400" : "text-zinc-500"}`} aria-hidden="true" />
                   <span className="truncate">{cat.title}</span>
                 </button>
               );

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Cpu, Layers, CircuitBoard, Activity, Smartphone } from "lucide-react";
+import { Cpu, CircuitBoard, Smartphone, Layers, Activity } from "lucide-react";
 import { portfolioData } from "../data/portfolio";
 
 const cards = [
@@ -14,8 +14,8 @@ const cards = [
 export default function About() {
   return (
     <section id="about" className="relative isolate py-28 lg:py-36 border-t border-zinc-900 scroll-mt-20 overflow-hidden">
-      <div className="absolute top-0 right-1/4 h-96 w-96 rounded-full bg-cyan-500/5 blur-[120px]" />
-      <div className="absolute bottom-0 left-1/4 h-96 w-96 rounded-full bg-violet-500/5 blur-[120px]" />
+      <div className="absolute top-0 right-1/4 h-96 w-96 rounded-full bg-cyan-500/5 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-1/4 h-96 w-96 rounded-full bg-violet-500/5 blur-[120px] pointer-events-none" />
       
       <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 relative z-10">
         <div className="flex flex-col items-center text-center mb-20">

@@ -14,6 +14,15 @@ interface SearchResult {
   icon: React.ComponentType<{ className?: string }>;
 }
 
+const typeColors: Record<string, { bg: string; border: string; text: string }> = {
+  project: { bg: "bg-cyan-500/5", border: "border-cyan-500/20", text: "text-cyan-400" },
+  skill: { bg: "bg-emerald-500/5", border: "border-emerald-500/20", text: "text-emerald-400" },
+  blog: { bg: "bg-violet-500/5", border: "border-violet-500/20", text: "text-violet-400" },
+  experience: { bg: "bg-blue-500/5", border: "border-blue-500/20", text: "text-blue-400" },
+  certification: { bg: "bg-amber-500/5", border: "border-amber-500/20", text: "text-amber-400" },
+  education: { bg: "bg-pink-500/5", border: "border-pink-500/20", text: "text-pink-400" },
+};
+
 export default function SearchPage() {
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -24,7 +33,6 @@ export default function SearchPage() {
     const results: SearchResult[] = [];
     const q = query.toLowerCase();
 
-    // Search projects
     portfolioData.projects.forEach((project) => {
       if (project.title.toLowerCase().includes(q) || project.description.toLowerCase().includes(q)) {
         results.push({
@@ -38,7 +46,6 @@ export default function SearchPage() {
       }
     });
 
-    // Search skills
     portfolioData.skillCategories.forEach((category) => {
       category.skills.forEach((skill) => {
         if (skill.name.toLowerCase().includes(q)) {
@@ -54,7 +61,6 @@ export default function SearchPage() {
       });
     });
 
-    // Search experience
     portfolioData.experience.forEach((exp, idx) => {
       if (exp.role.toLowerCase().includes(q) || exp.company.toLowerCase().includes(q)) {
         results.push({
@@ -68,7 +74,6 @@ export default function SearchPage() {
       }
     });
 
-    // Search certifications
     portfolioData.certifications.forEach((cert, idx) => {
       if (cert.name.toLowerCase().includes(q) || cert.issuer.toLowerCase().includes(q)) {
         results.push({
@@ -82,7 +87,6 @@ export default function SearchPage() {
       }
     });
 
-    // Search education
     portfolioData.education.forEach((edu, idx) => {
       if (edu.degree.toLowerCase().includes(q) || edu.institution.toLowerCase().includes(q)) {
         results.push({
@@ -115,21 +119,8 @@ export default function SearchPage() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  const getTypeColor = (type: string) => {
-    const colors: Record<string, string> = {
-      project: "cyan",
-      skill: "emerald",
-      blog: "violet",
-      experience: "blue",
-      certification: "amber",
-      education: "pink",
-    };
-    return colors[type] || "zinc";
-  };
-
   return (
     <>
-      {/* Search Trigger Button */}
       <button
         onClick={() => setIsOpen(true)}
         className="fixed bottom-8 left-8 z-40 flex h-12 items-center gap-3 rounded-full border border-cyan-500/20 bg-cyan-950/30 px-4 text-zinc-400 hover:border-cyan-400 transition-colors"
@@ -141,7 +132,6 @@ export default function SearchPage() {
         </kbd>
       </button>
 
-      {/* Search Modal */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -158,7 +148,6 @@ export default function SearchPage() {
               className="w-full max-w-2xl rounded-2xl border border-zinc-800 bg-zinc-950/95 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Search Input */}
               <div className="flex items-center gap-3 border-b border-zinc-900 p-4">
                 <Search className="h-5 w-5 text-zinc-400" />
                 <input
@@ -177,7 +166,6 @@ export default function SearchPage() {
                 </button>
               </div>
 
-              {/* Results */}
               <div className="max-h-96 overflow-y-auto p-4">
                 {query.trim() === "" ? (
                   <div className="text-center py-12">
@@ -193,6 +181,7 @@ export default function SearchPage() {
                   <div className="space-y-2">
                     {searchResults.map((result) => {
                       const Icon = result.icon;
+                      const colors = typeColors[result.type] || typeColors.project;
                       return (
                         <a
                           key={result.id}
@@ -200,7 +189,7 @@ export default function SearchPage() {
                           onClick={() => setIsOpen(false)}
                           className="flex items-center gap-3 rounded-lg border border-zinc-900 bg-zinc-900/30 p-3 hover:border-cyan-500/20 transition-colors group"
                         >
-                          <div className={`flex h-10 w-10 items-center justify-center rounded-lg border border-${getTypeColor(result.type)}-500/20 bg-${getTypeColor(result.type)}-500/5 text-${getTypeColor(result.type)}-400 flex-shrink-0`}>
+                          <div className={`flex h-10 w-10 items-center justify-center rounded-lg border ${colors.border} ${colors.bg} ${colors.text} flex-shrink-0`}>
                             <Icon className="h-5 w-5" />
                           </div>
                           <div className="flex-1 min-w-0">
