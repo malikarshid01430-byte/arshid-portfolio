@@ -10,8 +10,9 @@ export function ThemeProvider({
   return (
     <NextThemesProvider
       {...props}
-      // Prevent hydration mismatch by disabling transition on initial load
-      disableTransitionOnChange
+      disableTransitionOnChange={false}
+      enableSystem={true}
+      defaultTheme="system"
     >
       {children}
     </NextThemesProvider>

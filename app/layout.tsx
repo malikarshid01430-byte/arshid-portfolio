@@ -89,9 +89,9 @@ export default function RootLayout({
         <CursorGlow />
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
-          disableTransitionOnChange
+          defaultTheme="system"
+          enableSystem={true}
+          disableTransitionOnChange={false}
         >
           <main id="main-content" className="flex-1">
             {children}
