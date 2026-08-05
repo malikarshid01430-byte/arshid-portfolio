@@ -167,7 +167,8 @@ function ResumeDocument() {
           <View style={styles.headerRow}>
             <View>
               {profileImageSrc && (
-                <Image src={profileImageSrc} style={styles.profileImage} />
+                // @ts-expect-error
+                <Image src={profileImageSrc} style={styles.profileImage} alt="" />
               )}
             </View>
             <View style={{ flex: 1 }}>
