@@ -167,7 +167,7 @@ function ResumeDocument() {
           <View style={styles.headerRow}>
             <View>
               {profileImageSrc && (
-                // @ts-expect-error
+                // @ts-expect-error react-pdf Image prop typing
                 <Image src={profileImageSrc} style={styles.profileImage} alt="" />
               )}
             </View>

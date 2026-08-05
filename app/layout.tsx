@@ -65,6 +65,7 @@ export const metadata: Metadata = {
 import SkipLink from "./components/SkipLink";
 import CursorGlow from "./components/effects/CursorGlow";
 import ScrollProgress from "./components/effects/ScrollProgress";
+import EngineeringBackground from "./components/effects/EngineeringBackground";
 
 export default function RootLayout({
   children,
@@ -87,6 +88,7 @@ export default function RootLayout({
         <SkipLink />
         <ScrollProgress />
         <CursorGlow />
+        <EngineeringBackground />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
