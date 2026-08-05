@@ -4,7 +4,7 @@ import { portfolioData } from "@/app/data/portfolio";
 import fs from "fs";
 import path from "path";
 
-// Register fonts for professional typography
+// Register professional fonts
 Font.register({
   family: "Helvetica",
   fonts: [
@@ -17,39 +17,30 @@ const styles = StyleSheet.create({
   page: {
     fontFamily: "Helvetica",
     fontSize: 9,
-    lineHeight: 1.5,
+    lineHeight: 1.45,
     color: "#111827",
-    padding: 32,
+    padding: 28,
     backgroundColor: "#ffffff",
   },
   header: {
-    marginBottom: 14,
+    marginBottom: 12,
     borderBottom: "2 solid #2563eb",
-    paddingBottom: 10,
+    paddingBottom: 8,
   },
-  headerContent: {
+  headerRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 8,
+    marginBottom: 6,
     gap: 10,
   },
-  headerLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-    flex: 1,
-  },
   profileImage: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     objectFit: "cover",
   },
-  headerText: {
-    flex: 1,
-    marginLeft: 10,
-  },
   name: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: 700,
     color: "#0f172a",
     marginBottom: 2,
@@ -57,143 +48,97 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 10,
     color: "#475569",
-    marginBottom: 3,
+    marginBottom: 2,
   },
-  contact: {
-    fontSize: 8,
-    color: "#475569",
+  contactRow: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 6,
+    gap: 8,
+    fontSize: 8,
+    color: "#475569",
+    marginTop: 4,
   },
   contactItem: {
-    marginRight: 6,
+    marginRight: 8,
   },
   section: {
-    marginBottom: 12,
+    marginBottom: 10,
   },
   sectionTitle: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: 700,
     color: "#2563eb",
     textTransform: "uppercase",
-    letterSpacing: 0.8,
-    marginBottom: 6,
+    letterSpacing: 0.7,
+    marginBottom: 5,
     borderBottom: "1 solid #e5e7eb",
-    paddingBottom: 3,
+    paddingBottom: 2,
   },
   summary: {
     fontSize: 9,
     color: "#334155",
-    lineHeight: 1.5,
+    lineHeight: 1.45,
   },
-  skillCategory: {
-    marginBottom: 6,
-  },
-  skillCategoryTitle: {
-    fontSize: 9,
-    fontWeight: 600,
-    color: "#0f172a",
-    marginBottom: 2,
-  },
-  skillItem: {
-    fontSize: 8,
-    color: "#475569",
-    marginLeft: 4,
-    marginBottom: 1,
-  },
-  project: {
-    marginBottom: 10,
-  },
-  projectTitle: {
-    fontSize: 10,
-    fontWeight: 600,
-    color: "#0f172a",
-    marginBottom: 2,
-  },
-  projectSubtitle: {
-    fontSize: 9,
-    color: "#475569",
-    marginBottom: 2,
-  },
-  projectDescription: {
-    fontSize: 8,
-    color: "#334155",
-    lineHeight: 1.4,
-    marginBottom: 2,
-  },
-  techStack: {
-    fontSize: 8,
-    color: "#2563eb",
-    marginTop: 2,
-  },
-  experience: {
-    marginBottom: 10,
-  },
-  experienceHeader: {
+  skillsRow: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 2,
+    flexWrap: "wrap",
+    gap: 6,
   },
-  experienceRole: {
-    fontSize: 10,
-    fontWeight: 600,
-    color: "#0f172a",
-  },
-  experiencePeriod: {
-    fontSize: 9,
-    color: "#475569",
-  },
-  experienceCompany: {
-    fontSize: 9,
-    color: "#334155",
-    marginBottom: 2,
-  },
-  experienceDescription: {
+  skillChip: {
     fontSize: 8,
     color: "#334155",
-    lineHeight: 1.4,
-    marginLeft: 4,
+    backgroundColor: "#f1f5f9",
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+    border: "1 solid #e2e8f0",
   },
-  education: {
+  item: {
     marginBottom: 8,
   },
-  educationDegree: {
+  itemHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "baseline",
+    marginBottom: 1,
+  },
+  itemTitle: {
     fontSize: 10,
     fontWeight: 600,
     color: "#0f172a",
-    marginBottom: 2,
   },
-  educationInstitution: {
+  itemSubtitle: {
     fontSize: 9,
-    color: "#334155",
-    marginBottom: 2,
-  },
-  educationPeriod: {
-    fontSize: 8,
     color: "#475569",
-    marginBottom: 2,
+    marginBottom: 1,
   },
-  certification: {
+  itemPeriod: {
+    fontSize: 8,
+    color: "#64748b",
+  },
+  bullets: {
     fontSize: 8,
     color: "#334155",
-    marginBottom: 2,
-    marginLeft: 4,
-  },
-  achievement: {
-    fontSize: 8,
-    color: "#334155",
-    marginBottom: 2,
-    marginLeft: 4,
+    lineHeight: 1.35,
+    marginLeft: 8,
+    marginTop: 2,
   },
   link: {
     fontSize: 8,
     color: "#2563eb",
+    textDecoration: "none",
+  },
+  footer: {
+    marginTop: 10,
+    borderTop: "1 solid #e5e7eb",
+    paddingTop: 6,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   qrCode: {
-    width: 40,
-    height: 40,
-    marginTop: 8,
+    width: 36,
+    height: 36,
   },
 });
 
@@ -206,35 +151,36 @@ function ResumeDocument() {
     if (fs.existsSync(imagePath)) {
       profileImageSrc = imagePath;
     }
-  } catch (e) {
-    console.error("Failed to load profile image:", e);
+  } catch {
+    // ignore
   }
 
+  const allSkills = skillCategories.flatMap((category) =>
+    category.skills.map((skill) => `${category.title}: ${skill.name}`)
+  );
+
   return (
-      <Document title={`${personalInfo.name} - Resume`} author={personalInfo.name}>
+    <Document title={`${personalInfo.name} - Resume`} author={personalInfo.name}>
       <Page size="A4" style={styles.page}>
         {/* Header */}
         <View style={styles.header}>
-          <View style={styles.headerContent}>
-            <View style={styles.headerLeft}>
+          <View style={styles.headerRow}>
+            <View>
               {profileImageSrc && (
-                // eslint-disable-next-line jsx-a11y/alt-text
                 <Image src={profileImageSrc} style={styles.profileImage} />
               )}
-              <View style={styles.headerText}>
-                <Text style={styles.name}>{personalInfo.name}</Text>
-                <Text style={styles.title}>{personalInfo.title}</Text>
-                <Text style={{ fontSize: 7, color: "#64748b" }}>Generated: {new Date().toLocaleDateString()}</Text>
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.name}>{personalInfo.name}</Text>
+              <Text style={styles.title}>{personalInfo.title}</Text>
+              <View style={styles.contactRow}>
+                <Text style={styles.contactItem}>{personalInfo.email}</Text>
+                <Text style={styles.contactItem}>{personalInfo.phone}</Text>
+                <Text style={styles.contactItem}>{personalInfo.location}</Text>
+                <Text style={styles.contactItem}>{personalInfo.linkedin.replace("https://", "")}</Text>
+                <Text style={styles.contactItem}>{personalInfo.github.replace("https://", "")}</Text>
               </View>
             </View>
-          </View>
-          <View style={styles.contact}>
-            <Text style={styles.contactItem}>Email: {personalInfo.email}</Text>
-            <Text style={styles.contactItem}>Phone: {personalInfo.phone}</Text>
-            <Text style={styles.contactItem}>Location: {personalInfo.location}</Text>
-            <Text style={styles.contactItem}>LinkedIn: {personalInfo.linkedin.replace("https://", "")}</Text>
-            <Text style={styles.contactItem}>GitHub: {personalInfo.github.replace("https://", "")}</Text>
-            <Text style={styles.contactItem}>Portfolio: {personalInfo.portfolioUrl.replace("https://", "")}</Text>
           </View>
         </View>
 
@@ -247,36 +193,29 @@ function ResumeDocument() {
         {/* Technical Skills */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Technical Skills</Text>
-          {skillCategories.slice(0, 6).map((category, idx) => (
-            <View key={idx} style={styles.skillCategory}>
-              <Text style={styles.skillCategoryTitle}>{category.title}</Text>
-              {category.skills.slice(0, 5).map((skill, sIdx) => (
-                <Text key={sIdx} style={styles.skillItem}>
-                  {skill.name} ({skill.level}%)
-                </Text>
-              ))}
-            </View>
-          ))}
+          <View style={styles.skillsRow}>
+            {allSkills.slice(0, 24).map((skill, idx) => (
+              <Text key={idx} style={styles.skillChip}>{skill}</Text>
+            ))}
+          </View>
         </View>
 
         {/* Experience */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Experience</Text>
           {experience.slice(0, 3).map((exp, idx) => (
-            <View key={idx} style={styles.experience}>
-              <View style={styles.experienceHeader}>
-                <Text style={styles.experienceRole}>{exp.role}</Text>
-                <Text style={styles.experiencePeriod}>{exp.period}</Text>
+            <View key={idx} style={styles.item}>
+              <View style={styles.itemHeader}>
+                <Text style={styles.itemTitle}>{exp.role}</Text>
+                <Text style={styles.itemPeriod}>{exp.period}</Text>
               </View>
-              <Text style={styles.experienceCompany}>
-                {exp.company} | {exp.location}
-              </Text>
+              <Text style={styles.itemSubtitle}>{exp.company} | {exp.location}</Text>
               {exp.description.slice(0, 3).map((desc, dIdx) => (
-                <Text key={dIdx} style={styles.experienceDescription}>
-                  {desc}
-                </Text>
+                <Text key={dIdx} style={styles.bullets}>{desc}</Text>
               ))}
-              <Text style={styles.techStack}>Technologies: {exp.technologies.slice(0, 5).join(", ")}</Text>
+              <Text style={{ fontSize: 8, color: "#475569", marginTop: 2 }}>
+                Technologies: {exp.technologies.slice(0, 6).join(", ")}
+              </Text>
             </View>
           ))}
         </View>
@@ -285,11 +224,13 @@ function ResumeDocument() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Projects</Text>
           {projects.slice(0, 3).map((project, idx) => (
-            <View key={idx} style={styles.project}>
-              <Text style={styles.projectTitle}>{project.title}</Text>
-              <Text style={styles.projectSubtitle}>{project.subtitle}</Text>
-              <Text style={styles.projectDescription}>{project.longDescription?.slice(0, 200)}</Text>
-              <Text style={styles.techStack}>Technologies: {project.technologies.slice(0, 5).join(", ")}</Text>
+            <View key={idx} style={styles.item}>
+              <Text style={styles.itemTitle}>{project.title}</Text>
+              <Text style={styles.itemSubtitle}>{project.subtitle}</Text>
+              <Text style={styles.bullets}>{project.longDescription?.slice(0, 180)}</Text>
+              <Text style={{ fontSize: 8, color: "#475569", marginTop: 2 }}>
+                Technologies: {project.technologies.slice(0, 6).join(", ")}
+              </Text>
             </View>
           ))}
         </View>
@@ -298,12 +239,10 @@ function ResumeDocument() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Education</Text>
           {education.slice(0, 2).map((edu, idx) => (
-            <View key={idx} style={styles.education}>
-              <Text style={styles.educationDegree}>{edu.degree}</Text>
-              <Text style={styles.educationInstitution}>{edu.institution}</Text>
-              <Text style={styles.educationPeriod}>
-                {edu.period} | {edu.location}
-              </Text>
+            <View key={idx} style={styles.item}>
+              <Text style={styles.itemTitle}>{edu.degree}</Text>
+              <Text style={styles.itemSubtitle}>{edu.institution}</Text>
+              <Text style={styles.itemPeriod}>{edu.period} | {edu.location}</Text>
             </View>
           ))}
         </View>
@@ -312,10 +251,9 @@ function ResumeDocument() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Certifications</Text>
           {certifications.slice(0, 5).map((cert, idx) => (
-            <View key={idx} style={styles.certification}>
-              <Text>
-                {cert.name} - {cert.issuer} ({cert.date})
-              </Text>
+            <View key={idx} style={styles.item}>
+              <Text style={styles.itemTitle}>{cert.name}</Text>
+              <Text style={styles.itemSubtitle}>{cert.issuer} | {cert.date}</Text>
             </View>
           ))}
         </View>
@@ -324,23 +262,19 @@ function ResumeDocument() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Achievements</Text>
           {achievements.slice(0, 3).map((achievement, idx) => (
-            <View key={idx} style={styles.achievement}>
-              <Text>
-                {achievement.title} - {achievement.description}
-              </Text>
+            <View key={idx} style={styles.item}>
+              <Text style={styles.itemTitle}>{achievement.title}</Text>
+              <Text style={styles.bullets}>{achievement.description}</Text>
             </View>
           ))}
         </View>
 
-        {/* Connect */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Connect</Text>
-          <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 6, marginTop: 4 }}>
+        {/* Footer with links and QR */}
+        <View style={styles.footer}>
+          <View>
             <Text style={styles.link}>GitHub: {personalInfo.github.replace("https://", "")}</Text>
             <Text style={styles.link}>LinkedIn: {personalInfo.linkedin.replace("https://", "")}</Text>
-            <Text style={styles.link}>Email: {personalInfo.email}</Text>
-            <Text style={styles.link}>Phone: {personalInfo.phone}</Text>
-            <Text style={styles.link}>Location: {personalInfo.location}</Text>
+            <Text style={styles.link}>Portfolio: {personalInfo.portfolioUrl.replace("https://", "")}</Text>
           </View>
         </View>
       </Page>
