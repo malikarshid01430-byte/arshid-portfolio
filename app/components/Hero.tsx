@@ -9,16 +9,16 @@ import { portfolioData } from "../data/portfolio";
 import DownloadResumeButton from "./DownloadResumeButton";
 
 const logs = [
-  "> Initializing system core...",
-  "> Loading embedded systems modules... OK",
-  "> IoT connectivity established... OK",
-  "> VLSI design tools ready... OK",
+  "> Initializing engineering profile...",
+  "> Loading embedded systems expertise... OK",
+  "> IoT connectivity protocols loaded... OK",
+  "> VLSI design fundamentals ready... OK",
   "> Android SDK configured... OK",
-  "> Edge AI models loaded... OK",
-  "> System status: ALL NOMINAL",
+  "> Edge AI models initialized... OK",
+  "> System status: READY FOR OPPORTUNITIES",
 ];
 
-const techBadges = ["ESP32", "IoT", "VLSI", "FPGA", "React", "Next.js", "Edge AI"];
+const techBadges = ["ESP32", "IoT", "VLSI", "FPGA", "React", "Next.js", "Edge AI", "Kotlin"];
 
 export default function Hero() {
   const [consoleLines, setConsoleLines] = useState<string[]>([]);
@@ -26,12 +26,12 @@ export default function Hero() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 500], [0, 120]);
+  const y = useTransform(scrollY, [0, 500], [0, 80]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
 
   const getDelay = useCallback((idx: number) => {
-    if (idx === 0) return 500;
-    return 250 + (idx - 1) * 80;
+    if (idx === 0) return 600;
+    return 300 + (idx - 1) * 100;
   }, []);
 
   useEffect(() => {
@@ -48,15 +48,15 @@ export default function Hero() {
     <section
       ref={ref}
       className="relative isolate min-h-screen w-full flex items-center justify-center overflow-hidden scroll-mt-20"
-      style={{ paddingTop: '6rem', paddingBottom: '6rem' }}
+      style={{ paddingTop: '7rem', paddingBottom: '6rem' }}
     >
       {/* Background layers with pointer-events-none */}
-      <div className="absolute inset-0 bg-gradient-to-br from-cyan-950/10 via-black to-violet-950/10 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-black to-slate-900 pointer-events-none" />
       <div className="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-cyan-500/5 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-violet-500/5 blur-[120px] pointer-events-none" />
       
       {/* Dot pattern overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[length:32px_32px] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[length:32px_32px] pointer-events-none" />
 
       <motion.div
         className="w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 relative z-10"
