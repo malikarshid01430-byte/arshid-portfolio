@@ -19,6 +19,8 @@ import {
   TrendingUp,
   Users,
   Globe,
+  MessageSquare,
+  Cpu,
 } from "lucide-react";
 import { portfolioData } from "../data/portfolio";
 
@@ -53,6 +55,16 @@ const stats = [
   { icon: Award, label: "Achievements", value: "7+", color: "text-amber-400" },
 ];
 
+const technicalSkills = [
+  { category: "Embedded Systems", skills: ["ESP32", "STM32", "Arduino", "RTOS", "IoT Protocols"] },
+  { category: "Programming", skills: ["C", "C++", "Python", "Kotlin", "JavaScript", "TypeScript"] },
+  { category: "Web Technologies", skills: ["React", "Next.js", "Node.js", "Tailwind CSS"] },
+  { category: "Electronics", skills: ["PCB Design", "VLSI", "FPGA", "Verilog"] },
+  { category: "AI/ML", skills: ["Edge AI", "Computer Vision", "TensorFlow Lite"] },
+];
+
+const languages = ["English", "Hindi", "Urdu", "Kannada"];
+
 export default function RecruiterDashboard() {
   const [currentTime, setCurrentTime] = useState(new Date());
 
@@ -67,14 +79,39 @@ export default function RecruiterDashboard() {
         <div className="flex flex-col items-center text-center mb-20">
           <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest" aria-hidden="true">{">"} RECRUITER::DASHBOARD</span>
           <h2 id="recruiter-dashboard-heading" className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Recruiter Overview
+            Executive Dashboard
           </h2>
           <div className="mt-3 h-[2px] w-24 bg-gradient-to-r from-cyan-500 to-violet-500" />
           <p className="mt-4 text-zinc-400 max-w-2xl">
-            Essential information for recruiters and hiring managers
+            Comprehensive professional overview for recruiters and hiring managers
           </p>
         </div>
 
+        {/* Professional Summary */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ delay: 0.1, duration: 0.4 }}
+          className="rounded-2xl border border-zinc-800 bg-zinc-950/40 p-6 sm:p-8 mb-12"
+        >
+          <h3 className="font-mono text-sm font-semibold text-white uppercase tracking-wide flex items-center gap-2 mb-4">
+            <MessageSquare className="h-4 w-4 text-cyan-400" />
+            Professional Summary
+          </h3>
+          <p className="text-sm text-zinc-400 leading-relaxed max-w-4xl">
+            {portfolioData.personalInfo.bioShort}
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {["Embedded Systems", "IoT", "VLSI", "FPGA", "Edge AI", "Full Stack"].map((domain) => (
+              <span key={domain} className="px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-[10px] font-mono text-cyan-400">
+                {domain}
+              </span>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Quick Info Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-12">
           {quickInfo.map((info, idx) => {
             const Icon = info.icon;
@@ -99,6 +136,7 @@ export default function RecruiterDashboard() {
           })}
         </div>
 
+        {/* Quick Actions */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
           {quickActions.map((action, idx) => {
             const Icon = action.icon;
@@ -132,6 +170,7 @@ export default function RecruiterDashboard() {
           })}
         </div>
 
+        {/* Stats Grid */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -151,11 +190,61 @@ export default function RecruiterDashboard() {
           })}
         </motion.div>
 
+        {/* Technical Skills */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ delay: 0.4, duration: 0.4 }}
+          className="rounded-2xl border border-zinc-800 bg-zinc-950/40 p-6 sm:p-8 mb-12"
+        >
+          <h3 className="font-mono text-sm font-semibold text-white uppercase tracking-wide flex items-center gap-2 mb-6">
+            <Cpu className="h-4 w-4 text-cyan-400" />
+            Technical Skills
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {technicalSkills.map((group, idx) => (
+              <div key={idx}>
+                <h4 className="text-xs font-semibold text-zinc-300 mb-2">{group.category}</h4>
+                <div className="flex flex-wrap gap-1.5">
+                  {group.skills.map((skill) => (
+                    <span key={skill} className="px-2 py-1 rounded bg-zinc-900/60 border border-zinc-800 text-[10px] font-mono text-zinc-400">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Languages */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ delay: 0.5, duration: 0.4 }}
+          className="rounded-2xl border border-zinc-800 bg-zinc-950/40 p-6 sm:p-8 mb-12"
+        >
+          <h3 className="font-mono text-sm font-semibold text-white uppercase tracking-wide flex items-center gap-2 mb-4">
+            <Globe className="h-4 w-4 text-cyan-400" />
+            Languages
+          </h3>
+          <div className="flex flex-wrap gap-2">
+            {languages.map((lang) => (
+              <span key={lang} className="px-3 py-1.5 rounded-full border border-zinc-800 bg-zinc-900/40 text-xs font-mono text-zinc-300">
+                {lang}
+              </span>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* System Status */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ delay: 0.6, duration: 0.4 }}
           className="rounded-2xl border border-zinc-800 bg-zinc-950/40 p-6"
         >
           <div className="flex items-center justify-between mb-4">
