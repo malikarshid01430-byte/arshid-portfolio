@@ -1,0 +1,59 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "skills": "Skills",
+    "projects": "Projects",
+    "experience": "Experience",
+    "education": "Education",
+    "certifications": "Certifications",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Hello, I'm",
+    "title": "Electronics & Communication Engineer",
+    "subtitle": "Specializing in Embedded Systems, IoT, VLSI, and Edge AI",
+    "availability": "Available for Full-Time Opportunities",
+    "cta": {
+      "resume": "Download Resume",
+      "github": "GitHub",
+      "linkedin": "LinkedIn"
+    }
+  },
+  "dashboard": {
+    "title": "Executive Dashboard",
+    "subtitle": "Comprehensive professional overview for recruiters and hiring managers",
+    "summary": "Professional Summary",
+    "skills": "Technical Skills",
+    "languages": "Languages",
+    "status": "System Status"
+  },
+  "projects": {
+    "title": "Engineering Case Studies",
+    "subtitle": "End-to-end engineering projects with measurable impact and technical depth",
+    "viewCaseStudy": "View Case Study",
+    "problem": "Problem Statement",
+    "solution": "Solution Approach",
+    "overview": "Overview",
+    "results": "Results & Impact",
+    "highlights": "Key Highlights",
+    "features": "Features",
+    "techStack": "Tech Stack",
+    "challenges": "Technical Challenges",
+    "architecture": "System Architecture",
+    "media": "Media"
+  },
+  "contact": {
+    "title": "Get In Touch",
+    "subtitle": "Let's discuss opportunities, collaborations, or just say hello",
+    "name": "Your Name",
+    "email": "Your Email",
+    "message": "Message",
+    "send": "Send Message",
+    "copied": "Copied to clipboard"
+  },
+  "footer": {
+    "copyright": "All Rights Reserved",
+    "tagline": "Electronics & Communication Engineer"
+  }
+}
