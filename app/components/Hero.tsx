@@ -23,7 +23,8 @@ const techBadges = ["ESP32", "IoT", "VLSI", "FPGA", "React", "Next.js", "Edge AI
 export default function Hero() {
   const [consoleLines, setConsoleLines] = useState<string[]>([]);
   const [currentLineIdx, setCurrentLineIdx] = useState(0);
-  const ref = useRef(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true });
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 80]);
@@ -44,6 +45,23 @@ export default function Hero() {
     }
   }, [isInView, currentLineIdx, getDelay]);
 
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!ref.current) return;
+      const rect = ref.current.getBoundingClientRect();
+      setMousePos({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      });
+    };
+
+    const el = ref.current;
+    if (el) {
+      el.addEventListener("mousemove", handleMouseMove);
+      return () => el.removeEventListener("mousemove", handleMouseMove);
+    }
+  }, []);
+
   return (
     <section
       ref={ref}
@@ -57,6 +75,16 @@ export default function Hero() {
       
       {/* Dot pattern overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[length:32px_32px] pointer-events-none" />
+
+      {/* Mouse-follow glow */}
+      <div
+        className="pointer-events-none absolute h-[300px] w-[300px] rounded-full bg-cyan-500/10 blur-[100px] transition-opacity duration-500"
+        style={{
+          transform: `translate(${mousePos.x - 150}px, ${mousePos.y - 150}px)`,
+          opacity: mousePos.x ? 0.6 : 0,
+        }}
+        aria-hidden="true"
+      />
 
       <motion.div
         className="w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 relative z-10"
