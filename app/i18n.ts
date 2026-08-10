@@ -1,4 +1,3 @@
-import { notFound } from "next/navigation";
 import { getRequestConfig } from "next-intl/server";
 
 export const locales = ["en", "hi", "ur", "kn", "ta", "te", "ml", "mr", "gu", "pa", "bn", "or", "as", "ks", "ja", "zh", "ko", "de", "fr", "es", "ar", "ru", "it", "pt"];
