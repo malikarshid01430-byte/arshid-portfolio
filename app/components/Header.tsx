@@ -3,7 +3,7 @@
 import { useState, useSyncExternalStore } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Cpu, Menu, X, Sun, Moon } from "lucide-react";
-import { useTheme } from "next-themes";
+import { useTheme } from "@teispace/next-themes";
 import { portfolioData } from "../data/portfolio";
 import DownloadResumeButton from "./DownloadResumeButton";
 

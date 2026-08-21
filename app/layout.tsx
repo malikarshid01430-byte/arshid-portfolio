@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { NextIntlClientProvider } from "next-intl";
 import { ThemeProvider } from "./components/ThemeProvider";
 import StructuredData from "./components/StructuredData";
 import Script from "next/script";
 import "./globals.css";
+import messages from "../messages/en.json";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://malikarshid01430-byte.github.io"),
@@ -95,9 +97,11 @@ export default function RootLayout({
           enableSystem={true}
           disableTransitionOnChange={false}
         >
-          <main id="main-content" className="flex-1">
-            {children}
-          </main>
+          <NextIntlClientProvider locale="en" messages={messages}>
+            <main id="main-content" className="flex-1">
+              {children}
+            </main>
+          </NextIntlClientProvider>
         </ThemeProvider>
         <StructuredData />
 

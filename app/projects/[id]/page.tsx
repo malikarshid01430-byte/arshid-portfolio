@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { portfolioData } from "../../data/portfolio";
 import { Metadata } from "next";
-import Link from "next/link";
+import LocalizedLink from "../../components/LocalizedLink";
 import { Calendar, Cpu, Code2, CheckCircle } from "lucide-react";
 
 interface ProjectPageProps {
@@ -98,9 +98,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-xs font-mono text-zinc-500 mb-8">
-          <Link href="/" className="hover:text-cyan-400 transition-colors">Home</Link>
+          <LocalizedLink href="/" className="hover:text-cyan-400 transition-colors">Home</LocalizedLink>
           <span>/</span>
-          <Link href="/#projects" className="hover:text-cyan-400 transition-colors">Projects</Link>
+          <LocalizedLink href="/#projects" className="hover:text-cyan-400 transition-colors">Projects</LocalizedLink>
           <span>/</span>
           <span className="text-zinc-400">{project.title}</span>
         </nav>

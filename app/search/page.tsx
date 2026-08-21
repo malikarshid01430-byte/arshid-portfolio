@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, X, ExternalLink, Briefcase, Award, GraduationCap } from "lucide-react";
 import { portfolioData } from "../data/portfolio";
+import LocalizedLink from "../components/LocalizedLink";
 
 interface SearchResult {
   id: string;
@@ -183,7 +184,7 @@ export default function SearchPage() {
                       const Icon = result.icon;
                       const colors = typeColors[result.type] || typeColors.project;
                       return (
-                        <a
+                        <LocalizedLink
                           key={result.id}
                           href={result.href}
                           onClick={() => setIsOpen(false)}
@@ -199,7 +200,7 @@ export default function SearchPage() {
                             <p className="text-xs text-zinc-500 truncate">{result.description}</p>
                           </div>
                           <ExternalLink className="h-4 w-4 text-zinc-600 group-hover:text-cyan-400 transition-colors flex-shrink-0" />
-                        </a>
+                        </LocalizedLink>
                       );
                     })}
                   </div>

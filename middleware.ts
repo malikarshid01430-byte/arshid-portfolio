@@ -1,9 +1,11 @@
-import createMiddleware from "next-intl/middleware";
+import { NextResponse } from "next/server";
 
-export default createMiddleware({
-  locales: ["en", "hi", "ur", "kn", "ta", "te", "ml", "mr", "gu", "pa", "bn", "or", "as", "ks", "ja", "zh", "ko", "de", "fr", "es", "ar", "ru", "it", "pt"],
-  defaultLocale: "en",
-});
+// Minimal pass-through middleware: locale routing is handled by the
+// `app/[locale]` layout and catch-all pages. This avoids runtime errors
+// from the next-intl middleware when a separate config file is not present.
+export function middleware() {
+  return NextResponse.next();
+}
 
 export const config = {
   matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],

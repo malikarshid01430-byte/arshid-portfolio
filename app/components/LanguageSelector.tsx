@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale } from "next-intl";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Globe, Check } from "lucide-react";
@@ -37,14 +37,25 @@ export default function LanguageSelector() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
 
   const currentLang = languages.find((l) => l.code === locale) || languages[0];
 
   const switchLocale = (newLocale: string) => {
-    const segments = pathname.split("/");
-    segments[1] = newLocale;
-    const newPath = segments.join("/");
+    const knownLocales = languages.map((l) => l.code);
+    const segments = pathname.split("/").filter(Boolean);
+
+    if (segments.length > 0 && knownLocales.includes(segments[0])) {
+      // replace existing locale segment
+      segments[0] = newLocale;
+    } else {
+      // insert locale as first segment
+      segments.unshift(newLocale);
+    }
+
+    const query = searchParams ? `?${searchParams.toString()}` : "";
+    const newPath = `/${segments.join("/")}${query}`;
     router.push(newPath);
     setIsOpen(false);
   };

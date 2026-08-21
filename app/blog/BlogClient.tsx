@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import LocalizedLink from "../components/LocalizedLink";
 import { motion } from "framer-motion";
 import { Calendar, Clock, ArrowRight, BookOpen } from "lucide-react";
 
@@ -112,7 +112,7 @@ export default function BlogClient() {
               viewport={{ once: true, amount: 0.2 }}
               transition={{ delay: idx * 0.05, duration: 0.3 }}
             >
-              <Link
+              <LocalizedLink
                 href={`/blog/${post.slug}`}
                 className="group block rounded-2xl border border-zinc-800 bg-zinc-950/40 p-6 hover:border-cyan-500/30 transition-all h-full"
               >
@@ -165,7 +165,7 @@ export default function BlogClient() {
                     </span>
                   </div>
                 </div>
-              </Link>
+              </LocalizedLink>
             </motion.div>
           ))}
         </div>

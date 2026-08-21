@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import LocalizedLink from "../../components/LocalizedLink";
 import { Calendar, Clock, Tag, ArrowLeft } from "lucide-react";
 
 const blogPosts: Record<string, {
@@ -670,21 +670,21 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-xs font-mono text-zinc-500 mb-8">
-          <Link href="/" className="hover:text-cyan-400 transition-colors">Home</Link>
+          <LocalizedLink href="/" className="hover:text-cyan-400 transition-colors">Home</LocalizedLink>
           <span>/</span>
-          <Link href="/blog" className="hover:text-cyan-400 transition-colors">Blog</Link>
+          <LocalizedLink href="/blog" className="hover:text-cyan-400 transition-colors">Blog</LocalizedLink>
           <span>/</span>
           <span className="text-zinc-400">{post.title}</span>
         </nav>
 
         {/* Back Button */}
-        <Link
+        <LocalizedLink
           href="/blog"
           className="inline-flex items-center gap-2 text-xs font-mono text-zinc-400 hover:text-cyan-400 transition-colors mb-8"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Blog
-        </Link>
+        </LocalizedLink>
 
         {/* Article Header */}
         <article className="prose prose-invert max-w-none">
