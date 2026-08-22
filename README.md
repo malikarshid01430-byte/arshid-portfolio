@@ -47,7 +47,7 @@ cp .env.example .env.local
 # - NEXT_PUBLIC_GA_MEASUREMENT_ID
 # - NEXT_PUBLIC_CLARITY_ID
 # Optional:
-# - NEXT_PUBLIC_OPENAI_API_KEY
+# - OPENAI_API_KEY
 # - GITHUB_TOKEN
 ```
 
@@ -58,7 +58,7 @@ cp .env.example .env.local
 | `NEXT_PUBLIC_SITE_URL` | Your site URL | Yes |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics measurement ID | Yes |
 | `NEXT_PUBLIC_CLARITY_ID` | Microsoft Clarity project ID | Yes |
-| `NEXT_PUBLIC_OPENAI_API_KEY` | OpenAI API key for AI chatbot | No |
+| `OPENAI_API_KEY` | OpenAI API key for AI chatbot (server-side only) | No |
 | `GITHUB_TOKEN` | GitHub personal access token | No |
 | `EMAILJS_PUBLIC_KEY` | EmailJS public key | No |
 | `EMAILJS_SERVICE_ID` | EmailJS service ID | No |
@@ -159,7 +159,7 @@ MIT License - feel free to use this portfolio as a template for your own.
 
 **Arshid Ahmad Malik**
 
-- **Portfolio**: https://arhid-portfolio.vercel.app
+- **Portfolio**: https://arshid-portfolio.vercel.app
 - **GitHub**: https://github.com/arshidahmadmalik
 - **LinkedIn**: https://linkedin.com/in/arshidahmadmalik
 - **Email**: malikarshid9893@gmail.com

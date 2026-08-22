@@ -137,7 +137,8 @@ const ResumePreview = memo(function ResumePreview({
                 className="w-full h-full"
                 onLoad={handleIframeLoad}
                 onError={handleIframeError}
-                title="Resume Preview"
+                title="Arshid Ahmad Malik — Resume Preview"
+                aria-label="Resume document preview"
               />
             </div>
           </motion.div>

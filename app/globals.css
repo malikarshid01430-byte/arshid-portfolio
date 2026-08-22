@@ -667,6 +667,45 @@
     background-color: var(--bg-raised);
     color: var(--text-tertiary);
   }
+
+  /* Select elements in light mode */
+  html.light select.input-field {
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    border-color: var(--border-dim);
+  }
+
+  /* Card-lift hover border override for light mode */
+  html.light .card-lift:hover {
+    border-color: var(--cyan-border) !important;
+    box-shadow: 0 8px 24px -8px rgba(8,145,178,0.10);
+  }
+
+  /* Ensure btn-ghost reads correctly in light mode */
+  html.light .btn-ghost {
+    color: var(--text-secondary);
+    border-color: var(--border-dim);
+  }
+  html.light .btn-ghost:hover {
+    background-color: var(--cyan-dim);
+    border-color: var(--cyan-border);
+    color: var(--cyan);
+  }
+
+  /* Tech panel in light mode */
+  html.light .tech-panel .text-label {
+    color: var(--text-dim);
+  }
+
+  /* Skill track in light mode */
+  html.light .skill-track {
+    background-color: var(--border-dim);
+  }
+
+  /* Timeline node in light mode */
+  html.light .timeline-line {
+    background: linear-gradient(to bottom, var(--cyan) 0%, rgba(8,145,178,0.15) 100%);
+  }
 }
 
 /* ─────────────────────────────────────────────

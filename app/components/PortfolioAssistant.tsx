@@ -157,8 +157,9 @@ function PortfolioAssistantComponent() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [isTyping, setIsTyping] = useState(false);
 
-  const hasOpenAIKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY && 
-                       process.env.NODE_ENV === 'production';
+  // Always attempt the server-side AI route; the route itself handles
+  // the case where OPENAI_API_KEY is not configured and returns a local response.
+  const useAI = true;
 
   const addMessage = useCallback((role: "user" | "assistant", content: string) => {
     const newMessage: Message = {
@@ -179,7 +180,7 @@ function PortfolioAssistantComponent() {
     setIsTyping(true);
 
     try {
-      const response = hasOpenAIKey 
+      const response = useAI
         ? await getAIResponse(userMessage)
         : getLocalResponse(userMessage);
       addMessage("assistant", response);
@@ -195,7 +196,7 @@ function PortfolioAssistantComponent() {
     setIsTyping(true);
     
     try {
-      const response = hasOpenAIKey 
+      const response = useAI
         ? await getAIResponse(question)
         : getLocalResponse(question);
       addMessage("assistant", response);

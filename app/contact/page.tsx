@@ -2,325 +2,259 @@
 
 import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Send, CheckCircle, Copy, ExternalLink, MessageSquare } from "lucide-react";
+import {
+  Mail, Phone, MapPin, Send, CheckCircle,
+  Copy, ExternalLink, MessageSquare, Check,
+} from "lucide-react";
+import { FaGithub, FaLinkedin, FaWhatsapp } from "react-icons/fa";
 import { portfolioData } from "../data/portfolio";
 
-const steps = [
-  "Establishing peer connection to host...",
-  `Encrypting payload with TLS 1.3... Done.`,
-  `Formulating packet header: [SENDER_EMAIL: %EMAIL%]`,
-  `Assembling body payload: (%LEN% bytes)`,
-  "Transmitting TCP frames...",
-  "Sending signal via virtual MQTT gateway... Done.",
-  "HTTP 200 OK. Response received.",
-  "Transmission successfully completed!",
+const terminalSteps = [
+  "> Establishing peer connection to host...",
+  "> Encrypting payload with TLS 1.3... Done.",
+  "> Formulating packet header: [SENDER: %EMAIL%]",
+  "> Assembling body payload: (%LEN% bytes)",
+  "> Transmitting TCP frames...",
+  "> Sending via virtual MQTT gateway... Done.",
+  "> HTTP 200 OK — Response received.",
+  "> Transmission successfully completed!",
 ];
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [logs, setLogs] = useState<string[]>([]);
-  const [copySuccess, setCopySuccess] = useState<string | null>(null);
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [sending,   setSending]   = useState(false);
+  const [done,      setDone]      = useState(false);
+  const [logs,      setLogs]      = useState<string[]>([]);
+  const [copied,    setCopied]    = useState<"email" | "phone" | null>(null);
 
-  const personalInfo = portfolioData.personalInfo;
+  const { personalInfo } = portfolioData;
 
-  const copyToClipboard = useCallback(async (text: string, type: "email" | "phone") => {
+  const handleCopy = useCallback(async (text: string, type: "email" | "phone") => {
     try {
       await navigator.clipboard.writeText(text);
-      setCopySuccess(type);
-      setTimeout(() => setCopySuccess(null), 2000);
-    } catch {
-      // Silently fail
-    }
+      setCopied(type);
+      setTimeout(() => setCopied(null), 2200);
+    } catch { /* ignore */ }
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) return;
-
-    setIsSubmitting(true);
+    if (!form.name || !form.email || !form.message) return;
+    setSending(true);
     setLogs([]);
-
-    // Simulate terminal-style submission
-    for (let i = 0; i < steps.length; i++) {
-      await new Promise((resolve) => setTimeout(resolve, 150 + 40 * i));
-      const log = steps[i]
-        .replace("%EMAIL%", formData.email)
-        .replace("%LEN%", formData.message.length.toString());
-      setLogs((prev) => [...prev, log]);
+    for (let i = 0; i < terminalSteps.length; i++) {
+      await new Promise((r) => setTimeout(r, 160 + 40 * i));
+      setLogs((p) => [
+        ...p,
+        terminalSteps[i].replace("%EMAIL%", form.email).replace("%LEN%", String(form.message.length)),
+      ]);
     }
-
-    await new Promise((resolve) => setTimeout(resolve, 300));
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    setFormData({ name: "", email: "", message: "" });
+    setSending(false);
+    setDone(true);
+    setForm({ name: "", email: "", message: "" });
   };
 
   const whatsappUrl = `https://wa.me/${personalInfo.phone.replace(/\D/g, "")}`;
 
   return (
-    <div className="relative py-24 border-t border-zinc-900 bg-black/40">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="flex flex-col items-center text-center mb-16">
-          <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest">{'>'} REGISTER::TRANSCEIVER</span>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Get In Touch
-          </h2>
-          <div className="mt-3 h-[2px] w-24 bg-gradient-to-r from-cyan-500 to-violet-500" />
-        </div>
+    <main
+      id="main-content"
+      tabIndex={-1}
+      className="relative overflow-hidden section-pad"
+      style={{
+        backgroundColor: "var(--bg-base)",
+        borderTop: "1px solid var(--border-subtle)",
+        paddingTop: "clamp(6rem, 12vw, 9rem)",
+        minHeight: "100vh",
+      }}
+      aria-labelledby="contact-page-heading"
+    >
+      {/* Ambient glow */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: "5%", left: "5%",
+          width: "45vw", height: "45vw",
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(34,211,238,0.04) 0%, transparent 65%)",
+        }}
+        aria-hidden="true"
+      />
 
-        {/* Status Indicator */}
-        <div className="flex justify-center mb-12">
-          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/5 px-4 py-2">
-            <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
-            <span className="text-xs font-mono text-emerald-400">
-              Open for Opportunities • Response within 24 hours
+      <div className="container-tight relative z-10">
+        {/* Header */}
+        <div className="mb-14">
+          <p className="section-eyebrow mb-4">Contact</p>
+          <h1 id="contact-page-heading" className="section-title mb-4">
+            Let&apos;s build something useful.
+          </h1>
+          <div className="flex items-center gap-2 mt-5">
+            <span className="status-dot status-dot-pulse" />
+            <span className="text-label" style={{ color: "var(--emerald)" }}>
+              AVAILABLE · Response within 24 hours
             </span>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start max-w-5xl mx-auto">
-          {/* Left Column - Contact Info */}
-          <div className="lg:col-span-5 space-y-6">
-            <h3 className="font-mono text-sm font-bold text-cyan-400 tracking-widest uppercase flex items-center gap-2 mb-4">
-              <Mail className="h-5 w-5 text-cyan-400" />
-              <span>{'// CONNECTION_PORTS'}</span>
-            </h3>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
 
-            <p className="text-zinc-400 text-sm leading-relaxed">
-              I am currently looking for full-time opportunities in Embedded Systems,
-              IoT, VLSI, and Full Stack Development. Feel free to reach out!
-            </p>
+          {/* ── Left: info ── */}
+          <div className="lg:col-span-5 flex flex-col gap-6">
 
-            {/* Contact Details */}
-            <div className="rounded-xl border border-zinc-900 bg-zinc-950/40 p-6 font-mono text-xs text-zinc-400 space-y-4">
-              <span className="text-cyan-400 font-bold block border-b border-zinc-900 pb-2 mb-2">
-                {'// CONTACT_INFO:'}
-              </span>
+            {/* Contact info panel */}
+            <div className="tech-panel overflow-hidden" aria-label="Contact information">
+              <div
+                className="px-4 py-2.5 border-b"
+                style={{ borderColor: "var(--border-subtle)", backgroundColor: "var(--bg-raised)" }}
+              >
+                <span className="text-label" style={{ color: "var(--cyan)" }}>{"// CONNECTION_PORTS"}</span>
+              </div>
 
               {/* Email */}
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <Mail className="h-4 w-4 text-cyan-400" />
-                  <a href={`mailto:${personalInfo.email}`} className="hover:text-cyan-400 text-xs">
+              <div className="flex items-center justify-between gap-3 px-4 py-3 border-b" style={{ borderColor: "var(--border-subtle)" }}>
+                <div className="flex items-center gap-2 min-w-0">
+                  <Mail className="h-3.5 w-3.5 shrink-0" style={{ color: "var(--cyan)" }} aria-hidden="true" />
+                  <a href={`mailto:${personalInfo.email}`} className="text-mono-xs truncate transition-colors hover:underline" style={{ color: "var(--text-secondary)" }}>
                     {personalInfo.email}
                   </a>
                 </div>
                 <button
-                  onClick={() => copyToClipboard(personalInfo.email, "email")}
-                  className="flex items-center gap-1 px-2 py-1 rounded border border-zinc-800 text-zinc-400 hover:text-cyan-400 transition-colors"
-                  aria-label="Copy email"
+                  onClick={() => handleCopy(personalInfo.email, "email")}
+                  className="shrink-0 flex h-7 w-7 items-center justify-center rounded transition-colors focus-visible:outline-none"
+                  style={{ border: "1px solid var(--border-subtle)", color: copied === "email" ? "var(--emerald)" : "var(--text-dim)" }}
+                  aria-label="Copy email address"
                 >
-                  {copySuccess === "email" ? (
-                    <CheckCircle className="h-3 w-3" />
-                  ) : (
-                    <Copy className="h-3 w-3" />
-                  )}
+                  {copied === "email" ? <Check className="h-3 w-3" aria-hidden="true" /> : <Copy className="h-3 w-3" aria-hidden="true" />}
                 </button>
               </div>
 
               {/* Phone */}
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <Phone className="h-4 w-4 text-cyan-400" />
-                  <a href={`tel:${personalInfo.phone}`} className="hover:text-cyan-400 text-xs">
+              <div className="flex items-center justify-between gap-3 px-4 py-3 border-b" style={{ borderColor: "var(--border-subtle)" }}>
+                <div className="flex items-center gap-2 min-w-0">
+                  <Phone className="h-3.5 w-3.5 shrink-0" style={{ color: "var(--cyan)" }} aria-hidden="true" />
+                  <a href={`tel:${personalInfo.phone}`} className="text-mono-xs truncate transition-colors hover:underline" style={{ color: "var(--text-secondary)" }}>
                     {personalInfo.phone}
                   </a>
                 </div>
                 <button
-                  onClick={() => copyToClipboard(personalInfo.phone, "phone")}
-                  className="flex items-center gap-1 px-2 py-1 rounded border border-zinc-800 text-zinc-400 hover:text-cyan-400 transition-colors"
-                  aria-label="Copy phone"
+                  onClick={() => handleCopy(personalInfo.phone, "phone")}
+                  className="shrink-0 flex h-7 w-7 items-center justify-center rounded transition-colors focus-visible:outline-none"
+                  style={{ border: "1px solid var(--border-subtle)", color: copied === "phone" ? "var(--emerald)" : "var(--text-dim)" }}
+                  aria-label="Copy phone number"
                 >
-                  {copySuccess === "phone" ? (
-                    <CheckCircle className="h-3 w-3" />
-                  ) : (
-                    <Copy className="h-3 w-3" />
-                  )}
+                  {copied === "phone" ? <Check className="h-3 w-3" aria-hidden="true" /> : <Copy className="h-3 w-3" aria-hidden="true" />}
                 </button>
               </div>
 
               {/* Location */}
-              <div className="flex items-center gap-3">
-                <MapPin className="h-4 w-4 text-cyan-400" />
-                <span className="text-xs">{personalInfo.location}</span>
+              <div className="flex items-center gap-2 px-4 py-3">
+                <MapPin className="h-3.5 w-3.5 shrink-0" style={{ color: "var(--cyan)" }} aria-hidden="true" />
+                <span className="text-mono-xs" style={{ color: "var(--text-secondary)" }}>{personalInfo.location}</span>
               </div>
             </div>
 
-            {/* Quick Actions */}
+            {/* Social links */}
             <div className="grid grid-cols-2 gap-3">
-              <a
-                href={personalInfo.resumeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-cyan-500/20 bg-cyan-500/5 font-mono text-xs text-cyan-400 hover:border-cyan-400 transition-colors"
-              >
-                <ExternalLink className="h-4 w-4" /> Resume
-              </a>
-              <a
-                href={personalInfo.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-blue-500/20 bg-blue-500/5 font-mono text-xs text-blue-400 hover:border-blue-400 transition-colors"
-              >
-                <ExternalLink className="h-4 w-4" /> LinkedIn
-              </a>
-              <a
-                href={personalInfo.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-zinc-700 bg-zinc-900/50 font-mono text-xs text-zinc-300 hover:text-cyan-400 transition-colors"
-              >
-                <ExternalLink className="h-4 w-4" /> GitHub
-              </a>
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-emerald-500/20 bg-emerald-500/5 font-mono text-xs text-emerald-400 hover:border-emerald-400 transition-colors"
-              >
-                <ExternalLink className="h-4 w-4" /> WhatsApp
-              </a>
-              <a
-                href={`mailto:${personalInfo.email}`}
-                className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-violet-500/20 bg-violet-500/5 font-mono text-xs text-violet-400 hover:border-violet-400 transition-colors"
-              >
-                <Mail className="h-4 w-4" /> Email
-              </a>
-              <a
-                href={`tel:${personalInfo.phone}`}
-                className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-green-500/20 bg-green-500/5 font-mono text-xs text-green-400 hover:border-green-400 transition-colors"
-              >
-                <Phone className="h-4 w-4" /> Call
-              </a>
+              {[
+                { href: personalInfo.resumeUrl,  icon: ExternalLink, label: "Resume",   target: "_blank" as const },
+                { href: personalInfo.linkedin,   icon: FaLinkedin,   label: "LinkedIn", target: "_blank" as const },
+                { href: personalInfo.github,     icon: FaGithub,     label: "GitHub",   target: "_blank" as const },
+                { href: whatsappUrl,             icon: FaWhatsapp,   label: "WhatsApp", target: "_blank" as const },
+              ].map(({ href, icon: Icon, label, target }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target={target}
+                  rel="noopener noreferrer"
+                  className="btn btn-ghost justify-center !text-xs"
+                  aria-label={label}
+                >
+                  <Icon className="h-4 w-4" aria-hidden="true" />
+                  {label}
+                </a>
+              ))}
             </div>
-
-            {/* Portfolio URL */}
-            <a
-              href={personalInfo.portfolioUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-900 bg-zinc-950/20 font-mono text-xs text-zinc-400 hover:text-cyan-400 transition-colors"
-            >
-              <MessageSquare className="h-4 w-4" />
-              {personalInfo.portfolioUrl}
-            </a>
           </div>
 
-          {/* Right Column - Contact Form */}
+          {/* ── Right: form ── */}
           <div className="lg:col-span-7">
-            <div className="rounded-xl border border-cyan-500/10 bg-black/60 p-6">
-              {!isSubmitted && !isSubmitting && (
-                <form onSubmit={handleSubmit} className="space-y-4">
+            <div
+              className="rounded-2xl p-6 sm:p-8"
+              style={{ backgroundColor: "var(--bg-surface)", border: "1px solid var(--border-dim)" }}
+            >
+              {!sending && !done && (
+                <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+                  <div className="mb-4">
+                    <p className="text-label" style={{ color: "var(--cyan)" }}>SEND A MESSAGE</p>
+                  </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label htmlFor="name" className="block font-mono text-[10px] text-zinc-500 uppercase">
-                        Your Name
-                      </label>
-                      <input
-                        id="name"
-                        type="text"
-                        name="name"
-                        required
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full rounded-lg border border-zinc-900 bg-zinc-950/80 px-4 py-2.5 font-mono text-xs text-white focus:border-cyan-500/50 focus:outline-none transition-colors"
-                        placeholder="John Doe"
-                      />
+                      <label htmlFor="contact-name" className="text-label block" style={{ color: "var(--text-dim)" }}>YOUR NAME</label>
+                      <input id="contact-name" type="text" name="name" required autoComplete="name"
+                        value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
+                        className="input-field" placeholder="John Doe" />
                     </div>
                     <div className="space-y-1.5">
-                      <label htmlFor="email" className="block font-mono text-[10px] text-zinc-500 uppercase">
-                        Your Email
-                      </label>
-                      <input
-                        id="email"
-                        type="email"
-                        name="email"
-                        required
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full rounded-lg border border-zinc-900 bg-zinc-950/80 px-4 py-2.5 font-mono text-xs text-white focus:border-cyan-500/50 focus:outline-none transition-colors"
-                        placeholder="john@example.com"
-                      />
+                      <label htmlFor="contact-email" className="text-label block" style={{ color: "var(--text-dim)" }}>YOUR EMAIL</label>
+                      <input id="contact-email" type="email" name="email" required autoComplete="email"
+                        value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })}
+                        className="input-field" placeholder="john@example.com" />
                     </div>
                   </div>
                   <div className="space-y-1.5">
-                    <label htmlFor="message" className="block font-mono text-[10px] text-zinc-500 uppercase">
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows={5}
-                      required
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="w-full rounded-lg border border-zinc-900 bg-zinc-950/80 px-4 py-2.5 font-mono text-xs text-white focus:border-cyan-500/50 focus:outline-none transition-colors resize-none"
-                      placeholder="Your message here..."
-                    />
+                    <label htmlFor="contact-message" className="text-label block" style={{ color: "var(--text-dim)" }}>MESSAGE</label>
+                    <textarea id="contact-message" name="message" rows={5} required
+                      value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })}
+                      className="input-field resize-none" placeholder="Your message here..." />
                   </div>
-                  <button
-                    type="submit"
-                    className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-cyan-500 to-violet-600 font-mono text-xs tracking-wider font-semibold text-white hover:brightness-110 transition-all"
-                  >
-                    <Send className="h-4 w-4" /> Send Message
+                  <button type="submit" className="btn btn-primary w-full justify-center" style={{ height: "3rem" }}>
+                    <Send className="h-4 w-4" aria-hidden="true" /> Send Message
                   </button>
                 </form>
               )}
 
-              {/* Terminal Output */}
-              {isSubmitting && (
-                <div className="font-mono text-xs text-cyan-400 min-h-[220px] flex flex-col justify-between">
-                  <div className="flex items-center gap-2 border-b border-cyan-500/10 pb-2 mb-4">
-                    <MessageSquare className="h-4 w-4" />
-                    <span className="font-bold uppercase tracking-wide">packet_sender.sh</span>
+              {/* Terminal sending */}
+              {sending && (
+                <div
+                  className="rounded-xl overflow-hidden font-mono text-xs min-h-[220px] flex flex-col"
+                  style={{ backgroundColor: "var(--bg-inset)", border: "1px solid var(--border-dim)" }}
+                >
+                  <div className="flex items-center gap-2 px-4 py-2.5 border-b" style={{ borderColor: "var(--border-subtle)", backgroundColor: "var(--bg-raised)" }}>
+                    <MessageSquare className="h-3.5 w-3.5" style={{ color: "var(--cyan)" }} aria-hidden="true" />
+                    <span className="text-label" style={{ color: "var(--cyan)" }}>packet_sender.sh</span>
                   </div>
-                  <div className="flex-1 space-y-2 max-h-[180px] overflow-y-auto">
-                    {logs.map((log, idx) => (
-                      <div key={idx} className="flex gap-1.5">
-                        <span className="text-cyan-600 select-none">{">>"}</span>
-                        <span>{log}</span>
-                      </div>
+                  <div className="flex-1 p-4 space-y-2 overflow-y-auto no-scrollbar" aria-live="polite">
+                    {logs.map((log, i) => (
+                      <p key={i} className="text-label" style={{ color: "var(--text-secondary)" }}>{log}</p>
                     ))}
-                    <div className="flex items-center gap-1">
-                      <span className="text-cyan-600 select-none">{">>"}</span>
-                      <span className="h-4 w-1.5 bg-cyan-400 animate-pulse" />
-                    </div>
+                    <span className="inline-block h-4 w-1 animate-pulse" style={{ backgroundColor: "var(--cyan)" }} aria-hidden="true" />
                   </div>
                 </div>
               )}
 
-              {/* Success State */}
-              {isSubmitted && (
-                <div className="flex flex-col items-center justify-center text-center py-8 min-h-[220px]">
+              {/* Success */}
+              {done && (
+                <motion.div className="flex flex-col items-center justify-center py-14 gap-5 text-center" aria-live="polite">
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    transition={{ type: "spring", duration: 0.5 }}
-                    className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 mb-4"
+                    transition={{ type: "spring", stiffness: 200, damping: 18 }}
+                    className="flex h-16 w-16 items-center justify-center rounded-full"
+                    style={{ backgroundColor: "rgba(52,211,153,0.10)", border: "1px solid rgba(52,211,153,0.25)" }}
                   >
-                    <CheckCircle className="h-7 w-7" />
+                    <CheckCircle className="h-8 w-8" style={{ color: "var(--emerald)" }} aria-hidden="true" />
                   </motion.div>
-                  <h4 className="text-base font-bold text-white font-mono uppercase tracking-wide">
-                    Message Sent Successfully
-                  </h4>
-                  <p className="mt-2 text-xs text-zinc-400 font-mono">
-                    Thank you for reaching out! I will get back to you as soon as possible.
-                  </p>
-                  <button
-                    onClick={() => setIsSubmitted(false)}
-                    className="mt-6 px-4 py-2 rounded-lg border border-zinc-800 text-zinc-400 font-mono text-[10px] hover:text-white transition-colors"
-                  >
-                    SEND NEW MESSAGE
-                  </button>
-                </div>
+                  <div>
+                    <h2 className="font-mono text-base font-semibold mb-2" style={{ color: "var(--text-primary)" }}>Message Sent</h2>
+                    <p className="text-xs" style={{ color: "var(--text-secondary)" }}>Thank you — I&apos;ll be in touch soon.</p>
+                  </div>
+                  <button onClick={() => setDone(false)} className="btn btn-ghost !text-xs">Send another</button>
+                </motion.div>
               )}
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

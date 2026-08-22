@@ -2,16 +2,8 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { 
-  GraduationCap, 
-  Briefcase, 
-  Award, 
-  Code2, 
-  Calendar
-} from "lucide-react";
+import { GraduationCap, Briefcase, Award, Code2, Calendar } from "lucide-react";
 import { portfolioData } from "../data/portfolio";
-
-// Note: Metadata should be added via server component wrapper or layout
 
 interface TimelineEvent {
   id: string;
@@ -20,190 +12,161 @@ interface TimelineEvent {
   organization?: string;
   date: string;
   description?: string;
-  icon: React.ComponentType<{ className?: string }>;
-  color: string;
+  Icon: React.ComponentType<{ className?: string }>;
+  accent: string;
+  accentDim: string;
 }
+
+const typeLabels: Record<string, string> = {
+  education:     "Education",
+  internship:    "Internship",
+  certification: "Certification",
+  achievement:   "Achievement",
+  project:       "Project",
+};
 
 export default function TimelinePage() {
   const events: TimelineEvent[] = [];
 
-  // Add education
-  portfolioData.education.forEach((edu, idx) => {
+  portfolioData.education.forEach((edu, i) =>
     events.push({
-      id: `edu-${idx}`,
-      type: "education",
-      title: edu.degree,
-      organization: edu.institution,
-      date: edu.period,
+      id: `edu-${i}`, type: "education",
+      title: edu.degree, organization: edu.institution, date: edu.period,
       description: edu.details.join(", "),
-      icon: GraduationCap,
-      color: "cyan",
-    });
-  });
+      Icon: GraduationCap, accent: "var(--cyan)", accentDim: "rgba(34,211,238,0.08)",
+    }),
+  );
 
-  // Add internships
-  portfolioData.experience.forEach((exp, idx) => {
+  portfolioData.experience.forEach((exp, i) =>
     events.push({
-      id: `exp-${idx}`,
-      type: "internship",
-      title: exp.role,
-      organization: exp.company,
-      date: exp.period,
+      id: `exp-${i}`, type: "internship",
+      title: exp.role, organization: exp.company, date: exp.period,
       description: exp.achievements[0],
-      icon: Briefcase,
-      color: "emerald",
-    });
-  });
+      Icon: Briefcase, accent: "var(--emerald)", accentDim: "rgba(52,211,153,0.08)",
+    }),
+  );
 
-  // Add certifications (top 10)
-  portfolioData.certifications.slice(0, 10).forEach((cert, idx) => {
+  portfolioData.certifications.slice(0, 10).forEach((cert, i) =>
     events.push({
-      id: `cert-${idx}`,
-      type: "certification",
-      title: cert.name,
-      organization: cert.issuer,
-      date: cert.date,
-      icon: Award,
-      color: "violet",
-    });
-  });
+      id: `cert-${i}`, type: "certification",
+      title: cert.name, organization: cert.issuer, date: cert.date,
+      Icon: Award, accent: "#818cf8", accentDim: "rgba(129,140,248,0.08)",
+    }),
+  );
 
-  // Add achievements
-  portfolioData.achievements.forEach((achievement, idx) => {
+  portfolioData.achievements.forEach((ach, i) =>
     events.push({
-      id: `ach-${idx}`,
-      type: "achievement",
-      title: achievement.title,
-      date: achievement.date,
-      description: achievement.description,
-      icon: Award,
-      color: "amber",
-    });
-  });
+      id: `ach-${i}`, type: "achievement",
+      title: ach.title, date: ach.date, description: ach.description,
+      Icon: Award, accent: "var(--amber)", accentDim: "rgba(251,191,36,0.08)",
+    }),
+  );
 
-  // Add projects
-  portfolioData.projects.slice(0, 5).forEach((project, idx) => {
+  portfolioData.projects.slice(0, 5).forEach((p, i) =>
     events.push({
-      id: `proj-${idx}`,
-      type: "project",
-      title: project.title,
-      date: project.timeline || "2026",
-      description: project.category,
-      icon: Code2,
-      color: "blue",
-    });
-  });
+      id: `proj-${i}`, type: "project",
+      title: p.title, date: p.timeline ?? "2026", description: p.category,
+      Icon: Code2, accent: "#f472b6", accentDim: "rgba(244,114,182,0.08)",
+    }),
+  );
 
-  // Sort by date
   events.sort((a, b) => b.date.localeCompare(a.date));
 
-  const getColorClasses = (color: string) => {
-    const colors: Record<string, { bg: string; border: string; text: string; icon: string }> = {
-      cyan: {
-        bg: "bg-cyan-500/5",
-        border: "border-cyan-500/20",
-        text: "text-cyan-400",
-        icon: "bg-cyan-500/10",
-      },
-      emerald: {
-        bg: "bg-emerald-500/5",
-        border: "border-emerald-500/20",
-        text: "text-emerald-400",
-        icon: "bg-emerald-500/10",
-      },
-      violet: {
-        bg: "bg-violet-500/5",
-        border: "border-violet-500/20",
-        text: "text-violet-400",
-        icon: "bg-violet-500/10",
-      },
-      amber: {
-        bg: "bg-amber-500/5",
-        border: "border-amber-500/20",
-        text: "text-amber-400",
-        icon: "bg-amber-500/10",
-      },
-      blue: {
-        bg: "bg-blue-500/5",
-        border: "border-blue-500/20",
-        text: "text-blue-400",
-        icon: "bg-blue-500/10",
-      },
-    };
-    return colors[color] || colors.cyan;
-  };
-
   return (
-    <div className="relative py-24 border-t border-zinc-900 bg-black/40">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="flex flex-col items-center text-center mb-16">
-          <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest">{'>'} TIMELINE</span>
-          <h1 className="mt-2 text-4xl font-bold tracking-tight text-white sm:text-5xl">
-            Career Journey
-          </h1>
-          <div className="mt-3 h-[2px] w-24 bg-gradient-to-r from-cyan-500 to-violet-500" />
-          <p className="mt-4 text-zinc-400 max-w-2xl">
-            Education, experience, certifications, and achievements
+    <main
+      id="main-content"
+      tabIndex={-1}
+      className="relative overflow-hidden section-pad"
+      style={{
+        backgroundColor: "var(--bg-base)",
+        borderTop: "1px solid var(--border-subtle)",
+        paddingTop: "clamp(6rem, 12vw, 9rem)",
+        minHeight: "100vh",
+      }}
+      aria-labelledby="timeline-heading"
+    >
+      <div
+        className="absolute pointer-events-none"
+        style={{ top: "5%", right: "5%", width: "40vw", height: "40vw", borderRadius: "50%", background: "radial-gradient(circle, rgba(34,211,238,0.04) 0%, transparent 65%)" }}
+        aria-hidden="true"
+      />
+
+      <div className="container-tight relative z-10">
+        <div className="mb-14">
+          <p className="section-eyebrow mb-4">Timeline</p>
+          <h1 id="timeline-heading" className="section-title">Career Journey</h1>
+          <p className="mt-4 text-sm max-w-lg" style={{ color: "var(--text-secondary)" }}>
+            Education, experience, certifications, and achievements in chronological order.
           </p>
         </div>
 
         {/* Timeline */}
-        <div className="relative">
-          {/* Vertical Line */}
-          <div className="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-cyan-500/50 via-violet-500/50 to-amber-500/50" />
+        <div className="relative pl-14">
+          {/* Vertical line */}
+          <div
+            className="absolute left-5 top-0 bottom-0 w-px"
+            style={{ background: "linear-gradient(to bottom, var(--cyan) 0%, rgba(34,211,238,0.1) 100%)" }}
+            aria-hidden="true"
+          />
 
-          {/* Events */}
-          <div className="space-y-8">
-            {events.map((event, idx) => {
-              const Icon = event.icon;
-              const colors = getColorClasses(event.color);
-
+          <div className="space-y-6">
+            {events.map((ev, i) => {
+              const { Icon } = ev;
               return (
-                <motion.div
-                  key={event.id}
-                  initial={{ opacity: 0, x: -20 }}
+                <motion.article
+                  key={ev.id}
+                  initial={{ opacity: 0, x: -14 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: idx * 0.05, duration: 0.3 }}
-                  className="relative flex gap-6"
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ delay: Math.min(i * 0.04, 0.5), duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                  className="relative"
                 >
-                  {/* Icon */}
-                  <div className={`relative z-10 flex h-16 w-16 items-center justify-center rounded-full border-2 ${colors.border} ${colors.icon} flex-shrink-0`}>
-                    <Icon className={`h-6 w-6 ${colors.text}`} />
-                  </div>
-
-                  {/* Content */}
-                  <div className={`flex-1 rounded-xl border ${colors.border} ${colors.bg} p-6`}>
-                    <div className="flex items-start justify-between mb-2">
-                      <h3 className="text-base font-semibold text-white">
-                        {event.title}
-                      </h3>
-                      <span className={`text-[10px] font-mono ${colors.text} flex items-center gap-1`}>
-                        <Calendar className="h-3 w-3" />
-                        {event.date}
-                      </span>
-                    </div>
-
-                    {event.organization && (
-                      <p className="text-sm text-zinc-400 mb-2">{event.organization}</p>
-                    )}
-
-                    {event.description && (
-                      <p className="text-xs text-zinc-500 leading-relaxed">
-                        {event.description}
-                      </p>
-                    )}
-
-                    <span className={`inline-block mt-3 text-[10px] font-mono uppercase tracking-wider ${colors.text}`}>
-                      {event.type}
+                  {/* Node */}
+                  <div
+                    className="absolute -left-9 top-4 flex h-9 w-9 items-center justify-center rounded-full border-2"
+                    style={{ borderColor: ev.accent, backgroundColor: ev.accentDim }}
+                    aria-hidden="true"
+                  >
+                    <span style={{ color: ev.accent }}>
+                      <Icon className="h-4 w-4" aria-hidden="true" />
                     </span>
                   </div>
-                </motion.div>
+
+                  {/* Card */}
+                  <div
+                    className="rounded-xl p-5 card-lift"
+                    style={{
+                      backgroundColor: "var(--bg-surface)",
+                      border: `1px solid ${ev.accentDim.replace("0.08", "0.22")}`,
+                    }}
+                  >
+                    <div className="flex flex-wrap items-start justify-between gap-3 mb-2">
+                      <h2 className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
+                        {ev.title}
+                      </h2>
+                      <div className="flex items-center gap-1.5 text-label shrink-0" style={{ color: "var(--text-dim)" }}>
+                        <Calendar className="h-3 w-3" aria-hidden="true" />
+                        {ev.date}
+                      </div>
+                    </div>
+                    {ev.organization && (
+                      <p className="text-xs mb-1.5" style={{ color: ev.accent }}>{ev.organization}</p>
+                    )}
+                    {ev.description && (
+                      <p className="text-xs leading-relaxed" style={{ color: "var(--text-tertiary)" }}>
+                        {ev.description}
+                      </p>
+                    )}
+                    <span className="text-label mt-3 block" style={{ color: ev.accent }}>
+                      {typeLabels[ev.type]}
+                    </span>
+                  </div>
+                </motion.article>
               );
             })}
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

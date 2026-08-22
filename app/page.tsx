@@ -11,8 +11,9 @@ import Footer from "./components/Footer";
 
 export default function Home() {
   return (
-    <main className="relative">
+    <main className="relative" id="main-content" tabIndex={-1}>
       <Header />
+      {/* H1 is inside the Hero section — "Arshid Ahmad Malik" */}
       <Hero />
       <RecruiterDashboard />
       <About />

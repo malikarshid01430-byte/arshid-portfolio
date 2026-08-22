@@ -172,8 +172,9 @@ const summary =
 
 // ─── Document component ───────────────────────────────────────────────────────
 function ResumeDocument() {
-  const { personalInfo, projects, experience, education, certifications, achievements } =
+  const { personalInfo, projects, experience, certifications, achievements } =
     portfolioData;
+  const { education } = portfolioData;
 
   return (
     <Document
@@ -276,61 +277,45 @@ function ResumeDocument() {
         <View style={S.section}>
           <SectionHead>Education</SectionHead>
 
-          {/* B.E. — currently pursuing */}
-          <View style={S.item}>
-            <View style={S.itemHeaderRow}>
-              <Text style={S.itemTitle}>
-                Bachelor of Engineering — Electronics and Communication Engineering
-              </Text>
-              <Text style={S.itemPeriod}>2022 — Expected May 2026</Text>
-            </View>
-            <Text style={S.itemSubtitle}>
-              MVJ College of Engineering, Bangalore | Visvesvaraya Technological University (VTU)
-            </Text>
-            <View style={[S.bullet, { marginTop: 3 }]}>
-              <Text style={[S.statusBadge]}>Pursuing — Expected Graduation: May 2026</Text>
-            </View>
-            <Text style={[S.bodyText, { marginTop: 3 }]}>
-              Relevant Coursework: Microcontrollers &amp; Embedded Systems, VLSI Design &amp; FPGA
-              Implementation, Digital Electronics, Communication Systems, IoT &amp; Wireless Sensor
-              Networks, PCB Design &amp; Fabrication, Signal Processing.
-            </Text>
-          </View>
-
-          {/* Diploma */}
-          <View style={S.item}>
-            <View style={S.itemHeaderRow}>
-              <Text style={S.itemTitle}>
-                Diploma — Electronics and Communication Engineering (71%)
-              </Text>
-              <Text style={S.itemPeriod}>2020 — 2023</Text>
-            </View>
-            <Text style={S.itemSubtitle}>
-              Government Polytechnic College Srinagar, Srinagar, Kashmir
-            </Text>
-          </View>
-
-          {/* Class XII */}
-          <View style={S.item}>
-            <View style={S.itemHeaderRow}>
-              <Text style={S.itemTitle}>Higher Secondary Certificate — Class XII (57%)</Text>
-              <Text style={S.itemPeriod}>2019 — 2020</Text>
-            </View>
-            <Text style={S.itemSubtitle}>
-              Government Model Higher Secondary School, Dooru, Anantnag, J&amp;K | JKBOSE
-            </Text>
-          </View>
-
-          {/* Class X */}
-          <View style={S.item}>
-            <View style={S.itemHeaderRow}>
-              <Text style={S.itemTitle}>Secondary School Certificate — Class X (58%)</Text>
-              <Text style={S.itemPeriod}>2017 — 2018</Text>
-            </View>
-            <Text style={S.itemSubtitle}>
-              Army Goodwill School, Wuzur, Qazigund, Anantnag, J&amp;K | JKBOSE
-            </Text>
-          </View>
+          {education.map((edu, i) => {
+            const isBE = edu.degree.includes("Bachelor") || edu.degree.includes("B.E");
+            const isPursuing = edu.period.includes("2026");
+            return (
+              <View key={i} style={S.item}>
+                <View style={S.itemHeaderRow}>
+                  <Text style={S.itemTitle}>
+                    {edu.degree}{edu.details.find((d) => d.includes("%")) ? ` (${edu.details.find((d) => d.includes("%"))?.match(/\d+%/)?.[0]})` : ""}
+                  </Text>
+                  <Text style={S.itemPeriod}>
+                    {edu.period}{isPursuing && isBE ? " (Pursuing)" : ""}
+                  </Text>
+                </View>
+                <Text style={S.itemSubtitle}>
+                  {edu.institution}
+                  {(() => {
+                    const d = edu.details.find((detail) =>
+                      detail.includes("VTU") ||
+                      detail.includes("Visvesvaraya") ||
+                      detail === "Electronics and Communication Engineering"
+                    );
+                    return d ? ` | ${d}` : "";
+                  })()}
+                  {edu.details.some((d) => d.includes("JKBOSE")) ? " | JKBOSE" : ""}
+                  {" — "}{edu.location}
+                </Text>
+                {isBE && isPursuing && (
+                  <View style={[S.bullet, { marginTop: 3 }]}>
+                    <Text style={S.statusBadge}>Pursuing — Expected Graduation: May 2026</Text>
+                  </View>
+                )}
+                {edu.coursework && edu.coursework.length > 0 && (
+                  <Text style={[S.bodyText, { marginTop: 3 }]}>
+                    Relevant Coursework: {edu.coursework.slice(0, 5).join(", ")}.
+                  </Text>
+                )}
+              </View>
+            );
+          })}
         </View>
 
         {/* ── CERTIFICATIONS ── */}
@@ -389,6 +374,9 @@ function ResumeDocument() {
 
 // ─── Route handler ────────────────────────────────────────────────────────────
 export async function GET(request: Request) {
+  // Construct JSX outside try/catch (React doesn't catch render errors in try/catch)
+  const doc = <ResumeDocument />;
+
   try {
     const { pdf } = await import("@react-pdf/renderer");
     const url = new URL(request.url);
@@ -399,7 +387,6 @@ export async function GET(request: Request) {
         ? "Arshid_Ahmad_Malik_Resume_1Page.pdf"
         : "Arshid_Ahmad_Malik_Resume.pdf";
 
-    const doc = <ResumeDocument />;
     const blob = await pdf(doc).toBlob();
 
     const arrayBuffer = await blob.arrayBuffer();

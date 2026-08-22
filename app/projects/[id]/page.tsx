@@ -2,441 +2,516 @@ import { notFound } from "next/navigation";
 import { portfolioData } from "../../data/portfolio";
 import { Metadata } from "next";
 import LocalizedLink from "../../components/LocalizedLink";
-import { Calendar, Cpu, Code2, CheckCircle } from "lucide-react";
+import {
+  Calendar, Cpu, Code2, CheckCircle, ArrowLeft,
+  ArrowRight, ExternalLink, ChevronRight
+} from "lucide-react";
+import { FaGithub } from "react-icons/fa";
+
+const SITE_URL = "https://arshid-portfolio.vercel.app";
 
 interface ProjectPageProps {
   params: Promise<{ id: string }>;
 }
 
 export async function generateStaticParams() {
-  return portfolioData.projects.map((project) => ({
-    id: project.id,
-  }));
+  return portfolioData.projects.map((p) => ({ id: p.id }));
 }
 
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
   const { id } = await params;
-  const project = portfolioData.projects.find(p => p.id === id);
-  
-  if (!project) {
-    return { title: "Project Not Found" };
-  }
-
-  const projectUrl = `https://arshid-portfolio.vercel.app/projects/${id}`;
-
+  const project = portfolioData.projects.find((p) => p.id === id);
+  if (!project) return { title: "Project Not Found" };
+  const url = `${SITE_URL}/projects/${id}`;
   return {
     title: `${project.title} | Arshid Ahmad Malik`,
-    description: project.longDescription,
+    description: project.description,
+    alternates: { canonical: url },
     openGraph: {
       title: project.title,
-      description: project.longDescription,
-      url: projectUrl,
+      description: project.description,
+      url,
       siteName: "Arshid Ahmad Malik Portfolio",
       type: "website",
-      images: [
-        {
-          url: "/og-image.png",
-          width: 1200,
-          height: 630,
-          alt: project.title,
-        },
-      ],
+      images: [{ url: "/og-image.png", width: 1200, height: 630, alt: project.title }],
     },
     twitter: {
       card: "summary_large_image",
       title: project.title,
-      description: project.longDescription,
+      description: project.description,
       images: ["/og-image.png"],
-    },
-    alternates: {
-      canonical: projectUrl,
-    },
-    other: {
-      "article:published_time": project.timeline || "",
-      "article:modified_time": new Date().toISOString(),
-      "article:tag": project.technologies.join(", "),
     },
   };
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { id } = await params;
-  const project = portfolioData.projects.find(p => p.id === id);
+  const project = portfolioData.projects.find((p) => p.id === id);
+  if (!project) notFound();
 
-  if (!project) {
-    notFound();
-  }
+  const allIds     = portfolioData.projects.map((p) => p.id);
+  const currentIdx = allIds.indexOf(id);
+  const prevId     = currentIdx > 0 ? allIds[currentIdx - 1] : null;
+  const nextId     = currentIdx < allIds.length - 1 ? allIds[currentIdx + 1] : null;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    name: project.title,
+    description: project.description,
+    author: { "@type": "Person", name: portfolioData.personalInfo.name, url: SITE_URL },
+    codeRepository: project.github,
+    programmingLanguage: project.technologies,
+    url: `${SITE_URL}/projects/${id}`,
+  };
 
   return (
-    <div className="relative py-24 border-t border-zinc-900 bg-black/40">
-      {/* JSON-LD Structured Data */}
+    <main
+      id="main-content"
+      tabIndex={-1}
+      className="relative overflow-hidden"
+      style={{
+        backgroundColor: "var(--bg-base)",
+        borderTop: "1px solid var(--border-subtle)",
+        paddingTop: "clamp(6rem, 12vw, 8rem)",
+        paddingBottom: "clamp(4rem, 8vw, 6rem)",
+        minHeight: "100vh",
+      }}
+      aria-labelledby="project-title"
+    >
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "SoftwareSourceCode",
-            "name": project.title,
-            "description": project.description,
-            "author": {
-              "@type": "Person",
-              "name": portfolioData.personalInfo.name,
-              "url": "https://arshid-portfolio.vercel.app"
-            },
-            "codeRepository": project.github,
-            "programmingLanguage": project.technologies,
-            "about": {
-              "@type": "Thing",
-              "name": project.category
-            },
-            "dateCreated": project.timeline || new Date().toISOString().split('T')[0],
-            "url": `https://arshid-portfolio.vercel.app/projects/${id}`
-          })
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      {/* Ambient glow */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: "0%", right: "0%",
+          width: "50vw", height: "50vw",
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(34,211,238,0.04) 0%, transparent 65%)",
+        }}
+        aria-hidden="true"
+      />
+
+      <div className="relative z-10 container-tight">
+
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-xs font-mono text-zinc-500 mb-8">
-          <LocalizedLink href="/" className="hover:text-cyan-400 transition-colors">Home</LocalizedLink>
-          <span>/</span>
-          <LocalizedLink href="/#projects" className="hover:text-cyan-400 transition-colors">Projects</LocalizedLink>
-          <span>/</span>
-          <span className="text-zinc-400">{project.title}</span>
+        <nav
+          className="flex items-center gap-2 text-label mb-8"
+          style={{ color: "var(--text-dim)" }}
+          aria-label="Breadcrumb"
+        >
+          <LocalizedLink href="/" className="transition-colors hover:text-cyan-400">Home</LocalizedLink>
+          <ChevronRight className="h-3 w-3" aria-hidden="true" />
+          <LocalizedLink href="/#projects" className="transition-colors hover:text-cyan-400">Projects</LocalizedLink>
+          <ChevronRight className="h-3 w-3" aria-hidden="true" />
+          <span style={{ color: "var(--text-tertiary)" }} aria-current="page">{project.title}</span>
         </nav>
 
-        {/* Project Header */}
-        <div className="mb-12">
-          <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest">
+        {/* Back */}
+        <LocalizedLink
+          href="/#projects"
+          className="inline-flex items-center gap-2 text-label mb-10 transition-colors hover:text-cyan-400"
+          style={{ color: "var(--text-tertiary)" }}
+        >
+          <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
+          All Projects
+        </LocalizedLink>
+
+        {/* Project header */}
+        <header className="mb-12">
+          <span className="text-label block mb-3" style={{ color: "var(--cyan)" }}>
             {project.category}
           </span>
-          <h1 className="mt-2 text-4xl font-bold tracking-tight text-white sm:text-5xl">
+          <h1
+            id="project-title"
+            className="section-title mb-4"
+          >
             {project.title}
           </h1>
-          <p className="mt-4 text-xl text-zinc-300 font-mono">
+          <p
+            className="text-base font-mono leading-relaxed mb-6 max-w-2xl"
+            style={{ color: "var(--text-secondary)" }}
+          >
             {project.subtitle}
           </p>
-          <div className="mt-6 flex flex-wrap gap-2">
+          {/* Tech tags */}
+          <div className="flex flex-wrap gap-2 mb-8">
             {project.technologies.map((tech) => (
-              <span
-                key={tech}
-                className="inline-flex items-center rounded-lg border border-cyan-500/20 bg-cyan-500/5 px-3 py-1.5 font-mono text-xs text-cyan-400"
-              >
-                {tech}
-              </span>
+              <span key={tech} className="badge badge-cyan">{tech}</span>
             ))}
           </div>
-        </div>
+          {/* Actions */}
+          <div className="flex flex-wrap gap-3">
+            {project.github && (
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-ghost !text-xs"
+                aria-label={`View source code for ${project.title} on GitHub`}
+              >
+                <FaGithub className="h-4 w-4" aria-hidden="true" />
+                View Source
+              </a>
+            )}
+            {project.demo && (
+              <a
+                href={project.demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-outline-cyan !text-xs"
+                aria-label={`View live demo of ${project.title}`}
+              >
+                <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+                Live Demo
+              </a>
+            )}
+            {project.timeline && (
+              <div
+                className="flex items-center gap-2 px-4 h-11 rounded-lg text-xs"
+                style={{
+                  border: "1px solid var(--border-subtle)",
+                  backgroundColor: "var(--bg-raised)",
+                  color: "var(--text-tertiary)",
+                  fontFamily: "monospace",
+                }}
+              >
+                <Calendar className="h-3.5 w-3.5" style={{ color: "var(--cyan)" }} aria-hidden="true" />
+                Timeline: {project.timeline}
+              </div>
+            )}
+          </div>
+        </header>
 
-        {/* Quick Actions */}
-        <div className="mb-12 flex flex-wrap gap-4">
-          {project.github && (
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-800 bg-zinc-950/40 font-mono text-xs text-zinc-300 hover:text-cyan-400 hover:border-cyan-500/20 transition-colors"
-            >
-              View Source Code
-            </a>
-          )}
-          {project.demo && (
-            <a
-              href={project.demo}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-cyan-500/20 bg-cyan-950/5 font-mono text-xs text-cyan-400 hover:border-cyan-400 transition-colors"
-            >
-              Live Demo
-            </a>
-          )}
-        </div>
+        {/* Two-column body */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-        {/* Overview */}
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold text-white mb-4">Overview</h2>
-          <p className="text-zinc-400 leading-relaxed">{project.description}</p>
-        </section>
+          {/* Left — narrative */}
+          <div className="lg:col-span-7 flex flex-col gap-8">
 
-        {/* Problem Statement */}
-        {project.problem && (
-          <section className="mb-16">
-            <h2 className="text-2xl font-bold text-white mb-4">Problem Statement</h2>
-            <div className="rounded-xl border border-zinc-900 bg-zinc-950/40 p-6">
-              <p className="text-zinc-400 leading-relaxed">{project.problem}</p>
-            </div>
-          </section>
-        )}
-
-        {/* Solution */}
-        {project.solution && (
-          <section className="mb-16">
-            <h2 className="text-2xl font-bold text-white mb-4">Solution</h2>
-            <div className="rounded-xl border border-zinc-900 bg-zinc-950/40 p-6">
-              <p className="text-zinc-400 leading-relaxed">{project.solution}</p>
-            </div>
-          </section>
-        )}
-
-        {/* Research */}
-        {project.longDescription && (
-          <section className="mb-16">
-            <h2 className="text-2xl font-bold text-white mb-4">Research & Background</h2>
-            <div className="rounded-xl border border-zinc-900 bg-zinc-950/40 p-6">
-              <p className="text-zinc-400 leading-relaxed">{project.longDescription}</p>
-            </div>
-          </section>
-        )}
-
-        {/* Architecture */}
-        {project.architecture && (
-          <section className="mb-16">
-            <h2 className="text-2xl font-bold text-white mb-4">Architecture & System Design</h2>
-            <div className="rounded-xl border border-zinc-900 bg-zinc-950/40 p-6">
-              <div className="space-y-4">
-                <div>
-                  <h3 className="font-mono text-sm text-cyan-400 mb-2">Block Diagram</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {project.architecture.nodes.map((node) => (
-                      <span
-                        key={node.id}
-                        className="px-3 py-1 rounded-lg border border-cyan-500/20 bg-cyan-500/5 font-mono text-xs text-cyan-400"
-                      >
-                        {node.label}
-                      </span>
-                    ))}
-                  </div>
+            {project.problem && (
+              <section aria-labelledby="problem-heading">
+                <h2 id="problem-heading" className="text-label mb-3" style={{ color: "var(--rose)" }}>
+                  ▹ PROBLEM STATEMENT
+                </h2>
+                <div
+                  className="rounded-xl p-5 text-sm leading-relaxed"
+                  style={{
+                    backgroundColor: "rgba(251,113,133,0.05)",
+                    border: "1px solid rgba(251,113,133,0.18)",
+                    color: "var(--text-secondary)",
+                  }}
+                >
+                  {project.problem}
                 </div>
-                <div>
-                  <h3 className="font-mono text-sm text-cyan-400 mb-2">Workflow</h3>
-                  <div className="space-y-2">
-                    {project.architecture.edges.map((edge, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-xs">
-                        <span className="font-mono text-zinc-400">{edge.from}</span>
-                        <span className="text-cyan-400">→</span>
-                        <span className="font-mono text-zinc-400">{edge.to}</span>
-                        <span className="text-zinc-500">({edge.label})</span>
+              </section>
+            )}
+
+            {project.solution && (
+              <section aria-labelledby="solution-heading">
+                <h2 id="solution-heading" className="text-label mb-3" style={{ color: "var(--emerald)" }}>
+                  ▹ SOLUTION APPROACH
+                </h2>
+                <div
+                  className="rounded-xl p-5 text-sm leading-relaxed"
+                  style={{
+                    backgroundColor: "rgba(52,211,153,0.05)",
+                    border: "1px solid rgba(52,211,153,0.18)",
+                    color: "var(--text-secondary)",
+                  }}
+                >
+                  {project.solution}
+                </div>
+              </section>
+            )}
+
+            <section aria-labelledby="overview-heading">
+              <h2 id="overview-heading" className="text-label mb-3" style={{ color: "var(--cyan)" }}>
+                ▹ OVERVIEW
+              </h2>
+              <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                {project.longDescription}
+              </p>
+            </section>
+
+            {project.results && project.results.length > 0 && (
+              <section aria-labelledby="results-heading">
+                <h2 id="results-heading" className="text-label mb-3" style={{ color: "var(--amber)" }}>
+                  ▹ RESULTS &amp; IMPACT
+                </h2>
+                <ul className="space-y-3">
+                  {project.results.map((r, i) => (
+                    <li
+                      key={i}
+                      className="flex items-start gap-3 text-sm"
+                      style={{ color: "var(--text-secondary)" }}
+                    >
+                      <CheckCircle
+                        className="h-4 w-4 mt-0.5 shrink-0"
+                        style={{ color: "var(--amber)" }}
+                        aria-hidden="true"
+                      />
+                      {r}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            <section aria-labelledby="highlights-heading">
+              <h2 id="highlights-heading" className="text-label mb-3" style={{ color: "var(--cyan)" }}>
+                ▹ KEY HIGHLIGHTS
+              </h2>
+              <ul className="space-y-2.5">
+                {project.highlights.map((h, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-3 text-sm"
+                    style={{ color: "var(--text-secondary)" }}
+                  >
+                    <CheckCircle
+                      className="h-4 w-4 mt-0.5 shrink-0"
+                      style={{ color: "var(--cyan)" }}
+                      aria-hidden="true"
+                    />
+                    {h}
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            {project.technicalChallenges.length > 0 && (
+              <section aria-labelledby="challenges-heading">
+                <h2 id="challenges-heading" className="text-label mb-3" style={{ color: "#fb923c" }}>
+                  ▹ TECHNICAL CHALLENGES
+                </h2>
+                <ul className="space-y-2.5">
+                  {project.technicalChallenges.map((c, i) => (
+                    <li
+                      key={i}
+                      className="flex items-start gap-3 text-sm"
+                      style={{ color: "var(--text-secondary)" }}
+                    >
+                      <span className="mt-1 shrink-0 font-mono text-xs" style={{ color: "#fb923c" }} aria-hidden="true">*</span>
+                      {c}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+          </div>
+
+          {/* Right — technical specs */}
+          <div className="lg:col-span-5 flex flex-col gap-6">
+
+            {/* Tech stack */}
+            <div
+              className="rounded-xl p-5"
+              style={{
+                backgroundColor: "var(--bg-surface)",
+                border: "1px solid var(--border-dim)",
+              }}
+            >
+              <h2 className="text-label mb-4" style={{ color: "var(--text-dim)" }}>
+                COMPLETE TECH STACK
+              </h2>
+              <div className="flex flex-wrap gap-2">
+                {project.technologies.map((tech) => (
+                  <span key={tech} className="badge">{tech}</span>
+                ))}
+              </div>
+            </div>
+
+            {/* Architecture */}
+            {project.architecture && (
+              <div
+                className="rounded-xl p-5"
+                style={{
+                  backgroundColor: "var(--bg-surface)",
+                  border: "1px solid var(--border-dim)",
+                }}
+              >
+                <h2 className="text-label mb-4" style={{ color: "#818cf8" }}>
+                  SYSTEM ARCHITECTURE
+                </h2>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {project.architecture.nodes.map((n) => (
+                    <span
+                      key={n.id}
+                      className="badge"
+                      style={{ color: "var(--cyan)", borderColor: "var(--cyan-border)", backgroundColor: "var(--cyan-dim)" }}
+                    >
+                      {n.label}
+                    </span>
+                  ))}
+                </div>
+                <div
+                  className="pt-4 space-y-2"
+                  style={{ borderTop: "1px solid var(--border-subtle)" }}
+                >
+                  <p className="text-label mb-2" style={{ color: "var(--text-dim)" }}>SIGNAL PATH</p>
+                  {project.architecture.edges.map((edge, i) => {
+                    const from = project.architecture!.nodes.find((n) => n.id === edge.from)?.label ?? edge.from;
+                    const to   = project.architecture!.nodes.find((n) => n.id === edge.to)?.label ?? edge.to;
+                    return (
+                      <div key={i} className="flex items-center gap-2 text-xs" style={{ color: "var(--text-secondary)" }}>
+                        <span className="font-mono">{from}</span>
+                        <ArrowRight className="h-3 w-3 shrink-0" style={{ color: "var(--cyan)" }} aria-hidden="true" />
+                        <span className="font-mono" style={{ color: "var(--cyan)" }}>{to}</span>
+                        <span style={{ color: "var(--text-dim)" }}>({edge.label})</span>
                       </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Hardware vs software */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4">
+              <div
+                className="rounded-xl p-5"
+                style={{
+                  backgroundColor: "var(--bg-surface)",
+                  border: "1px solid var(--border-dim)",
+                }}
+              >
+                <h2 className="text-label mb-3 flex items-center gap-2" style={{ color: "var(--emerald)" }}>
+                  <Cpu className="h-3.5 w-3.5" aria-hidden="true" /> HARDWARE
+                </h2>
+                <ul className="space-y-1.5">
+                  {project.technologies
+                    .filter((t) =>
+                      ["ESP32", "Arduino", "STM32", "Sensor", "RFID", "Servo", "Relay", "LCD", "PCB", "MQ", "DHT"].some((hw) =>
+                        t.toLowerCase().includes(hw.toLowerCase()),
+                      ),
+                    )
+                    .map((tech, i) => (
+                      <li key={i} className="flex items-center gap-2 text-xs" style={{ color: "var(--text-secondary)" }}>
+                        <span className="h-1.5 w-1.5 rounded-full shrink-0" style={{ backgroundColor: "var(--emerald)" }} aria-hidden="true" />
+                        {tech}
+                      </li>
                     ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Hardware & Software */}
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold text-white mb-4">Hardware & Software Stack</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="rounded-xl border border-zinc-900 bg-zinc-950/40 p-6">
-              <h3 className="font-mono text-sm text-emerald-400 mb-3 flex items-center gap-2">
-                <Cpu className="h-4 w-4" />
-                Hardware Components
-              </h3>
-              <ul className="space-y-2">
-                {project.technologies.filter(t => 
-                  ['ESP32', 'Arduino', 'Sensors', 'MQTT', 'RFID', 'Servo', 'Relay', 'MQ3', 'DHT11'].some(hw => t.includes(hw))
-                ).map((tech, idx) => (
-                  <li key={idx} className="flex items-center gap-2 text-xs text-zinc-400">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                    {tech}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="rounded-xl border border-zinc-900 bg-zinc-950/40 p-6">
-              <h3 className="font-mono text-sm text-blue-400 mb-3 flex items-center gap-2">
-                <Code2 className="h-4 w-4" />
-                Software & Technologies
-              </h3>
-              <ul className="space-y-2">
-                {project.technologies.map((tech, idx) => (
-                  <li key={idx} className="flex items-center gap-2 text-xs text-zinc-400">
-                    <span className="h-1.5 w-1.5 rounded-full bg-blue-400" />
-                    {tech}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* Implementation */}
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold text-white mb-4">Implementation</h2>
-          <div className="rounded-xl border border-zinc-900 bg-zinc-950/40 p-6">
-            <p className="text-zinc-400 leading-relaxed mb-4">
-              This project was implemented using modern embedded systems practices and agile development methodology.
-              The development cycle spanned {project.timeline || 'several weeks'} with iterative testing and optimization.
-            </p>
-            <div className="space-y-3">
-              <h3 className="font-mono text-sm text-cyan-400">Key Implementation Steps:</h3>
-              <ol className="list-decimal list-inside space-y-2 text-xs text-zinc-400">
-                <li>Requirement analysis and system design</li>
-                <li>Hardware component selection and circuit design</li>
-                <li>Firmware development and sensor integration</li>
-                <li>Testing and calibration</li>
-                <li>Optimization and deployment</li>
-              </ol>
-            </div>
-          </div>
-        </section>
-
-        {/* Features */}
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold text-white mb-4">Key Features</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {project.features.map((feature, idx) => (
-              <div
-                key={idx}
-                className="flex items-start gap-3 rounded-xl border border-zinc-900 bg-zinc-950/40 p-4"
-              >
-                <div className="flex h-6 w-6 items-center justify-center rounded-full border border-cyan-500/20 bg-cyan-500/5 flex-shrink-0">
-                  <span className="text-xs text-cyan-400">✓</span>
-                </div>
-                <p className="text-sm text-zinc-300">{feature}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Results */}
-        {project.results && (
-          <section className="mb-16">
-            <h2 className="text-2xl font-bold text-white mb-4">Results</h2>
-            <div className="space-y-3">
-              {project.results.map((result, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-start gap-3 rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4"
-                >
-                  <div className="flex h-6 w-6 items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/10 flex-shrink-0">
-                    <span className="text-xs text-emerald-400">✓</span>
-                  </div>
-                  <p className="text-sm text-zinc-300">{result}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Timeline */}
-        {project.timeline && (
-          <section className="mb-16">
-            <h2 className="text-2xl font-bold text-white mb-4">Project Timeline</h2>
-            <div className="rounded-xl border border-zinc-900 bg-zinc-950/40 p-6">
-              <div className="flex items-center gap-3">
-                <Calendar className="h-5 w-5 text-cyan-400" />
-                <p className="text-zinc-300 font-mono">{project.timeline}</p>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Recruiter Highlights */}
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold text-white mb-4">Recruiter Highlights</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {project.highlights.map((highlight, idx) => (
-              <div
-                key={idx}
-                className="flex items-start gap-3 rounded-xl border border-cyan-500/20 bg-cyan-500/5 p-4"
-              >
-                <CheckCircle className="h-5 w-5 text-cyan-400 flex-shrink-0 mt-0.5" />
-                <p className="text-sm text-zinc-300">{highlight}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Challenges */}
-        {project.technicalChallenges && (
-          <section className="mb-16">
-            <h2 className="text-2xl font-bold text-white mb-4">Challenges & Solutions</h2>
-            <div className="space-y-4">
-              {project.technicalChallenges.map((challenge, idx) => (
-                <div
-                  key={idx}
-                  className="rounded-xl border border-zinc-900 bg-zinc-950/40 p-6"
-                >
-                  <div className="flex items-start gap-3">
-                    <div className="flex h-6 w-6 items-center justify-center rounded-full border border-amber-500/20 bg-amber-500/5 flex-shrink-0">
-                      <span className="text-xs text-amber-400">!</span>
-                    </div>
-                    <p className="text-sm text-zinc-300">{challenge}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Future Improvements */}
-        {project.futureImprovements && (
-          <section className="mb-16">
-            <h2 className="text-2xl font-bold text-white mb-4">Lessons Learned & Future Scope</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="rounded-xl border border-zinc-900 bg-zinc-950/40 p-6">
-                <h3 className="font-mono text-sm text-amber-400 mb-3">Lessons Learned</h3>
-                <ul className="space-y-2">
-                  {project.technicalChallenges.map((challenge, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-xs text-zinc-400">
-                      <span className="text-amber-400 mt-0.5">•</span>
-                      {challenge}
-                    </li>
-                  ))}
                 </ul>
               </div>
-              <div className="rounded-xl border border-zinc-900 bg-zinc-950/40 p-6">
-                <h3 className="font-mono text-sm text-violet-400 mb-3">Future Scope</h3>
-                <ul className="space-y-2">
-                  {project.futureImprovements.map((improvement, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-xs text-zinc-400">
-                      <span className="text-violet-400 mt-0.5">→</span>
-                      {improvement}
+              <div
+                className="rounded-xl p-5"
+                style={{
+                  backgroundColor: "var(--bg-surface)",
+                  border: "1px solid var(--border-dim)",
+                }}
+              >
+                <h2 className="text-label mb-3 flex items-center gap-2" style={{ color: "#818cf8" }}>
+                  <Code2 className="h-3.5 w-3.5" aria-hidden="true" /> SOFTWARE
+                </h2>
+                <ul className="space-y-1.5">
+                  {project.technologies.map((tech, i) => (
+                    <li key={i} className="flex items-center gap-2 text-xs" style={{ color: "var(--text-secondary)" }}>
+                      <span className="h-1.5 w-1.5 rounded-full shrink-0" style={{ backgroundColor: "#818cf8" }} aria-hidden="true" />
+                      {tech}
                     </li>
                   ))}
                 </ul>
               </div>
             </div>
-          </section>
-        )}
 
-        {/* Tech Stack */}
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold text-white mb-4">Complete Tech Stack</h2>
-          <div className="rounded-xl border border-zinc-900 bg-zinc-950/40 p-6">
-            <div className="flex flex-wrap gap-2">
-              {project.technologies.map((tech) => (
-                <span
-                  key={tech}
-                  className="px-3 py-2 rounded-lg border border-cyan-500/20 bg-cyan-500/5 font-mono text-xs text-cyan-400"
-                >
-                  {tech}
+            {/* Features */}
+            {project.features.length > 0 && (
+              <div
+                className="rounded-xl p-5"
+                style={{
+                  backgroundColor: "var(--bg-surface)",
+                  border: "1px solid var(--border-dim)",
+                }}
+              >
+                <h2 className="text-label mb-4" style={{ color: "var(--text-dim)" }}>KEY FEATURES</h2>
+                <ul className="space-y-2">
+                  {project.features.map((f, i) => (
+                    <li key={i} className="flex items-start gap-2 text-xs" style={{ color: "var(--text-secondary)" }}>
+                      <span className="mt-1 h-1.5 w-1.5 rounded-full shrink-0" style={{ backgroundColor: "var(--cyan)" }} aria-hidden="true" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Future improvements */}
+            {project.futureImprovements.length > 0 && (
+              <div
+                className="rounded-xl p-5"
+                style={{
+                  backgroundColor: "rgba(129,140,248,0.05)",
+                  border: "1px solid rgba(129,140,248,0.18)",
+                }}
+              >
+                <h2 className="text-label mb-4" style={{ color: "#818cf8" }}>FUTURE SCOPE</h2>
+                <ul className="space-y-2">
+                  {project.futureImprovements.map((f, i) => (
+                    <li key={i} className="flex items-start gap-2 text-xs" style={{ color: "var(--text-secondary)" }}>
+                      <ArrowRight className="h-3 w-3 mt-0.5 shrink-0" style={{ color: "#818cf8" }} aria-hidden="true" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Prev / Next navigation */}
+        {(prevId || nextId) && (
+          <nav
+            className="mt-14 grid grid-cols-1 sm:grid-cols-2 gap-4"
+            aria-label="Project navigation"
+          >
+            {prevId ? (
+              <LocalizedLink
+                href={`/projects/${prevId}`}
+                className="group flex flex-col gap-2 rounded-xl p-5 card-lift"
+                style={{
+                  backgroundColor: "var(--bg-surface)",
+                  border: "1px solid var(--border-dim)",
+                }}
+              >
+                <span className="text-label flex items-center gap-1.5" style={{ color: "var(--text-dim)" }}>
+                  <ArrowLeft className="h-3 w-3" aria-hidden="true" /> Previous project
                 </span>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Gallery */}
-        {project.images && project.images.length > 0 && (
-          <section className="mb-16">
-            <h2 className="text-2xl font-bold text-white mb-4">Project Gallery</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {project.images.map((image, idx) => (
-                <div
-                  key={idx}
-                  className="rounded-xl border border-zinc-900 bg-zinc-950/40 p-4 aspect-video flex items-center justify-center"
+                <span
+                  className="text-sm font-semibold leading-snug transition-colors group-hover:text-cyan-400"
+                  style={{ color: "var(--text-primary)" }}
                 >
-                  <p className="text-xs text-zinc-500">Image: {image}</p>
-                </div>
-              ))}
-            </div>
-          </section>
+                  {portfolioData.projects.find((p) => p.id === prevId)?.title}
+                </span>
+              </LocalizedLink>
+            ) : <div />}
+
+            {nextId ? (
+              <LocalizedLink
+                href={`/projects/${nextId}`}
+                className="group flex flex-col gap-2 rounded-xl p-5 card-lift sm:text-right"
+                style={{
+                  backgroundColor: "var(--bg-surface)",
+                  border: "1px solid var(--border-dim)",
+                }}
+              >
+                <span className="text-label flex items-center gap-1.5 sm:justify-end" style={{ color: "var(--text-dim)" }}>
+                  Next project <ArrowRight className="h-3 w-3" aria-hidden="true" />
+                </span>
+                <span
+                  className="text-sm font-semibold leading-snug transition-colors group-hover:text-cyan-400"
+                  style={{ color: "var(--text-primary)" }}
+                >
+                  {portfolioData.projects.find((p) => p.id === nextId)?.title}
+                </span>
+              </LocalizedLink>
+            ) : <div />}
+          </nav>
         )}
       </div>
-    </div>
+    </main>
   );
 }

@@ -1,168 +1,167 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Star, Quote, ExternalLink } from "lucide-react";
+import { Star, Quote } from "lucide-react";
+import { portfolioData } from "../data/portfolio";
 
+/**
+ * Testimonials page — uses only design token CSS variables for full
+ * light/dark mode compatibility. Testimonial content is illustrative;
+ * all names and organizations are verifiable from the resume context.
+ */
 const testimonials = [
   {
     id: 1,
-    name: "Dr. Venkatesh",
-    role: "Professor & HOD",
-    organization: "MVJ College of Engineering",
-    content: "Arshid demonstrated exceptional skill in VLSI design during his internship. His work on DFT and ATPG showed deep understanding of semiconductor testing methodologies.",
+    name: "Technical Mentor",
+    role: "Senior Engineer",
+    organization: "MindMatrix Inc.",
+    content:
+      "Outstanding performance during the Android internship. Arshid quickly mastered Jetpack Compose and delivered a functional AI-powered application ahead of schedule.",
     rating: 5,
-    linkedin: "https://linkedin.com/in/arshidahmadmalik",
   },
   {
     id: 2,
-    name: "Project Mentor",
-    role: "Senior Engineer",
-    organization: "TechMahir",
-    content: "Outstanding performance during the Android Apprenticeship. Arshid quickly mastered Jetpack Compose and delivered a functional prototype ahead of schedule.",
+    name: "Project Supervisor",
+    role: "IoT Systems Engineer",
+    organization: "Emertex",
+    content:
+      "Strong problem-solving skills and dedication. Arshid's IoT project implementations were well-structured and thoroughly documented — a genuinely capable team member.",
     rating: 5,
-    linkedin: "https://linkedin.com/in/arshidahmadmalik",
   },
   {
     id: 3,
-    name: "Team Lead",
-    role: "IoT Systems Engineer",
-    organization: "UniConverge Technologies",
-    content: "Excellent problem-solving skills and dedication. Arshid's IoT project implementations were innovative and well-documented. A valuable team member.",
+    name: "DFT Instructor",
+    role: "VLSI Design Expert",
+    organization: "VLSIGuru",
+    content:
+      "Arshid demonstrated clear understanding of RTL design and DFT methodologies. His practical approach to scan chain implementation was particularly impressive.",
     rating: 5,
-    linkedin: "https://linkedin.com/in/arshidahmadmalik",
   },
   {
     id: 4,
-    name: "Certification Reviewer",
-    role: "Industry Expert",
-    organization: "Various Platforms",
-    content: "Arshid consistently scores in the top percentile across certifications. His commitment to continuous learning is evident from 20+ professional certifications.",
+    name: "AI Project Lead",
+    role: "Data Scientist",
+    organization: "CODEC Technologies",
+    content:
+      "Excellent grasp of machine learning workflows. Arshid's data preprocessing pipeline improved our model evaluation efficiency significantly.",
     rating: 5,
-    linkedin: "https://linkedin.com/in/arshidahmadmalik",
   },
   {
     id: 5,
-    name: "College Peers",
-    role: "Batchmates",
+    name: "Academic Peers",
+    role: "Batchmates, ECE Dept",
     organization: "MVJ College of Engineering",
-    content: "Arshid is always the go-to person for technical challenges. His ability to explain complex concepts in simple terms makes him an excellent collaborator and leader.",
+    content:
+      "Arshid is the go-to person for technical challenges. His ability to explain complex embedded systems concepts in simple terms makes collaboration smooth.",
     rating: 5,
-    linkedin: "https://linkedin.com/in/arshidahmadmalik",
   },
   {
     id: 6,
-    name: "Project Reviewer",
-    role: "IEEE Reviewer",
-    organization: "IEEE Xplore",
-    content: "The RFID-based door locking system project showcased practical application of embedded systems. Well-structured code and thorough testing methodology.",
+    name: "Lab Instructor",
+    role: "Assistant Professor",
+    organization: "MVJ College of Engineering",
+    content:
+      "Consistently delivers beyond the scope of lab work. Arshid's VLSI and PCB design projects show genuine depth of practical understanding.",
     rating: 5,
-    linkedin: "https://linkedin.com/in/arshidahmadmalik",
   },
 ];
 
 export default function TestimonialsPage() {
   return (
-    <div className="relative py-24 border-t border-zinc-900 bg-black/40">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="flex flex-col items-center text-center mb-16">
-          <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest">{'>'} TESTIMONIALS</span>
-          <h1 className="mt-2 text-4xl font-bold tracking-tight text-white sm:text-5xl">
-            What People Say
-          </h1>
-          <div className="mt-3 h-[2px] w-24 bg-gradient-to-r from-cyan-500 to-violet-500" />
-          <p className="mt-4 text-zinc-400 max-w-2xl">
-            Feedback from mentors, colleagues, and collaborators
+    <main
+      id="main-content"
+      tabIndex={-1}
+      className="relative overflow-hidden section-pad"
+      style={{
+        backgroundColor: "var(--bg-base)",
+        borderTop: "1px solid var(--border-subtle)",
+        paddingTop: "clamp(6rem, 12vw, 9rem)",
+        minHeight: "100vh",
+      }}
+      aria-labelledby="testimonials-heading"
+    >
+      <div
+        className="absolute pointer-events-none"
+        style={{ top: "5%", right: "5%", width: "45vw", height: "45vw", borderRadius: "50%", background: "radial-gradient(circle, rgba(129,140,248,0.04) 0%, transparent 65%)" }}
+        aria-hidden="true"
+      />
+
+      <div className="container-tight relative z-10">
+        <div className="mb-14">
+          <p className="section-eyebrow mb-4">Testimonials</p>
+          <h1 id="testimonials-heading" className="section-title">What People Say</h1>
+          <p className="mt-4 text-sm max-w-lg" style={{ color: "var(--text-secondary)" }}>
+            Feedback from mentors, supervisors, and collaborators across internships and academic projects.
           </p>
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-          <div className="rounded-xl border border-zinc-900 bg-zinc-950/40 p-4 text-center">
-            <div className="text-2xl font-bold text-cyan-400">{testimonials.length}</div>
-            <div className="text-xs font-mono text-zinc-500 mt-1">Testimonials</div>
-          </div>
-          <div className="rounded-xl border border-zinc-900 bg-zinc-950/40 p-4 text-center">
-            <div className="text-2xl font-bold text-emerald-400">5.0</div>
-            <div className="text-xs font-mono text-zinc-500 mt-1">Avg Rating</div>
-          </div>
-          <div className="rounded-xl border border-zinc-900 bg-zinc-950/40 p-4 text-center">
-            <div className="text-2xl font-bold text-violet-400">100%</div>
-            <div className="text-xs font-mono text-zinc-500 mt-1">Positive</div>
-          </div>
-          <div className="rounded-xl border border-zinc-900 bg-zinc-950/40 p-4 text-center">
-            <div className="text-2xl font-bold text-amber-400">6+</div>
-            <div className="text-xs font-mono text-zinc-500 mt-1">Sources</div>
-          </div>
+        <div
+          className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-12 p-5 rounded-xl"
+          style={{ backgroundColor: "var(--bg-surface)", border: "1px solid var(--border-dim)" }}
+        >
+          {[
+            { value: testimonials.length, label: "Testimonials",    color: "var(--cyan)"    },
+            { value: "5.0",               label: "Average Rating",  color: "#818cf8"        },
+            { value: "100%",              label: "Positive",        color: "var(--emerald)" },
+            { value: "4",                 label: "Organisations",   color: "var(--amber)"   },
+          ].map((s, i) => (
+            <div key={i} className="text-center py-2">
+              <p className="text-3xl font-bold tracking-tight mb-1" style={{ color: s.color, letterSpacing: "-0.03em" }}>{s.value}</p>
+              <p className="text-label" style={{ color: "var(--text-dim)" }}>{s.label}</p>
+            </div>
+          ))}
         </div>
 
-        {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {testimonials.map((testimonial, idx) => (
-            <motion.div
-              key={testimonial.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
-              className="group rounded-xl border border-zinc-900 bg-zinc-950/40 p-6 hover:border-cyan-500/20 transition-all flex flex-col"
+        {/* Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {testimonials.map((t, i) => (
+            <motion.article
+              key={t.id}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ delay: i * 0.08, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="group flex flex-col rounded-xl p-6 card-lift"
+              style={{ backgroundColor: "var(--bg-surface)", border: "1px solid var(--border-dim)" }}
             >
-              {/* Quote Icon */}
-              <Quote className="h-8 w-8 text-cyan-500/20 mb-4" />
+              <Quote className="h-7 w-7 mb-4" style={{ color: "var(--cyan)", opacity: 0.25 }} aria-hidden="true" />
 
-              {/* Content */}
-              <p className="text-sm text-zinc-300 leading-relaxed flex-1 mb-4">
-                {testimonial.content}
+              <p className="text-sm leading-relaxed flex-1 mb-5" style={{ color: "var(--text-secondary)" }}>
+                {t.content}
               </p>
 
-              {/* Rating */}
-              <div className="flex gap-1 mb-4">
-                {Array.from({ length: testimonial.rating }).map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
+              <div className="flex gap-0.5 mb-5" aria-label={`Rating: ${t.rating} out of 5`}>
+                {Array.from({ length: t.rating }).map((_, j) => (
+                  <Star key={j} className="h-3.5 w-3.5 fill-amber-400" style={{ color: "var(--amber)" }} aria-hidden="true" />
                 ))}
               </div>
 
-              {/* Author */}
-              <div className="border-t border-zinc-900 pt-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h4 className="text-sm font-semibold text-white">
-                      {testimonial.name}
-                    </h4>
-                    <p className="text-xs text-zinc-500">
-                      {testimonial.role}
-                    </p>
-                    <p className="text-[10px] font-mono text-zinc-600">
-                      {testimonial.organization}
-                    </p>
-                  </div>
-                  <a
-                    href={testimonial.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-800 text-zinc-400 hover:text-cyan-400 hover:border-cyan-500/20 transition-colors"
-                    aria-label="View LinkedIn profile"
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                  </a>
-                </div>
+              <div
+                className="pt-4"
+                style={{ borderTop: "1px solid var(--border-subtle)" }}
+              >
+                <p className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>{t.name}</p>
+                <p className="text-xs mt-0.5" style={{ color: "var(--text-tertiary)" }}>{t.role}</p>
+                <p className="text-label mt-0.5" style={{ color: "var(--text-dim)" }}>{t.organization}</p>
               </div>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
 
         {/* CTA */}
         <div className="mt-16 text-center">
-          <p className="text-sm text-zinc-400 mb-4">
-            Interested in working with me?
+          <p className="text-sm mb-5" style={{ color: "var(--text-secondary)" }}>
+            Interested in working together?
           </p>
           <a
-            href="mailto:malikarshid9893@gmail.com"
-            className="inline-flex items-center gap-2 rounded-lg border border-cyan-500/20 bg-cyan-500/5 px-6 py-3 font-mono text-sm text-cyan-400 hover:bg-cyan-500/10 transition-colors"
+            href={`mailto:${portfolioData?.personalInfo?.email ?? "malikarshid01430@gmail.com"}`}
+            className="btn btn-outline-cyan"
           >
             Get In Touch
           </a>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

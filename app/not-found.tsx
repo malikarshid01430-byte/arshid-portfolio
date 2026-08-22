@@ -1,76 +1,109 @@
 "use client";
 
 import Link from "next/link";
-import { Terminal, Home } from "lucide-react";
+import { Terminal, Home, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black text-foreground px-4">
+    <main
+      id="main-content"
+      tabIndex={-1}
+      className="min-h-screen flex items-center justify-center px-6 py-24"
+      style={{ backgroundColor: "var(--bg-base)" }}
+      aria-labelledby="not-found-heading"
+    >
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-center max-w-2xl"
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        className="text-center max-w-lg w-full"
       >
-        {/* Terminal Window */}
-        <div className="rounded-xl border border-cyan-500/20 bg-black/80 p-8 backdrop-blur-sm shadow-[0_0_40px_rgba(6,182,212,0.05)]">
-          {/* Terminal Header */}
-          <div className="flex items-center justify-between border-b border-cyan-500/10 bg-cyan-950/10 px-4 py-3 mb-6">
+        {/* Terminal panel */}
+        <div
+          className="rounded-2xl overflow-hidden mb-8"
+          style={{
+            backgroundColor: "var(--bg-surface)",
+            border: "1px solid var(--border-dim)",
+            boxShadow: "0 24px 60px -16px rgba(0,0,0,0.5)",
+          }}
+        >
+          {/* Terminal header bar */}
+          <div
+            className="flex items-center justify-between px-4 py-3"
+            style={{
+              backgroundColor: "var(--bg-raised)",
+              borderBottom: "1px solid var(--border-subtle)",
+            }}
+          >
             <div className="flex items-center gap-2">
-              <Terminal className="h-4 w-4 text-cyan-400" />
-              <span className="text-xs text-cyan-400 font-bold tracking-wide">error_handler.elf</span>
+              <Terminal className="h-3.5 w-3.5" style={{ color: "var(--cyan)" }} aria-hidden="true" />
+              <span className="text-label" style={{ color: "var(--cyan)" }}>error_handler.elf</span>
             </div>
-            <div className="flex gap-1.5">
-              <div className="h-2 w-2 rounded-full bg-rose-500/50" />
-              <div className="h-2 w-2 rounded-full bg-amber-500/50" />
-              <div className="h-2 w-2 rounded-full bg-emerald-500/50" />
+            <div className="flex gap-1.5" aria-hidden="true">
+              <div className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: "rgba(251,113,133,0.5)" }} />
+              <div className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: "rgba(251,191,36,0.5)" }} />
+              <div className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: "rgba(52,211,153,0.5)" }} />
             </div>
           </div>
 
-          {/* Error Content */}
-          <div className="font-mono text-sm space-y-4">
-            <div className="text-cyan-400">
-              <span className="text-cyan-600">{'>'}{'>'}</span> ERROR_CODE: 0x404_NOT_FOUND
+          {/* Terminal body */}
+          <div className="px-6 py-8 font-mono text-sm space-y-3">
+            <p style={{ color: "var(--cyan)" }}>
+              <span style={{ color: "var(--text-dim)" }}>&gt;&gt;</span>{" "}
+              ERROR_CODE: 0x404_NOT_FOUND
+            </p>
+            <p style={{ color: "var(--text-secondary)" }}>
+              <span style={{ color: "var(--text-dim)" }}>&gt;&gt;</span>{" "}
+              The requested module could not be located.
+            </p>
+            <div style={{ color: "var(--text-tertiary)", fontSize: "0.75rem" }}>
+              <p className="mb-1">
+                <span style={{ color: "var(--text-dim)" }}>&gt;&gt;</span>{" "}
+                Possible causes:
+              </p>
+              <ul className="space-y-1 ml-6 text-xs">
+                <li>— Invalid address (URL may be incorrect)</li>
+                <li>— Module relocated or deprecated</li>
+                <li>— Insufficient access permissions</li>
+              </ul>
             </div>
-            <div className="text-zinc-400">
-              <span className="text-cyan-600">{'>'}{'>'}</span> The requested system module could not be located.
-            </div>
-            <div className="text-zinc-500 text-xs">
-              <span className="text-cyan-600">{'>'}{'>'}</span> Possible causes:
-            </div>
-            <ul className="text-xs text-zinc-500 space-y-1 ml-4">
-              <li>- Invalid memory address (URL)</li>
-              <li>- Module has been deprecated or relocated</li>
-              <li>- Insufficient access permissions</li>
-            </ul>
+          </div>
 
-            {/* 404 Display */}
-            <div className="py-8">
-              <div className="text-6xl font-bold text-transparent bg-gradient-to-r from-cyan-400 to-violet-500 bg-clip-text mb-2">
-                404
-              </div>
-              <div className="text-sm text-zinc-400">
-                PAGE_NOT_FOUND_IN_SYSTEM
-              </div>
-            </div>
-
-            {/* Action Button */}
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-violet-600 text-white font-mono text-xs tracking-wider font-semibold transition-all hover:brightness-110 shadow-[0_0_15px_rgba(6,182,212,0.2)]"
+          {/* 404 display */}
+          <div
+            className="py-8 px-6 text-center"
+            style={{ borderTop: "1px solid var(--border-subtle)" }}
+          >
+            <h1
+              id="not-found-heading"
+              className="text-7xl font-extrabold tracking-tight mb-2"
+              style={{ color: "var(--text-primary)", letterSpacing: "-0.04em" }}
             >
-              <Home className="h-4 w-4" />
-              Return to Home Base
-            </Link>
+              404
+            </h1>
+            <p className="text-label" style={{ color: "var(--text-dim)" }}>
+              PAGE_NOT_FOUND
+            </p>
           </div>
         </div>
 
-        {/* Additional Info */}
-        <div className="mt-6 text-[10px] text-zinc-600 font-mono">
-          <span className="text-cyan-600">{'>'}{'>'}</span> SYSTEM_HINT: Check the navigation menu for available modules
-        </div>
+        {/* Action */}
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 btn btn-primary"
+          style={{ height: "3rem", paddingInline: "1.5rem" }}
+        >
+          <Home className="h-4 w-4" aria-hidden="true" />
+          Return to Home
+          <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+        </Link>
+
+        <p className="mt-6 text-label" style={{ color: "var(--text-dim)" }}>
+          <span style={{ color: "var(--text-dim)" }}>&gt;&gt;</span>{" "}
+          Use the navigation to find what you are looking for.
+        </p>
       </motion.div>
-    </div>
+    </main>
   );
 }

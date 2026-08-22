@@ -19,7 +19,6 @@ export default function ScrollProgress() {
   return (
     <div
       className="fixed inset-x-0 top-0 z-[9990] h-[2px] pointer-events-none"
-      aria-hidden="true"
       role="progressbar"
       aria-valuenow={Math.round(progress)}
       aria-valuemin={0}

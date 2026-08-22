@@ -6,37 +6,62 @@ import Script from "next/script";
 import "./globals.css";
 import messages from "../messages/en.json";
 
+const SITE_URL = "https://arshid-portfolio.vercel.app";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://malikarshid01430-byte.github.io"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Arshid Ahmad Malik | Electronics & Communication Engineer | Embedded Systems & Edge AI",
-    template: "%s | Arshid Ahmad Malik"
+    default:
+      "Arshid Ahmad Malik | Electronics & Communication Engineer | Embedded Systems & Edge AI",
+    template: "%s | Arshid Ahmad Malik",
   },
-  description: "Engineering portfolio of Arshid Ahmad Malik, Electronics and Communication Engineer specializing in Embedded Systems, IoT, VLSI, FPGA, Edge AI, and Full Stack Development. Based in Bengaluru, India.",
-  keywords: ["Arshid Ahmad Malik", "Electronics Engineer", "Embedded Systems", "IoT", "VLSI", "FPGA", "Edge AI", "ESP32", "STM32", "Arduino", "Full Stack Developer", "Bengaluru"],
-  authors: [{ name: "Arshid Ahmad Malik" }],
+  description:
+    "Engineering portfolio of Arshid Ahmad Malik — Electronics and Communication Engineer specialising in Embedded Systems, IoT, VLSI, FPGA, Edge AI, Android, and Full Stack Development. Based in Bangalore, India.",
+  keywords: [
+    "Arshid Ahmad Malik",
+    "Electronics and Communication Engineer",
+    "Embedded Systems",
+    "IoT",
+    "VLSI",
+    "FPGA",
+    "Edge AI",
+    "ESP32",
+    "STM32",
+    "Arduino",
+    "Android Developer",
+    "React",
+    "Next.js",
+    "Full Stack Developer",
+    "Bangalore",
+    "India",
+  ],
+  authors: [{ name: "Arshid Ahmad Malik", url: SITE_URL }],
   creator: "Arshid Ahmad Malik",
+  publisher: "Arshid Ahmad Malik",
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://arshid-portfolio.vercel.app",
+    url: SITE_URL,
     title: "Arshid Ahmad Malik | Electronics & Communication Engineer",
-    description: "Engineering portfolio specializing in Embedded Systems, IoT, VLSI, FPGA, Edge AI, and Full Stack Development.",
+    description:
+      "Engineering portfolio specialising in Embedded Systems, IoT, VLSI, FPGA, Edge AI, and Full Stack Development.",
     siteName: "Arshid Ahmad Malik Portfolio",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Arshid Ahmad Malik - Electronics & Communication Engineer",
+        alt: "Arshid Ahmad Malik — Electronics & Communication Engineer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Arshid Ahmad Malik | Electronics & Communication Engineer",
-    description: "Engineering portfolio specializing in Embedded Systems, IoT, VLSI, FPGA, Edge AI, and Full Stack Development.",
+    description:
+      "Engineering portfolio specialising in Embedded Systems, IoT, VLSI, FPGA, Edge AI, and Full Stack Development.",
     images: ["/og-image.png"],
+    creator: "@arshidmalik",
   },
   robots: {
     index: true,
@@ -52,15 +77,12 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
   },
-  // Performance optimizations
   other: {
-    "theme-color": "#030712",
+    "theme-color": "#09090b",
   },
-  // JSON-LD structured data for SEO
   alternates: {
-    canonical: "https://arshid-portfolio.vercel.app",
+    canonical: SITE_URL,
   },
-  // Web App Manifest
   manifest: "/manifest.json",
 };
 
@@ -82,11 +104,10 @@ export default function RootLayout({
     >
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#030712" />
+        <meta name="theme-color" content="#09090b" />
         <link rel="manifest" href="/manifest.json" />
-        <link rel="canonical" href="https://arshid-portfolio.vercel.app" />
       </head>
-      <body className="min-h-full flex flex-col bg-black text-foreground">
+      <body className="min-h-full flex flex-col text-foreground" style={{ backgroundColor: "var(--bg-base)" }}>
         <SkipLink />
         <ScrollProgress />
         <CursorGlow />
@@ -98,9 +119,9 @@ export default function RootLayout({
           disableTransitionOnChange={false}
         >
           <NextIntlClientProvider locale="en" messages={messages}>
-            <main id="main-content" className="flex-1">
+            <div className="flex-1">
               {children}
-            </main>
+            </div>
           </NextIntlClientProvider>
         </ThemeProvider>
         <StructuredData />
