@@ -1,294 +1,550 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, Info, ArrowRight, ShieldCheck, CircuitBoard, ImageIcon, FileText, ExternalLink } from "lucide-react";
+import { useState, useMemo, useEffect } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import {
+  X, ArrowRight, ShieldCheck, CircuitBoard,
+  ExternalLink, ChevronRight, ArrowUpRight, Layers
+} from "lucide-react";
+import { FaGithub } from "react-icons/fa";
 import { portfolioData, Project } from "../data/portfolio";
+import LocalizedLink from "./LocalizedLink";
+
+const ease = [0.22, 1, 0.36, 1] as const;
 
 const categories = ["All", "Embedded & IoT", "Electronics & VLSI", "AI & Edge Computer Vision", "Full Stack Web"];
 
-const getNodeColor = (type: string) => {
-  const colors: Record<string, string> = {
-    sensor: "bg-emerald-950/40 border-emerald-500 text-emerald-400",
-    mcu: "bg-cyan-950/40 border-cyan-500 text-cyan-400",
-    "edge-ai": "bg-pink-950/40 border-pink-500 text-pink-400",
-    hardware: "bg-amber-950/40 border-amber-500 text-amber-400",
-    cloud: "bg-sky-950/40 border-sky-500 text-sky-400",
-    ui: "bg-violet-950/40 border-violet-500 text-violet-400",
-  };
-  return colors[type] || "bg-zinc-900 border-zinc-500 text-zinc-400";
+const categoryAccents: Record<string, string> = {
+  "Embedded & IoT":           "var(--cyan)",
+  "Electronics & VLSI":       "#818cf8",
+  "AI & Edge Computer Vision":"var(--emerald)",
+  "Full Stack Web":           "#f472b6",
 };
 
+const nodeColors: Record<string, string> = {
+  sensor:   "rgba(52,211,153,0.12)",
+  mcu:      "rgba(34,211,238,0.12)",
+  "edge-ai":"rgba(244,114,182,0.12)",
+  hardware: "rgba(251,191,36,0.12)",
+  cloud:    "rgba(56,189,248,0.12)",
+  ui:       "rgba(167,139,250,0.12)",
+};
+const nodeBorders: Record<string, string> = {
+  sensor:   "#34d399",
+  mcu:      "#22d3ee",
+  "edge-ai":"#f472b6",
+  hardware: "#fbbf24",
+  cloud:    "#38bdf8",
+  ui:       "#a78bfa",
+};
+const nodeText: Record<string, string> = {
+  sensor:   "#34d399",
+  mcu:      "#22d3ee",
+  "edge-ai":"#f472b6",
+  hardware: "#fbbf24",
+  cloud:    "#38bdf8",
+  ui:       "#a78bfa",
+};
+
+/* ── Project card ──────────────────────────────────────────────────── */
+function ProjectCard({
+  project,
+  index,
+  onOpen,
+}: {
+  project: Project;
+  index: number;
+  onOpen: (p: Project) => void;
+}) {
+  const reduced = useReducedMotion();
+  const accent  = categoryAccents[project.category] ?? "var(--cyan)";
+
+  return (
+    <motion.article
+      layout
+      key={project.id}
+      initial={reduced ? undefined : { opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.97 }}
+      transition={{ duration: 0.28, delay: index * 0.05, ease }}
+      className="group relative flex flex-col rounded-xl overflow-hidden cursor-pointer card-lift"
+      style={{
+        backgroundColor: "var(--bg-surface)",
+        border: "1px solid var(--border-dim)",
+        minHeight: 280,
+      }}
+      onClick={() => onOpen(project)}
+      tabIndex={0}
+      onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onOpen(project)}
+      aria-label={`View case study: ${project.title}`}
+    >
+      {/* Decorative top accent bar */}
+      <div className="h-[2px] w-full" style={{ background: accent, opacity: 0.6 }} aria-hidden="true" />
+
+      <div className="flex flex-col gap-4 p-5 sm:p-6 flex-1">
+        {/* Header row */}
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex flex-col gap-1">
+            <span className="text-label" style={{ color: accent }}>
+              {project.category}
+            </span>
+            <h3
+              className="font-semibold text-base leading-snug mt-1 transition-colors duration-150 group-hover:text-cyan-400"
+              style={{ color: "var(--text-primary)" }}
+            >
+              {project.title}
+            </h3>
+          </div>
+          <ArrowUpRight
+            className="h-4 w-4 shrink-0 mt-1 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            style={{ color: "var(--text-dim)" }}
+            aria-hidden="true"
+          />
+        </div>
+
+        {/* Subtitle */}
+        <p className="font-mono text-xs leading-relaxed" style={{ color: "var(--text-tertiary)" }}>
+          {project.subtitle}
+        </p>
+
+        {/* Description */}
+        <p className="text-xs leading-relaxed line-clamp-3 flex-1" style={{ color: "var(--text-secondary)" }}>
+          {project.description}
+        </p>
+
+        {/* Result callout */}
+        {project.results?.[0] && (
+          <p
+            className="text-xs leading-relaxed pl-3 border-l-2 py-1"
+            style={{ borderColor: "var(--amber)", color: "var(--text-secondary)" }}
+          >
+            {project.results[0]}
+          </p>
+        )}
+
+        {/* Tech tags */}
+        <div className="flex flex-wrap gap-1.5 mt-auto">
+          {project.technologies.slice(0, 4).map((t) => (
+            <span key={t} className="badge">{t}</span>
+          ))}
+          {project.technologies.length > 4 && (
+            <span className="badge badge-cyan">+{project.technologies.length - 4}</span>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div
+          className="flex items-center justify-between pt-3"
+          style={{ borderTop: "1px solid var(--border-subtle)" }}
+        >
+          {project.github ? (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="flex items-center gap-1.5 text-xs transition-colors"
+              style={{ color: "var(--text-dim)" }}
+              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--cyan)")}
+              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--text-dim)")}
+              aria-label={`GitHub source for ${project.title}`}
+            >
+              <FaGithub className="h-3.5 w-3.5" aria-hidden="true" /> Source
+            </a>
+          ) : <span />}
+          <span
+            className="flex items-center gap-1 font-mono text-[10px]"
+            style={{ color: accent }}
+          >
+            View Case Study <ChevronRight className="h-3 w-3" aria-hidden="true" />
+          </span>
+        </div>
+      </div>
+    </motion.article>
+  );
+}
+
+/* ── Modal ─────────────────────────────────────────────────────────── */
+function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
+  const reduced = useReducedMotion();
+
+  /* Close on Escape */
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [onClose]);
+
+  /* Prevent body scroll */
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
+  const accent = categoryAccents[project.category] ?? "var(--cyan)";
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-16 overflow-y-auto"
+      style={{ backgroundColor: "rgba(0,0,0,0.85)", backdropFilter: "blur(8px)" }}
+      onClick={onClose}
+    >
+      <motion.div
+        initial={reduced ? undefined : { opacity: 0, scale: 0.97, y: 12 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={reduced ? undefined : { opacity: 0, scale: 0.97 }}
+        transition={{ duration: 0.25, ease }}
+        className="relative w-full max-w-5xl rounded-2xl overflow-hidden mb-8"
+        style={{
+          backgroundColor: "var(--bg-surface)",
+          border: "1px solid var(--border-dim)",
+          boxShadow: "0 32px 80px -12px rgba(0,0,0,0.7)",
+        }}
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+      >
+        {/* Accent top bar */}
+        <div className="h-[2px]" style={{ background: accent }} aria-hidden="true" />
+
+        {/* Modal header */}
+        <div
+          className="flex items-start justify-between gap-4 px-6 py-5"
+          style={{ borderBottom: "1px solid var(--border-subtle)", backgroundColor: "var(--bg-raised)" }}
+        >
+          <div>
+            <span className="text-label" style={{ color: accent }}>
+              {project.category} · {project.timeline && `${project.timeline}`}
+            </span>
+            <h2
+              id="modal-title"
+              className="mt-1.5 text-xl font-bold tracking-tight"
+              style={{ color: "var(--text-primary)", letterSpacing: "-0.02em" }}
+            >
+              {project.title}
+            </h2>
+            <p className="font-mono text-xs mt-1" style={{ color: "var(--text-tertiary)" }}>
+              {project.subtitle}
+            </p>
+          </div>
+          <button
+            onClick={onClose}
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 mt-1"
+            style={{ border: "1px solid var(--border-dim)", color: "var(--text-tertiary)" }}
+            aria-label="Close project details"
+          >
+            <X className="h-4 w-4" aria-hidden="true" />
+          </button>
+        </div>
+
+        {/* Modal body */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 max-h-[72vh] overflow-y-auto">
+          {/* Left col */}
+          <div
+            className="flex flex-col gap-6 p-6"
+            style={{ borderRight: "1px solid var(--border-subtle)" }}
+          >
+            {project.problem && (
+              <div>
+                <h4 className="text-label mb-2" style={{ color: "var(--rose)" }}>▹ PROBLEM STATEMENT</h4>
+                <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>{project.problem}</p>
+              </div>
+            )}
+            {project.solution && (
+              <div>
+                <h4 className="text-label mb-2" style={{ color: "var(--emerald)" }}>▹ SOLUTION APPROACH</h4>
+                <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>{project.solution}</p>
+              </div>
+            )}
+            <div>
+              <h4 className="text-label mb-2" style={{ color: "var(--cyan)" }}>▹ OVERVIEW</h4>
+              <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>{project.longDescription}</p>
+            </div>
+            {project.results && project.results.length > 0 && (
+              <div>
+                <h4 className="text-label mb-3" style={{ color: "var(--amber)" }}>▹ RESULTS & IMPACT</h4>
+                <ul className="space-y-2">
+                  {project.results.map((r, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-sm" style={{ color: "var(--text-secondary)" }}>
+                      <ShieldCheck className="h-3.5 w-3.5 mt-0.5 shrink-0" style={{ color: "var(--amber)" }} aria-hidden="true" />
+                      {r}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <div>
+              <h4 className="text-label mb-3" style={{ color: "var(--cyan)" }}>▹ KEY HIGHLIGHTS</h4>
+              <ul className="space-y-2">
+                {project.highlights.map((h, i) => (
+                  <li key={i} className="flex items-start gap-2.5 text-sm" style={{ color: "var(--text-secondary)" }}>
+                    <ShieldCheck className="h-3.5 w-3.5 mt-0.5 shrink-0" style={{ color: "var(--cyan)" }} aria-hidden="true" />
+                    {h}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {project.technicalChallenges.length > 0 && (
+              <div>
+                <h4 className="text-label mb-3" style={{ color: "#fb923c" }}>▹ TECHNICAL CHALLENGES</h4>
+                <ul className="space-y-2">
+                  {project.technicalChallenges.map((c, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-sm" style={{ color: "var(--text-secondary)" }}>
+                      <span style={{ color: "#fb923c" }} aria-hidden="true">*</span>
+                      {c}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <div>
+              <h4 className="text-label mb-3" style={{ color: "var(--text-dim)" }}>▹ TECH STACK</h4>
+              <div className="flex flex-wrap gap-1.5">
+                {project.technologies.map((t) => (
+                  <span key={t} className="badge">{t}</span>
+                ))}
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-3 pt-2">
+              {project.github && (
+                <a href={project.github} target="_blank" rel="noopener noreferrer" className="btn btn-ghost !h-9 !text-xs">
+                  <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" /> View Source
+                </a>
+              )}
+              {project.demo && (
+                <a href={project.demo} target="_blank" rel="noopener noreferrer" className="btn btn-ghost !h-9 !text-xs">
+                  <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" /> Live Demo
+                </a>
+              )}
+              <LocalizedLink href={`/projects/${project.id}`} className="btn btn-outline-cyan !h-9 !text-xs">
+                Full Case Study <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+              </LocalizedLink>
+            </div>
+          </div>
+
+          {/* Right col */}
+          <div className="flex flex-col gap-6 p-6">
+            <div>
+              <h4 className="text-label mb-4 flex items-center gap-2" style={{ color: "#818cf8" }}>
+                <CircuitBoard className="h-3.5 w-3.5" aria-hidden="true" />
+                SYSTEM ARCHITECTURE
+              </h4>
+              {project.architecture ? (
+                <div
+                  className="rounded-xl p-4 font-mono text-xs"
+                  style={{ backgroundColor: "var(--bg-inset)", border: "1px solid var(--border-dim)" }}
+                >
+                  <div className="flex flex-wrap gap-2 justify-center mb-5">
+                    {project.architecture.nodes.map((n) => (
+                      <div
+                        key={n.id}
+                        className="flex flex-col items-center text-center px-3 py-2 rounded-lg border max-w-[120px]"
+                        style={{
+                          backgroundColor: nodeColors[n.type] ?? "rgba(100,116,139,0.1)",
+                          borderColor: nodeBorders[n.type] ?? "#64748b",
+                          color: nodeText[n.type] ?? "#94a3b8",
+                        }}
+                      >
+                        <span className="text-[8px] uppercase tracking-wider opacity-70 font-bold">{n.type}</span>
+                        <span className="text-[10px] font-semibold mt-0.5">{n.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ borderTop: "1px solid var(--border-subtle)", paddingTop: "1rem" }}>
+                    <span className="text-label block mb-3" style={{ color: "var(--text-dim)" }}>
+                      {"// SIGNAL PATH"}
+                    </span>
+                    <div className="space-y-2 max-h-48 overflow-y-auto no-scrollbar">
+                      {project.architecture.edges.map((edge, i) => {
+                        const from = project.architecture?.nodes.find((n) => n.id === edge.from)?.label ?? edge.from;
+                        const to   = project.architecture?.nodes.find((n) => n.id === edge.to)?.label ?? edge.to;
+                        return (
+                          <div
+                            key={i}
+                            className="flex items-center justify-between gap-2 rounded p-2"
+                            style={{ backgroundColor: "var(--bg-raised)", border: "1px solid var(--border-subtle)" }}
+                          >
+                            <div className="flex items-center gap-1.5 flex-wrap">
+                              <span className="font-semibold" style={{ color: "var(--text-primary)" }}>{from}</span>
+                              <ArrowRight className="h-3 w-3" style={{ color: "var(--cyan)" }} aria-hidden="true" />
+                              <span style={{ color: "var(--cyan)" }}>{to}</span>
+                            </div>
+                            <span
+                              className="badge badge-cyan shrink-0"
+                              style={{ fontSize: "0.55rem" }}
+                            >
+                              {edge.label}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className="flex items-center justify-center rounded-xl p-8"
+                  style={{
+                    border: "1px dashed var(--border-dim)",
+                    color: "var(--text-dim)",
+                    fontSize: "0.75rem",
+                    fontFamily: "monospace",
+                  }}
+                >
+                  <Layers className="h-4 w-4 mr-2" aria-hidden="true" /> No diagram available
+                </div>
+              )}
+            </div>
+
+            {project.features.length > 0 && (
+              <div>
+                <h4 className="text-label mb-3" style={{ color: "#818cf8" }}>▹ FEATURES</h4>
+                <ul className="space-y-1.5">
+                  {project.features.map((f, i) => (
+                    <li key={i} className="flex items-start gap-2 text-xs" style={{ color: "var(--text-secondary)" }}>
+                      <ArrowRight className="h-3 w-3 mt-0.5 shrink-0" style={{ color: "#818cf8" }} aria-hidden="true" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {project.futureImprovements.length > 0 && (
+              <div>
+                <h4 className="text-label mb-3" style={{ color: "var(--emerald)" }}>▹ FUTURE IMPROVEMENTS</h4>
+                <ul className="space-y-1.5">
+                  {project.futureImprovements.map((fi, i) => (
+                    <li key={i} className="flex items-start gap-2 text-xs" style={{ color: "var(--text-secondary)" }}>
+                      <span style={{ color: "var(--emerald)" }} aria-hidden="true">›</span>
+                      {fi}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+/* ── Main section ─────────────────────────────────────────────────── */
 export default function Projects() {
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [activeProject, setActiveProject] = useState<Project | null>(null);
+  const [activeProject,    setActiveProject]    = useState<Project | null>(null);
+  const reduced = useReducedMotion();
 
   const filteredProjects = useMemo(
-    () => selectedCategory === "All" ? portfolioData.projects : portfolioData.projects.filter((p) => p.category === selectedCategory),
-    [selectedCategory]
+    () =>
+      selectedCategory === "All"
+        ? portfolioData.projects
+        : portfolioData.projects.filter((p) => p.category === selectedCategory),
+    [selectedCategory],
   );
 
   return (
-    <section id="projects" className="relative isolate py-28 lg:py-36 border-t border-zinc-900 scroll-mt-20 overflow-hidden">
-      <div className="absolute top-0 right-1/4 h-96 w-96 rounded-full bg-cyan-500/5 blur-[120px]" />
-      <div className="absolute bottom-0 left-1/4 h-96 w-96 rounded-full bg-violet-500/5 blur-[120px]" />
-      
-      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 relative z-10">
-        <div className="flex flex-col items-center text-center mb-20">
-          <span className="font-mono text-xs text-cyan-400 uppercase tracking-widest" aria-hidden="true">Projects</span>
-          <h2 className="mt-3 text-4xl sm:text-5xl font-bold tracking-tight text-white">Engineering Case Studies</h2>
-          <p className="mt-4 text-base text-zinc-400 max-w-2xl">End-to-end engineering projects with measurable impact and technical depth.</p>
-          <div className="mt-4 h-[2px] w-24 bg-gradient-to-r from-cyan-500 to-violet-500" />
-        </div>
+    <section
+      id="projects"
+      className="relative isolate overflow-hidden scroll-mt-20 section-pad"
+      style={{
+        backgroundColor: "var(--bg-surface)",
+        borderTop: "1px solid var(--border-subtle)",
+      }}
+      aria-labelledby="projects-heading"
+    >
+      {/* Ambient glows */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: "5%", right: "5%",
+          width: "40vw", height: "40vw",
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(34,211,238,0.04) 0%, transparent 65%)",
+        }}
+        aria-hidden="true"
+      />
 
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-12" role="tablist" aria-label="Project categories">
-          {categories.map((cat) => (
-            <button 
-              key={cat} 
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-4 py-2 rounded-full border font-mono text-xs tracking-wider transition-all ${
-                selectedCategory === cat ? "bg-cyan-500/20 border-cyan-400 text-cyan-400" : "bg-zinc-950/30 border-zinc-800 text-zinc-400 hover:text-white"
-              }`}
-              role="tab"
-              aria-selected={selectedCategory === cat}
-            >{cat}</button>
-          ))}
-        </div>
+      <div className="container-tight relative z-10">
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project) => (
-              <motion.div
-                layout key={project.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.3 }}
-                onClick={() => setActiveProject(project)}
-                className="group relative rounded-2xl border border-zinc-800 bg-zinc-950/40 p-6 cursor-pointer transition-all hover:border-cyan-500/30"
+        {/* Section header */}
+        <motion.div
+          initial={reduced ? undefined : { opacity: 0, y: 20 }}
+          whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.55, ease }}
+          className="mb-12"
+        >
+          <p className="section-eyebrow mb-4">Projects</p>
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+            <h2 id="projects-heading" className="section-title">
+              Engineering Case Studies
+            </h2>
+            <p className="text-sm max-w-xs sm:text-right" style={{ color: "var(--text-tertiary)" }}>
+              {portfolioData.projects.length} projects · measurable outcomes
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Filter tabs */}
+        <div
+          className="flex flex-wrap gap-2 mb-10"
+          role="tablist"
+          aria-label="Project category filter"
+        >
+          {categories.map((cat) => {
+            const active  = selectedCategory === cat;
+            const accent  = categoryAccents[cat] ?? "var(--cyan)";
+            return (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                role="tab"
+                aria-selected={active}
+                className="px-4 py-2 rounded-full font-mono text-[10px] tracking-wide transition-all duration-180 focus-visible:outline-none focus-visible:ring-2"
+                style={{
+                  backgroundColor: active ? `${accent}18` : "var(--bg-raised)",
+                  border: active ? `1px solid ${accent}44` : "1px solid var(--border-subtle)",
+                  color: active ? accent : "var(--text-tertiary)",
+                  fontWeight: active ? 600 : 400,
+                }}
               >
-                <div className="absolute top-4 right-4 text-zinc-800 group-hover:text-cyan-500/30 transition-colors"><CircuitBoard className="h-10 w-10 stroke-[1]" /></div>
-                <div className="font-mono text-[10px] text-cyan-400 tracking-widest uppercase mb-2">{"// "}{project.category}</div>
-                <h3 className="text-xl font-bold text-white tracking-wide group-hover:text-cyan-400 transition-colors">{project.title}</h3>
-                <p className="mt-2 text-sm text-zinc-400 font-mono leading-relaxed">{project.subtitle}</p>
-                <p className="mt-4 text-xs text-zinc-500 leading-relaxed line-clamp-3">{project.description}</p>
-                <div className="mt-6 flex flex-wrap gap-1.5">
-                  {project.technologies.slice(0, 4).map((tech) => (
-                    <span key={tech} className="px-2.5 py-0.5 rounded bg-zinc-900/60 border border-zinc-800 text-[10px] font-mono text-zinc-400">{tech}</span>
-                  ))}
-                  {project.technologies.length > 4 && (
-                    <span className="px-2.5 py-0.5 rounded bg-cyan-950/10 border border-cyan-950/40 text-[10px] font-mono text-cyan-400">+{project.technologies.length - 4} MORE</span>
-                  )}
-                </div>
-                <div className="mt-6 flex items-center gap-1.5 font-mono text-xs text-cyan-400 group-hover:underline"><Info className="h-4 w-4" /><span>View Case Study</span></div>
-              </motion.div>
+                {cat}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Project grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project, i) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                index={i}
+                onOpen={setActiveProject}
+              />
             ))}
           </AnimatePresence>
         </div>
-
-        <AnimatePresence>
-          {activeProject && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 overflow-y-auto"
-              onClick={() => setActiveProject(null)}>
-              <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.2 }}
-                className="relative w-full max-w-5xl rounded-2xl border border-cyan-500/20 bg-zinc-950 p-6 sm:p-8 max-h-[90vh] overflow-y-auto"
-                onClick={(e) => e.stopPropagation()}>
-                <button onClick={() => setActiveProject(null)} className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-800 text-zinc-400 hover:text-white transition-colors" aria-label="Close project details"><X className="h-4 w-4" /></button>
-                
-                <div className="border-b border-zinc-900 pb-4 mb-6">
-                  <span className="font-mono text-xs text-cyan-400 tracking-wider">{"// PROJECT // "}{activeProject.category}</span>
-                  <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-wide mt-2">{activeProject.title}</h3>
-                  <p className="text-sm text-zinc-400 font-mono mt-1">{activeProject.subtitle}</p>
-                  {activeProject.timeline && (
-                    <div className="flex items-center gap-2 mt-2 text-xs text-zinc-500 font-mono">
-                      <span>Timeline: {activeProject.timeline}</span>
-                    </div>
-                  )}
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                  <div className="lg:col-span-6 space-y-6">
-                    {activeProject.problem && (
-                      <div>
-                        <h4 className="font-mono text-xs text-rose-400 uppercase tracking-widest mb-2">{'>'} PROBLEM STATEMENT</h4>
-                        <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">{activeProject.problem}</p>
-                      </div>
-                    )}
-
-                    {activeProject.solution && (
-                      <div>
-                        <h4 className="font-mono text-xs text-emerald-400 uppercase tracking-widest mb-2">{'>'} SOLUTION APPROACH</h4>
-                        <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">{activeProject.solution}</p>
-                      </div>
-                    )}
-
-                    <div>
-                      <h4 className="font-mono text-xs text-cyan-400 uppercase tracking-widest mb-2">{'>'} OVERVIEW</h4>
-                      <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">{activeProject.longDescription}</p>
-                    </div>
-
-                    {activeProject.results && (
-                      <div>
-                        <h4 className="font-mono text-xs text-amber-400 uppercase tracking-widest mb-3">{'>'} RESULTS & IMPACT</h4>
-                        <ul className="space-y-2 text-xs text-zinc-400">
-                          {activeProject.results.map((r, i) => (
-                            <li key={i} className="flex items-start gap-2">
-                              <ShieldCheck className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
-                              <span>{r}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    <div>
-                      <h4 className="font-mono text-xs text-cyan-400 uppercase tracking-widest mb-3">{'>'} KEY HIGHLIGHTS</h4>
-                      <ul className="space-y-2 text-xs text-zinc-400">
-                        {activeProject.highlights.map((h, i) => (
-                          <li key={i} className="flex items-start gap-2">
-                            <ShieldCheck className="h-4 w-4 text-cyan-400 shrink-0 mt-0.5" />
-                            <span>{h}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div>
-                      <h4 className="font-mono text-xs text-violet-400 uppercase tracking-widest mb-3">{'>'} FEATURES</h4>
-                      <ul className="space-y-2 text-xs text-zinc-400">
-                        {activeProject.features.map((f, i) => (
-                          <li key={i} className="flex items-start gap-2">
-                            <ArrowRight className="h-4 w-4 text-violet-400 shrink-0 mt-0.5" />
-                            <span>{f}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div>
-                      <h4 className="font-mono text-xs text-zinc-500 uppercase tracking-widest mb-2">{'>'} TECH STACK</h4>
-                      <div className="flex flex-wrap gap-1.5">
-                        {activeProject.technologies.map((t) => (
-                          <span key={t} className="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-[10px] font-mono text-zinc-400">{t}</span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {activeProject.technicalChallenges.length > 0 && (
-                      <div>
-                        <h4 className="font-mono text-xs text-orange-400 uppercase tracking-widest mb-3">{'>'} TECHNICAL CHALLENGES</h4>
-                        <ul className="space-y-2 text-xs text-zinc-400">
-                          {activeProject.technicalChallenges.map((c, i) => (
-                            <li key={i} className="flex items-start gap-2">
-                              <span className="text-orange-400 mt-0.5">*</span>
-                              <span>{c}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    <div className="flex flex-wrap gap-4 pt-4">
-                      {activeProject.github && (
-                        <a href={activeProject.github} target="_blank" rel="noopener noreferrer"
-                          className="flex items-center gap-2 px-4 py-2 rounded-lg border border-cyan-500/20 bg-cyan-950/5 font-mono text-xs text-cyan-400 hover:border-cyan-400 transition-colors">
-                          <ExternalLink className="h-4 w-4" /> View Source
-                        </a>
-                      )}
-                      {activeProject.demo && (
-                        <a href={activeProject.demo} target="_blank" rel="noopener noreferrer"
-                          className="flex items-center gap-2 px-4 py-2 rounded-lg border border-cyan-500/20 bg-cyan-950/5 font-mono text-xs text-cyan-400 hover:border-cyan-400 transition-colors">
-                          <ExternalLink className="h-4 w-4" /> Live Demo
-                        </a>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="lg:col-span-6 flex flex-col space-y-6">
-                    <div>
-                      <h4 className="font-mono text-xs text-violet-400 uppercase tracking-widest mb-4 flex items-center gap-2">
-                        <CircuitBoard className="h-4 w-4" /> SYSTEM ARCHITECTURE
-                      </h4>
-                      {activeProject.architecture ? (
-                        <div className="rounded-xl border border-zinc-900 bg-black/60 p-4 font-mono text-[10px] sm:text-xs">
-                          <div className="flex flex-wrap gap-3 justify-center mb-6">
-                            {activeProject.architecture.nodes.map((n) => (
-                              <div key={n.id} className={`px-3 py-2 rounded-lg border flex flex-col items-center text-center max-w-[140px] ${getNodeColor(n.type)}`}>
-                                <span className="font-bold text-[9px] uppercase opacity-75">{n.type}</span>
-                                <span className="font-semibold mt-1">{n.label}</span>
-                              </div>
-                            ))}
-                          </div>
-                          <div className="border-t border-zinc-900 pt-4">
-                            <span className="text-[10px] text-zinc-500 block mb-3 uppercase tracking-wider">{"// SIGNAL PATH CONNECTIONS:"}</span>
-                            <div className="space-y-2.5 max-h-[220px] overflow-y-auto">
-                              {activeProject.architecture.edges.map((e, i) => {
-                                const from = activeProject.architecture?.nodes.find((n) => n.id === e.from)?.label || e.from;
-                                const to = activeProject.architecture?.nodes.find((n) => n.id === e.to)?.label || e.to;
-                                return (
-                                  <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 p-2 rounded bg-zinc-950/60 border border-zinc-900">
-                                    <div className="flex items-center gap-2 flex-wrap">
-                                      <span className="text-zinc-300 font-semibold">{from}</span>
-                                      <ArrowRight className="h-3.5 w-3.5 text-cyan-500" />
-                                      <span className="text-cyan-400">{to}</span>
-                                    </div>
-                                    <span className="px-2 py-0.5 rounded bg-cyan-950/20 text-cyan-400 border border-cyan-500/10 text-[9px] font-bold">{e.label}</span>
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="flex items-center justify-center border border-dashed border-zinc-800 rounded-xl p-8 text-zinc-600">No system block diagram available.</div>
-                      )}
-                    </div>
-
-                    {activeProject.images && activeProject.images.length > 0 && (
-                      <div>
-                        <h4 className="font-mono text-xs text-cyan-400 uppercase tracking-widest mb-3 flex items-center gap-2">
-                          <ImageIcon className="h-4 w-4" /> MEDIA
-                        </h4>
-                        <div className="grid grid-cols-2 gap-2">
-                          {activeProject.images.slice(0, 4).map((img, i) => (
-                            <div key={i} className="rounded-lg border border-zinc-800 bg-zinc-900/60 p-2 text-[10px] text-zinc-500 font-mono flex items-center justify-center h-24">{img}</div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {activeProject.circuitDiagram && (
-                      <div>
-                        <h4 className="font-mono text-xs text-emerald-400 uppercase tracking-widest mb-3">CIRCUIT DIAGRAM</h4>
-                        <div className="rounded-lg border border-zinc-800 bg-zinc-900/60 p-3 text-[10px] text-zinc-500 font-mono flex items-center justify-center h-32">{activeProject.circuitDiagram}</div>
-                      </div>
-                    )}
-
-                    {activeProject.flowchart && (
-                      <div>
-                        <h4 className="font-mono text-xs text-amber-400 uppercase tracking-widest mb-3">FLOWCHART</h4>
-                        <div className="rounded-lg border border-zinc-800 bg-zinc-900/60 p-3 text-[10px] text-zinc-500 font-mono flex items-center justify-center h-32">{activeProject.flowchart}</div>
-                      </div>
-                    )}
-
-                    {activeProject.codeSnippets && activeProject.codeSnippets.length > 0 && (
-                      <div>
-                        <h4 className="font-mono text-xs text-teal-400 uppercase tracking-widest mb-3 flex items-center gap-2">
-                          <FileText className="h-4 w-4" /> CODE SNIPPET
-                        </h4>
-                        <div className="rounded-xl border border-zinc-800 bg-black/60 p-4 font-mono text-[10px] sm:text-xs text-zinc-300 overflow-x-auto">
-                          <pre>{activeProject.codeSnippets[0].code}</pre>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
+
+      {/* Modal */}
+      <AnimatePresence>
+        {activeProject && (
+          <ProjectModal
+            project={activeProject}
+            onClose={() => setActiveProject(null)}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 }

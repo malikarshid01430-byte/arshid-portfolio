@@ -2,305 +2,436 @@
 
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import Image from "next/image";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
-import { Terminal, ArrowDown, Briefcase, Code, Database } from "lucide-react";
+import { motion, useInView, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { ArrowRight, MapPin, Zap, Radio } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { portfolioData } from "../data/portfolio";
 import DownloadResumeButton from "./DownloadResumeButton";
 
-const logs = [
-  "> Initializing engineering profile...",
-  "> Loading embedded systems expertise... OK",
-  "> IoT connectivity protocols loaded... OK",
-  "> VLSI design fundamentals ready... OK",
-  "> Android SDK configured... OK",
-  "> Edge AI models initialized... OK",
-  "> System status: READY FOR OPPORTUNITIES",
-];
+/* ── Signal node visual (abstract technical element) ─────────────────── */
+function SignalNetwork() {
+  const reduced = useReducedMotion();
+  const nodes = [
+    { x: 50, y: 50, label: "ESP32",    color: "#22d3ee" },
+    { x: 78, y: 22, label: "FPGA",     color: "#818cf8" },
+    { x: 22, y: 22, label: "STM32",    color: "#22d3ee" },
+    { x: 78, y: 78, label: "Edge AI",  color: "#34d399" },
+    { x: 22, y: 78, label: "IoT",      color: "#818cf8" },
+  ];
+  const edges = [
+    [0, 1], [0, 2], [0, 3], [0, 4], [1, 3], [2, 4],
+  ];
 
-const techBadges = ["ESP32", "IoT", "VLSI", "FPGA", "React", "Next.js", "Edge AI", "Kotlin"];
+  return (
+    <div className="relative w-full h-full select-none pointer-events-none" aria-hidden="true">
+      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+        {edges.map(([a, b], i) => {
+          const na = nodes[a], nb = nodes[b];
+          return (
+            <motion.line
+              key={i}
+              x1={na.x} y1={na.y} x2={nb.x} y2={nb.y}
+              stroke="rgba(34,211,238,0.14)"
+              strokeWidth="0.4"
+              initial={{ opacity: 0 }}
+              animate={reduced ? { opacity: 1 } : { opacity: [0, 0.7, 0.3] }}
+              transition={{ duration: 2.5, delay: i * 0.3, repeat: Infinity, repeatType: "reverse" }}
+            />
+          );
+        })}
+        {nodes.map((node, i) => (
+          <g key={i}>
+            <motion.circle
+              cx={node.x} cy={node.y} r="1.2"
+              fill={node.color}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 0.9, scale: 1 }}
+              transition={{ delay: 0.6 + i * 0.12, duration: 0.4 }}
+            />
+            {!reduced && (
+              <motion.circle
+                cx={node.x} cy={node.y} r="2.5"
+                fill="none" stroke={node.color} strokeWidth="0.3"
+                initial={{ opacity: 0.4, scale: 0.8 }}
+                animate={{ opacity: 0, scale: 1.8 }}
+                transition={{ duration: 2, delay: i * 0.4, repeat: Infinity }}
+              />
+            )}
+            <text
+              x={node.x} y={node.y - 3.2}
+              textAnchor="middle"
+              fontSize="3.5"
+              fill="rgba(148,163,184,0.7)"
+              fontFamily="monospace"
+            >
+              {node.label}
+            </text>
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
+}
 
+/* ── Status panel ─────────────────────────────────────────────────────── */
+function StatusPanel({ inView }: { inView: boolean }) {
+  const rows = [
+    { label: "STATUS",     value: "AVAILABLE FOR OPPORTUNITIES", accent: true },
+    { label: "DISCIPLINE", value: "ECE / Embedded Systems" },
+    { label: "FOCUS",      value: "Embedded · EV · AI · IoT" },
+    { label: "LOCATION",   value: portfolioData.personalInfo.location.split(",").slice(0, 2).join(", ") },
+  ];
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: 24 }}
+      animate={inView ? { opacity: 1, x: 0 } : {}}
+      transition={{ delay: 0.75, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      className="rounded-xl border overflow-hidden"
+      style={{ borderColor: "var(--border-dim)", backgroundColor: "var(--bg-surface)" }}
+    >
+      {/* Header bar */}
+      <div
+        className="flex items-center justify-between px-4 py-2.5 border-b"
+        style={{ borderColor: "var(--border-subtle)", backgroundColor: "var(--bg-inset)" }}
+      >
+        <div className="flex items-center gap-2">
+          <Radio className="h-3.5 w-3.5" style={{ color: "var(--cyan)" }} aria-hidden="true" />
+          <span className="text-label" style={{ color: "var(--cyan)" }}>SYSTEM STATUS</span>
+        </div>
+        <span className="flex items-center gap-1.5">
+          <span className="status-dot status-dot-pulse" />
+          <span className="text-label" style={{ color: "var(--emerald)" }}>ONLINE</span>
+        </span>
+      </div>
+      {/* Rows */}
+      {rows.map((row, i) => (
+        <motion.div
+          key={row.label}
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ delay: 0.85 + i * 0.08 }}
+          className="flex items-start gap-3 px-4 py-2.5 border-b last:border-b-0"
+          style={{ borderColor: "var(--border-subtle)" }}
+        >
+          <span
+            className="text-label shrink-0 mt-0.5 w-24"
+            style={{ color: "var(--text-dim)" }}
+          >
+            {row.label}
+          </span>
+          <span
+            className="text-mono-xs leading-relaxed"
+            style={{ color: row.accent ? "var(--emerald)" : "var(--text-secondary)" }}
+          >
+            {row.value}
+          </span>
+        </motion.div>
+      ))}
+    </motion.div>
+  );
+}
+
+/* ── Main Hero component ──────────────────────────────────────────────── */
 export default function Hero() {
-  const [consoleLines, setConsoleLines] = useState<string[]>([]);
-  const [currentLineIdx, setCurrentLineIdx] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [hasMoused, setHasMoused] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true });
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
+  const reduced = useReducedMotion();
+
   const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 500], [0, 80]);
-  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+  const y       = useTransform(scrollY, [0, 500], [0, reduced ? 0 : 60]);
+  const opacity = useTransform(scrollY, [0, 380], [1, 0]);
 
-  const getDelay = useCallback((idx: number) => {
-    if (idx === 0) return 600;
-    return 300 + (idx - 1) * 100;
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    setHasMoused(true);
   }, []);
 
   useEffect(() => {
-    if (isInView && currentLineIdx < logs.length) {
-      const timeout = setTimeout(() => {
-        setConsoleLines((prev) => [...prev, logs[currentLineIdx]]);
-        setCurrentLineIdx((prev) => prev + 1);
-      }, getDelay(currentLineIdx));
-      return () => clearTimeout(timeout);
-    }
-  }, [isInView, currentLineIdx, getDelay]);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!ref.current) return;
-      const rect = ref.current.getBoundingClientRect();
-      setMousePos({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      });
-    };
-
     const el = ref.current;
-    if (el) {
-      el.addEventListener("mousemove", handleMouseMove);
-      return () => el.removeEventListener("mousemove", handleMouseMove);
-    }
-  }, []);
+    if (!el || reduced) return;
+    el.addEventListener("mousemove", handleMouseMove, { passive: true });
+    return () => el.removeEventListener("mousemove", handleMouseMove);
+  }, [handleMouseMove, reduced]);
+
+  /* Staggered entrance delays */
+  const ease = [0.22, 1, 0.36, 1] as const;
+  const entry = (delay: number) => ({
+    initial: { opacity: 0, y: 20 },
+    animate: isInView ? { opacity: 1, y: 0 } : {},
+    transition: { delay, duration: 0.6, ease },
+  });
+
+  const techTags = ["ESP32", "STM32", "IoT", "VLSI", "FPGA", "Edge AI", "React", "Kotlin"];
 
   return (
     <section
       ref={ref}
-      className="relative isolate min-h-screen w-full flex items-center justify-center overflow-hidden scroll-mt-20"
-      style={{ paddingTop: '7rem', paddingBottom: '6rem' }}
+      id="hero"
+      className="relative isolate min-h-screen w-full flex items-center overflow-hidden"
+      style={{
+        paddingTop: "7rem",
+        paddingBottom: "5rem",
+        borderBottom: "1px solid var(--border-subtle)",
+      }}
+      aria-label="Hero — Arshid Ahmad Malik"
     >
-      {/* Background layers with pointer-events-none */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-black to-slate-900 pointer-events-none" />
-      <div className="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-cyan-500/5 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-violet-500/5 blur-[120px] pointer-events-none" />
-      
-      {/* Dot pattern overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[length:32px_32px] pointer-events-none" />
+      {/* ── Backgrounds ── */}
+      <div className="absolute inset-0 pointer-events-none" style={{ backgroundColor: "var(--bg-base)" }} />
 
-      {/* Mouse-follow glow */}
+      {/* Ambient radial glows */}
       <div
-        className="pointer-events-none absolute h-[300px] w-[300px] rounded-full bg-cyan-500/10 blur-[100px] transition-opacity duration-500"
+        className="absolute pointer-events-none"
         style={{
-          transform: `translate(${mousePos.x - 150}px, ${mousePos.y - 150}px)`,
-          opacity: mousePos.x ? 0.6 : 0,
+          top: "-10%", left: "15%",
+          width: "55vw", height: "55vw",
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(34,211,238,0.055) 0%, transparent 70%)",
+          filter: "blur(1px)",
+        }}
+        aria-hidden="true"
+      />
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          bottom: "0%", right: "5%",
+          width: "40vw", height: "40vw",
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(129,140,248,0.04) 0%, transparent 70%)",
         }}
         aria-hidden="true"
       />
 
+      {/* Mouse-follow ambient light */}
+      {!reduced && (
+        <div
+          className="pointer-events-none absolute"
+          style={{
+            width: 360,
+            height: 360,
+            borderRadius: "50%",
+            background: "radial-gradient(circle, rgba(34,211,238,0.07) 0%, transparent 70%)",
+            transform: `translate(${mousePos.x - 180}px, ${mousePos.y - 180}px)`,
+            opacity: hasMoused ? 1 : 0,
+            transition: "opacity 400ms ease",
+            pointerEvents: "none",
+          }}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* ── Content ── */}
       <motion.div
-        className="w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 xl:px-12 2xl:px-16 relative z-10"
-        style={{ y, opacity }}
+        style={reduced ? {} : { y, opacity }}
+        className="relative z-10 w-full max-w-[1380px] mx-auto px-6 sm:px-8 lg:px-10 xl:px-14"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left Column - Content */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            className="flex flex-col gap-6"
-          >
-            {/* Availability Badge */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className="inline-flex items-center gap-3 w-fit"
-            >
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
-              </span>
-              <span className="text-xs font-semibold text-emerald-400 tracking-wide font-mono uppercase">
-                Available for Full-Time Opportunities
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+
+          {/* ── LEFT: Main content ── */}
+          <div className="flex flex-col gap-7 max-w-2xl">
+
+            {/* Identity label */}
+            <motion.div {...entry(0.1)} className="flex items-center gap-3">
+              <span
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full border text-label"
+                style={{
+                  borderColor: "var(--border-dim)",
+                  backgroundColor: "var(--bg-surface)",
+                  color: "var(--text-tertiary)",
+                }}
+              >
+                <Zap className="h-3 w-3" style={{ color: "var(--cyan)" }} aria-hidden="true" />
+                ELECTRONICS &amp; COMMUNICATION ENGINEER
               </span>
             </motion.div>
 
             {/* Name */}
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ delay: 0.3, duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-              className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.1]"
-            >
-              {portfolioData.personalInfo.name}
-            </motion.h1>
+            <motion.div {...entry(0.18)}>
+              <h1
+                className="text-hero-name"
+                style={{ color: "var(--text-primary)" }}
+              >
+                {portfolioData.personalInfo.name.split(" ").map((word, i) => (
+                  <span key={i} className="block">{word}</span>
+                ))}
+              </h1>
+            </motion.div>
 
-            {/* Title with animated gradient */}
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-              className="text-xl sm:text-2xl font-mono font-semibold bg-gradient-to-r from-cyan-400 via-violet-400 to-cyan-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-[gradient_3s_linear_infinite]"
-            >
-              Electronics & Communication Engineer
-            </motion.h2>
-
-            {/* Bio */}
+            {/* Short bio */}
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: 0.5, duration: 0.6 }}
-              className="text-base sm:text-lg text-zinc-400 leading-relaxed max-w-xl"
+              {...entry(0.28)}
+              className="text-base sm:text-lg leading-relaxed max-w-lg"
+              style={{ color: "var(--text-secondary)" }}
             >
               {portfolioData.personalInfo.bioShort}
             </motion.p>
 
-            {/* Tech Stack Badges */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: 0.55, duration: 0.6 }}
-              className="flex flex-wrap gap-2"
-            >
-              {techBadges.map((tech) => (
-                <span
-                  key={tech}
-                  className="px-3 py-1.5 rounded-full border border-zinc-800 bg-zinc-950/50 font-mono text-[10px] text-zinc-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-colors"
-                >
-                  {tech}
+            {/* Tech tags */}
+            <motion.div {...entry(0.36)} className="flex flex-wrap gap-2">
+              {techTags.map((tag) => (
+                <span key={tag} className="badge">
+                  {tag}
                 </span>
               ))}
             </motion.div>
 
-            {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: 0.6, duration: 0.6 }}
-              className="flex flex-wrap gap-4"
-            >
-              <DownloadResumeButton variant="primary" label="Download Resume" />
+            {/* CTAs */}
+            <motion.div {...entry(0.44)} className="flex flex-wrap gap-3">
+              <a
+                href="#projects"
+                className="btn btn-primary focus-visible:ring-2"
+                style={{ "--tw-ring-color": "var(--cyan)" } as React.CSSProperties}
+              >
+                Explore My Work
+                <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+              </a>
+              <DownloadResumeButton variant="secondary" label="Download Resume" />
               <a
                 href={portfolioData.personalInfo.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-12 items-center justify-center gap-2 rounded-xl border border-zinc-800 bg-zinc-950/50 px-6 font-mono text-sm tracking-wide text-zinc-300 hover:border-cyan-500/50 hover:text-white transition-all duration-300"
+                className="btn btn-ghost"
+                aria-label="GitHub profile"
               >
-                <FaGithub className="h-4 w-4" />
+                <FaGithub className="h-4 w-4" aria-hidden="true" />
                 GitHub
               </a>
               <a
                 href={portfolioData.personalInfo.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-12 items-center justify-center gap-2 rounded-xl border border-zinc-800 bg-zinc-950/50 px-6 font-mono text-sm tracking-wide text-zinc-300 hover:border-cyan-500/50 hover:text-white transition-all duration-300"
+                className="btn btn-ghost"
+                aria-label="LinkedIn profile"
               >
-                <FaLinkedin className="h-4 w-4" />
+                <FaLinkedin className="h-4 w-4" aria-hidden="true" />
                 LinkedIn
               </a>
             </motion.div>
 
-            {/* Stats */}
+            {/* Stats strip */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: 0.7, duration: 0.6 }}
-              className="grid grid-cols-3 gap-4 pt-6 border-t border-zinc-800"
+              {...entry(0.52)}
+              className="grid grid-cols-3 gap-0 pt-7"
+              style={{ borderTop: "1px solid var(--border-subtle)" }}
             >
               {[
-                { icon: Briefcase, label: "Internships", value: "4+" },
-                { icon: Code, label: "Projects", value: "7+" },
-                { icon: Database, label: "Certifications", value: "20+" },
-              ].map((stat, idx) => (
-                <div key={idx} className="text-center">
-                  <stat.icon className="h-5 w-5 text-cyan-400 mx-auto mb-1" />
-                  <div className="text-lg font-bold text-white">{stat.value}</div>
-                  <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider">{stat.label}</div>
+                { value: `${portfolioData.projects.length}`,      label: "Projects" },
+                { value: `${portfolioData.experience.length}`,    label: "Internships" },
+                { value: `${portfolioData.certifications.length}`, label: "Certifications" },
+              ].map((stat, i) => (
+                <div
+                  key={i}
+                  className="flex flex-col gap-1 pr-6"
+                  style={{
+                    borderRight: i < 2 ? "1px solid var(--border-subtle)" : "none",
+                    marginRight: i < 2 ? "1.5rem" : "0",
+                  }}
+                >
+                  <span
+                    className="text-3xl font-bold tracking-tight"
+                    style={{ color: "var(--text-primary)", letterSpacing: "-0.03em" }}
+                  >
+                    {stat.value}
+                  </span>
+                  <span className="text-label" style={{ color: "var(--text-dim)" }}>
+                    {stat.label}
+                  </span>
                 </div>
               ))}
             </motion.div>
-          </motion.div>
+          </div>
 
-          {/* Right Column - Image and Terminal */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex flex-col items-center gap-6"
-          >
-            {/* Profile Image */}
-            <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-lg">
-              <div className="absolute -inset-4 rounded-full bg-gradient-to-br from-cyan-500/20 to-violet-500/20 blur-3xl opacity-60" />
-              <div className="relative aspect-square w-full">
-                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-500 to-violet-600 p-[2px]">
-                  <div className="w-full h-full rounded-full bg-black p-1">
-                    <Image
-                      src={portfolioData.personalInfo.profileImage || "/images/profile.jpg"}
-                      alt={portfolioData.personalInfo.name}
-                      width={480}
-                      height={480}
-                      priority
-                      className="relative rounded-full object-cover w-full h-full"
-                    />
-                  </div>
-                </div>
-                {/* Status Badge */}
+          {/* ── RIGHT: Visual column ── */}
+          <div className="flex flex-col gap-6 items-center lg:items-end">
+
+            {/* Profile image + signal overlay */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ delay: 0.3, duration: 0.7, ease }}
+              className="relative w-full max-w-xs sm:max-w-sm"
+            >
+              {/* Signal network behind image */}
+              <div
+                className="absolute -inset-8 rounded-full pointer-events-none opacity-60"
+                aria-hidden="true"
+              >
+                <SignalNetwork />
+              </div>
+
+              {/* Image frame */}
+              <div
+                className="relative aspect-square w-full rounded-2xl overflow-hidden"
+                style={{
+                  border: "1px solid var(--border-dim)",
+                  backgroundColor: "var(--bg-surface)",
+                  boxShadow: "0 24px 80px -24px rgba(0,0,0,0.6)",
+                }}
+              >
+                <Image
+                  src={portfolioData.personalInfo.profileImage || "/images/profile.jpg"}
+                  alt={`${portfolioData.personalInfo.name} — Electronics & Communication Engineer`}
+                  width={480}
+                  height={480}
+                  priority
+                  className="w-full h-full object-cover"
+                />
+
+                {/* Availability badge */}
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-                  transition={{ delay: 1, duration: 0.5 }}
-                  className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full border border-emerald-500/30 bg-black/80 backdrop-blur-xl px-3 py-1.5"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: 0.9, duration: 0.4 }}
+                  className="absolute bottom-4 left-4 right-4 flex items-center justify-between px-4 py-2.5 rounded-xl"
+                  style={{
+                    backgroundColor: "rgba(9,9,11,0.88)",
+                    backdropFilter: "blur(12px)",
+                    border: "1px solid var(--border-dim)",
+                  }}
                 >
-                  <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-xs font-mono text-emerald-400">Open to Work</span>
+                  <div className="flex items-center gap-2">
+                    <span className="status-dot status-dot-pulse" />
+                    <span className="text-label" style={{ color: "var(--emerald)" }}>
+                      OPEN TO WORK
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1.5" style={{ color: "var(--text-dim)" }}>
+                    <MapPin className="h-3 w-3" aria-hidden="true" />
+                    <span className="text-label">BENGALURU</span>
+                  </div>
                 </motion.div>
               </div>
-            </div>
+            </motion.div>
 
-            {/* Terminal */}
-            <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg rounded-2xl border border-zinc-800 bg-zinc-950/90 backdrop-blur-xl overflow-hidden shadow-2xl shadow-cyan-500/10">
-              <div className="flex items-center justify-between border-b border-zinc-800 bg-zinc-900/50 px-4 py-3">
-                <div className="flex items-center gap-2">
-                  <Terminal className="h-4 w-4 text-cyan-400" aria-hidden="true" />
-                  <span className="text-xs text-zinc-400 font-bold tracking-wide">terminal</span>
-                </div>
-                <div className="flex gap-1.5" aria-hidden="true">
-                  <div className="h-2.5 w-2.5 rounded-full bg-zinc-700 hover:bg-red-500 transition-colors cursor-pointer" />
-                  <div className="h-2.5 w-2.5 rounded-full bg-zinc-700 hover:bg-yellow-500 transition-colors cursor-pointer" />
-                  <div className="h-2.5 w-2.5 rounded-full bg-zinc-700 hover:bg-emerald-500 transition-colors cursor-pointer" />
-                </div>
-              </div>
-              <div className="h-56 sm:h-64 overflow-y-auto p-4 text-[11px] leading-6 text-zinc-400 font-mono" aria-live="polite" aria-atomic="false">
-                {consoleLines.map((line, idx) => (
-                  <div key={idx} className="flex items-start gap-1 mb-1">
-                    <span className="text-emerald-400 select-none mr-1">$</span>
-                    <span>{line.replace("> ", "")}</span>
-                  </div>
-                ))}
-                {currentLineIdx < logs.length ? (
-                  <div className="flex items-center gap-1">
-                    <span className="text-emerald-400 select-none mr-1">$</span>
-                    <span className="h-4 w-1.5 bg-emerald-400 animate-pulse" />
-                  </div>
-                ) : (
-                  <div className="mt-4 pt-3 border-t border-zinc-800 text-[10px] text-zinc-500">
-                    Ready for new challenges.
-                  </div>
-                )}
-              </div>
+            {/* Status panel */}
+            <div className="w-full max-w-xs sm:max-w-sm">
+              <StatusPanel inView={isInView} />
             </div>
-          </motion.div>
-
-          {/* Scroll Indicator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ delay: 1.2, duration: 0.6 }}
-            className="lg:col-span-2 flex justify-center mt-8"
-          >
-            <a href="#about" className="flex flex-col items-center gap-2 text-zinc-500 hover:text-cyan-400 transition-colors" aria-label="Scroll down">
-              <span className="text-[10px] font-mono uppercase tracking-widest">Scroll</span>
-              <ArrowDown className="h-4 w-4 animate-bounce" />
-            </a>
-          </motion.div>
+          </div>
         </div>
       </motion.div>
 
-      <style jsx>{`
-        @keyframes gradient {
-          0%, 100% { background-position: 0% center; }
-          50% { background-position: 100% center; }
-        }
-      `}</style>
+      {/* Scroll cue */}
+      {!reduced && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ delay: 1.4, duration: 0.5 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none"
+          aria-hidden="true"
+        >
+          <span className="text-label" style={{ color: "var(--text-dim)" }}>SCROLL</span>
+          <motion.div
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+            className="w-px h-8"
+            style={{ background: "linear-gradient(to bottom, var(--cyan), transparent)" }}
+          />
+        </motion.div>
+      )}
     </section>
   );
 }

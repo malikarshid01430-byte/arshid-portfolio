@@ -1,316 +1,428 @@
 import { NextResponse } from "next/server";
-import { Document, Page, Text, View, StyleSheet, Font, Image } from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 import { portfolioData } from "@/app/data/portfolio";
-import fs from "fs";
-import path from "path";
 
-// Register professional fonts
-Font.register({
-  family: "Helvetica",
-  fonts: [
-    { src: "https://fonts.gstatic.com/s/helveticaneue/v78/1PtsGG9SDusqNw8UA2gKjH.woff2", fontWeight: 400 },
-    { src: "https://fonts.gstatic.com/s/helveticaneue/v78/1PtsGG9SDusqNw8UA2gKjH.woff2", fontWeight: 700 },
-  ],
-});
-
-const styles = StyleSheet.create({
+// ─── Styles ──────────────────────────────────────────────────────────────────
+const S = StyleSheet.create({
   page: {
     fontFamily: "Helvetica",
-    fontSize: 9,
-    lineHeight: 1.45,
+    fontSize: 8.5,
+    lineHeight: 1.42,
     color: "#111827",
-    padding: 28,
+    paddingTop: 30,
+    paddingBottom: 28,
+    paddingHorizontal: 36,
     backgroundColor: "#ffffff",
   },
-  header: {
-    marginBottom: 12,
-    borderBottom: "2 solid #2563eb",
-    paddingBottom: 8,
-  },
-  headerRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 6,
-    gap: 10,
-  },
-  profileImage: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    objectFit: "cover",
-  },
-  name: {
-    fontSize: 17,
-    fontWeight: 700,
-    color: "#0f172a",
-    marginBottom: 2,
-  },
-  title: {
-    fontSize: 10,
-    color: "#475569",
-    marginBottom: 2,
-  },
+  // Header
+  header: { marginBottom: 10, paddingBottom: 8, borderBottom: "1.5 solid #1d4ed8" },
+  name: { fontSize: 18, fontWeight: 700, color: "#0f172a", marginBottom: 2 },
+  headline: { fontSize: 9.5, color: "#334155", marginBottom: 5 },
   contactRow: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 8,
-    fontSize: 8,
+    fontSize: 7.5,
     color: "#475569",
-    marginTop: 4,
+    gap: 0,
   },
-  contactItem: {
-    marginRight: 8,
-  },
-  section: {
-    marginBottom: 10,
-  },
+  contactSep: { color: "#94a3b8", marginHorizontal: 5 },
+  // Sections
+  section: { marginBottom: 9 },
   sectionTitle: {
-    fontSize: 10,
-    fontWeight: 700,
-    color: "#2563eb",
-    textTransform: "uppercase",
-    letterSpacing: 0.7,
-    marginBottom: 5,
-    borderBottom: "1 solid #e5e7eb",
-    paddingBottom: 2,
-  },
-  summary: {
-    fontSize: 9,
-    color: "#334155",
-    lineHeight: 1.45,
-  },
-  skillsRow: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 6,
-  },
-  skillChip: {
     fontSize: 8,
-    color: "#334155",
-    backgroundColor: "#f1f5f9",
-    paddingHorizontal: 6,
+    fontWeight: 700,
+    color: "#1d4ed8",
+    textTransform: "uppercase",
+    letterSpacing: 0.8,
+    marginBottom: 4,
+    paddingBottom: 2,
+    borderBottom: "0.5 solid #dbeafe",
+  },
+  // Text blocks
+  bodyText: { fontSize: 8.5, color: "#334155", lineHeight: 1.45 },
+  // Skills
+  skillsGrid: { flexDirection: "row", flexWrap: "wrap", gap: 4 },
+  skillChip: {
+    fontSize: 7.5,
+    color: "#1e40af",
+    backgroundColor: "#eff6ff",
+    paddingHorizontal: 5,
     paddingVertical: 2,
-    borderRadius: 4,
-    border: "1 solid #e2e8f0",
+    borderRadius: 3,
+    border: "0.5 solid #bfdbfe",
+    marginBottom: 2,
   },
-  item: {
-    marginBottom: 8,
+  skillCategoryLabel: {
+    fontSize: 7,
+    fontWeight: 700,
+    color: "#64748b",
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+    marginBottom: 2,
+    marginTop: 3,
   },
-  itemHeader: {
+  // Items (experience / projects / education)
+  item: { marginBottom: 7 },
+  itemHeaderRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "baseline",
     marginBottom: 1,
   },
-  itemTitle: {
-    fontSize: 10,
-    fontWeight: 600,
-    color: "#0f172a",
-  },
-  itemSubtitle: {
-    fontSize: 9,
-    color: "#475569",
-    marginBottom: 1,
-  },
-  itemPeriod: {
-    fontSize: 8,
-    color: "#64748b",
-  },
-  bullets: {
-    fontSize: 8,
-    color: "#334155",
-    lineHeight: 1.35,
-    marginLeft: 8,
+  itemTitle: { fontSize: 9, fontWeight: 700, color: "#0f172a" },
+  itemSubtitle: { fontSize: 8, color: "#475569", marginBottom: 1 },
+  itemPeriod: { fontSize: 7.5, color: "#64748b" },
+  bullet: {
+    flexDirection: "row",
+    alignItems: "flex-start",
     marginTop: 2,
   },
-  link: {
-    fontSize: 8,
-    color: "#2563eb",
-    textDecoration: "none",
+  bulletDot: { fontSize: 8.5, color: "#1d4ed8", marginRight: 4, marginTop: 0.5 },
+  bulletText: { fontSize: 8, color: "#334155", lineHeight: 1.38, flex: 1 },
+  techLine: { fontSize: 7.5, color: "#475569", marginTop: 2 },
+  // Impact callout
+  impactBox: {
+    backgroundColor: "#f0fdf4",
+    border: "0.5 solid #bbf7d0",
+    borderRadius: 3,
+    padding: 4,
+    marginTop: 3,
   },
+  impactText: { fontSize: 7.5, color: "#166534" },
+  // Education status badge
+  statusBadge: {
+    fontSize: 7,
+    color: "#0369a1",
+    backgroundColor: "#e0f2fe",
+    paddingHorizontal: 4,
+    paddingVertical: 1,
+    borderRadius: 3,
+    border: "0.5 solid #bae6fd",
+  },
+  // Footer
   footer: {
-    marginTop: 10,
-    borderTop: "1 solid #e5e7eb",
-    paddingTop: 6,
+    marginTop: 8,
+    paddingTop: 5,
+    borderTop: "0.5 solid #e5e7eb",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
-  qrCode: {
-    width: 36,
-    height: 36,
-  },
+  footerText: { fontSize: 7, color: "#94a3b8" },
+  footerLink: { fontSize: 7, color: "#1d4ed8" },
+  // Two-column skills layout
+  twoCol: { flexDirection: "row", gap: 12 },
+  col: { flex: 1 },
 });
 
-function ResumeDocument() {
-  const { personalInfo, skillCategories, projects, experience, education, certifications, achievements } = portfolioData;
-
-  let profileImageSrc: string | undefined;
-  try {
-    const imagePath = path.join(process.cwd(), "public", personalInfo.profileImage || "/images/profile.jpg");
-    if (fs.existsSync(imagePath)) {
-      profileImageSrc = imagePath;
-    }
-  } catch {
-    // ignore
-  }
-
-  const allSkills = skillCategories.flatMap((category) =>
-    category.skills.map((skill) => `${category.title}: ${skill.name}`)
+// ─── Bullet helper ────────────────────────────────────────────────────────────
+function Bullet({ text }: { text: string }) {
+  return (
+    <View style={S.bullet}>
+      <Text style={S.bulletDot}>•</Text>
+      <Text style={S.bulletText}>{text}</Text>
+    </View>
   );
+}
+
+// ─── Section title helper ─────────────────────────────────────────────────────
+function SectionHead({ children }: { children: string }) {
+  return <Text style={S.sectionTitle}>{children}</Text>;
+}
+
+// ─── Core skill groups (ATS-optimised, readable) ──────────────────────────────
+const coreSkillGroups = [
+  {
+    label: "Programming",
+    skills: "C, C++, Python, Java, JavaScript, TypeScript, Kotlin, Verilog",
+  },
+  {
+    label: "Embedded & IoT",
+    skills: "ESP32, ESP8266, Arduino, STM32, 8051, Embedded C, MQTT, Blynk, WiFi, BLE",
+  },
+  {
+    label: "VLSI & Digital Design",
+    skills: "RTL Design, Verilog HDL, FPGA, CMOS, EDA Tools, DFT, ATPG, Scan Chain",
+  },
+  {
+    label: "AI / ML",
+    skills: "Machine Learning, Edge AI, Computer Vision, Google Gemini, Prompt Engineering",
+  },
+  {
+    label: "PCB & Hardware",
+    skills: "EasyEDA, KiCad, Proteus, PCB Layout, Circuit Design, MATLAB, Simulink",
+  },
+  {
+    label: "Mobile & Web",
+    skills: "Android (Jetpack Compose), React, Next.js, Node.js, Firebase, REST APIs, Tailwind CSS",
+  },
+  {
+    label: "Tools & Platforms",
+    skills: "Git, GitHub, VS Code, Android Studio, Arduino IDE, Linux",
+  },
+];
+
+// ─── Professional summary ─────────────────────────────────────────────────────
+const summary =
+  "Electronics and Communication Engineer pursuing B.E. at MVJ College of Engineering (VTU), " +
+  "expected graduation May 2026. Hands-on experience in Embedded Systems, IoT, VLSI/DFT, " +
+  "Android Development, and AI-powered applications through four industry internships. " +
+  "Proficient in C, C++, Python, Verilog, Kotlin, and full-stack web technologies. " +
+  "Seeking a full-time engineering role in Embedded Systems, IoT, or related disciplines.";
+
+// ─── Document component ───────────────────────────────────────────────────────
+function ResumeDocument() {
+  const { personalInfo, projects, experience, education, certifications, achievements } =
+    portfolioData;
 
   return (
-    <Document title={`${personalInfo.name} - Resume`} author={personalInfo.name}>
-      <Page size="A4" style={styles.page}>
-        {/* Header */}
-        <View style={styles.header}>
-          <View style={styles.headerRow}>
-            <View>
-              {profileImageSrc && (
-                // @ts-expect-error react-pdf Image prop typing
-                <Image src={profileImageSrc} style={styles.profileImage} alt="" />
-              )}
-            </View>
-            <View style={{ flex: 1 }}>
-              <Text style={styles.name}>{personalInfo.name}</Text>
-              <Text style={styles.title}>{personalInfo.title}</Text>
-              <View style={styles.contactRow}>
-                <Text style={styles.contactItem}>{personalInfo.email}</Text>
-                <Text style={styles.contactItem}>{personalInfo.phone}</Text>
-                <Text style={styles.contactItem}>{personalInfo.location}</Text>
-                <Text style={styles.contactItem}>{personalInfo.linkedin.replace("https://", "")}</Text>
-                <Text style={styles.contactItem}>{personalInfo.github.replace("https://", "")}</Text>
-              </View>
-            </View>
+    <Document
+      title={`${personalInfo.name} — Resume`}
+      author={personalInfo.name}
+      subject="Electronics and Communication Engineering Resume"
+      keywords="Embedded Systems, IoT, VLSI, ESP32, Arduino, Android, React, Edge AI, FPGA"
+      creator={personalInfo.name}
+    >
+      <Page size="A4" style={S.page}>
+        {/* ── HEADER ── */}
+        <View style={S.header}>
+          <Text style={S.name}>{personalInfo.name}</Text>
+          <Text style={S.headline}>
+            Electronics &amp; Communication Engineer | Embedded Systems | IoT | VLSI | Android | Full Stack
+          </Text>
+          <View style={S.contactRow}>
+            <Text>{personalInfo.email}</Text>
+            <Text style={S.contactSep}>|</Text>
+            <Text>{personalInfo.phone}</Text>
+            <Text style={S.contactSep}>|</Text>
+            <Text>{personalInfo.location}</Text>
+            <Text style={S.contactSep}>|</Text>
+            <Text>{personalInfo.linkedin.replace("https://", "")}</Text>
+            <Text style={S.contactSep}>|</Text>
+            <Text>{personalInfo.github.replace("https://", "")}</Text>
+            <Text style={S.contactSep}>|</Text>
+            <Text>{personalInfo.portfolioUrl.replace("https://", "")}</Text>
           </View>
         </View>
 
-        {/* Professional Summary */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Professional Summary</Text>
-          <Text style={styles.summary}>{personalInfo.bioShort}</Text>
+        {/* ── PROFESSIONAL SUMMARY ── */}
+        <View style={S.section}>
+          <SectionHead>Professional Summary</SectionHead>
+          <Text style={S.bodyText}>{summary}</Text>
         </View>
 
-        {/* Technical Skills */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Technical Skills</Text>
-          <View style={styles.skillsRow}>
-            {allSkills.slice(0, 24).map((skill, idx) => (
-              <Text key={idx} style={styles.skillChip}>{skill}</Text>
-            ))}
-          </View>
+        {/* ── TECHNICAL SKILLS ── */}
+        <View style={S.section}>
+          <SectionHead>Technical Skills</SectionHead>
+          {coreSkillGroups.map((grp) => (
+            <View key={grp.label} style={{ marginBottom: 3 }}>
+              <Text style={S.skillCategoryLabel}>{grp.label}</Text>
+              <Text style={S.bodyText}>{grp.skills}</Text>
+            </View>
+          ))}
         </View>
 
-        {/* Experience */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Experience</Text>
-          {experience.slice(0, 3).map((exp, idx) => (
-            <View key={idx} style={styles.item}>
-              <View style={styles.itemHeader}>
-                <Text style={styles.itemTitle}>{exp.role}</Text>
-                <Text style={styles.itemPeriod}>{exp.period}</Text>
+        {/* ── PROFESSIONAL EXPERIENCE ── */}
+        <View style={S.section}>
+          <SectionHead>Professional Experience</SectionHead>
+          {experience.map((exp, i) => (
+            <View key={i} style={S.item}>
+              <View style={S.itemHeaderRow}>
+                <Text style={S.itemTitle}>{exp.role}</Text>
+                <Text style={S.itemPeriod}>{exp.period}</Text>
               </View>
-              <Text style={styles.itemSubtitle}>{exp.company} | {exp.location}</Text>
-              {exp.description.slice(0, 3).map((desc, dIdx) => (
-                <Text key={dIdx} style={styles.bullets}>{desc}</Text>
+              <Text style={S.itemSubtitle}>
+                {exp.company} — {exp.location}
+              </Text>
+              {exp.responsibilities.slice(0, 3).map((r, j) => (
+                <Bullet key={j} text={r} />
               ))}
-              <Text style={{ fontSize: 8, color: "#475569", marginTop: 2 }}>
-                Technologies: {exp.technologies.slice(0, 6).join(", ")}
+              {exp.impact ? (
+                <View style={S.impactBox}>
+                  <Text style={S.impactText}>Impact: {exp.impact}</Text>
+                </View>
+              ) : null}
+              <Text style={S.techLine}>
+                Technologies: {exp.technologies.slice(0, 7).join(", ")}
               </Text>
             </View>
           ))}
         </View>
 
-        {/* Projects */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Projects</Text>
-          {projects.slice(0, 3).map((project, idx) => (
-            <View key={idx} style={styles.item}>
-              <Text style={styles.itemTitle}>{project.title}</Text>
-              <Text style={styles.itemSubtitle}>{project.subtitle}</Text>
-              <Text style={styles.bullets}>{project.longDescription?.slice(0, 180)}</Text>
-              <Text style={{ fontSize: 8, color: "#475569", marginTop: 2 }}>
-                Technologies: {project.technologies.slice(0, 6).join(", ")}
+        {/* ── PROJECTS ── */}
+        <View style={S.section}>
+          <SectionHead>Projects</SectionHead>
+          {projects.slice(0, 4).map((p, i) => (
+            <View key={i} style={S.item}>
+              <View style={S.itemHeaderRow}>
+                <Text style={S.itemTitle}>{p.title}</Text>
+                {p.timeline ? <Text style={S.itemPeriod}>{p.timeline}</Text> : null}
+              </View>
+              <Text style={S.itemSubtitle}>{p.subtitle}</Text>
+              <Text style={[S.bodyText, { marginTop: 2 }]}>
+                {p.longDescription?.slice(0, 200)}
+              </Text>
+              {p.results?.slice(0, 2).map((r, j) => (
+                <Bullet key={j} text={r} />
+              ))}
+              <Text style={S.techLine}>
+                Stack: {p.technologies.slice(0, 6).join(", ")}
               </Text>
             </View>
           ))}
         </View>
 
-        {/* Education */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Education</Text>
-          {education.slice(0, 2).map((edu, idx) => (
-            <View key={idx} style={styles.item}>
-              <Text style={styles.itemTitle}>{edu.degree}</Text>
-              <Text style={styles.itemSubtitle}>{edu.institution}</Text>
-              <Text style={styles.itemPeriod}>{edu.period} | {edu.location}</Text>
-            </View>
-          ))}
-        </View>
+        {/* ── EDUCATION ── */}
+        <View style={S.section}>
+          <SectionHead>Education</SectionHead>
 
-        {/* Certifications */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Certifications</Text>
-          {certifications.slice(0, 5).map((cert, idx) => (
-            <View key={idx} style={styles.item}>
-              <Text style={styles.itemTitle}>{cert.name}</Text>
-              <Text style={styles.itemSubtitle}>{cert.issuer} | {cert.date}</Text>
+          {/* B.E. — currently pursuing */}
+          <View style={S.item}>
+            <View style={S.itemHeaderRow}>
+              <Text style={S.itemTitle}>
+                Bachelor of Engineering — Electronics and Communication Engineering
+              </Text>
+              <Text style={S.itemPeriod}>2022 — Expected May 2026</Text>
             </View>
-          ))}
-        </View>
-
-        {/* Achievements */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Achievements</Text>
-          {achievements.slice(0, 3).map((achievement, idx) => (
-            <View key={idx} style={styles.item}>
-              <Text style={styles.itemTitle}>{achievement.title}</Text>
-              <Text style={styles.bullets}>{achievement.description}</Text>
+            <Text style={S.itemSubtitle}>
+              MVJ College of Engineering, Bangalore | Visvesvaraya Technological University (VTU)
+            </Text>
+            <View style={[S.bullet, { marginTop: 3 }]}>
+              <Text style={[S.statusBadge]}>Pursuing — Expected Graduation: May 2026</Text>
             </View>
-          ))}
-        </View>
-
-        {/* Footer with links and QR */}
-        <View style={styles.footer}>
-          <View>
-            <Text style={styles.link}>GitHub: {personalInfo.github.replace("https://", "")}</Text>
-            <Text style={styles.link}>LinkedIn: {personalInfo.linkedin.replace("https://", "")}</Text>
-            <Text style={styles.link}>Portfolio: {personalInfo.portfolioUrl.replace("https://", "")}</Text>
+            <Text style={[S.bodyText, { marginTop: 3 }]}>
+              Relevant Coursework: Microcontrollers &amp; Embedded Systems, VLSI Design &amp; FPGA
+              Implementation, Digital Electronics, Communication Systems, IoT &amp; Wireless Sensor
+              Networks, PCB Design &amp; Fabrication, Signal Processing.
+            </Text>
           </View>
+
+          {/* Diploma */}
+          <View style={S.item}>
+            <View style={S.itemHeaderRow}>
+              <Text style={S.itemTitle}>
+                Diploma — Electronics and Communication Engineering (71%)
+              </Text>
+              <Text style={S.itemPeriod}>2020 — 2023</Text>
+            </View>
+            <Text style={S.itemSubtitle}>
+              Government Polytechnic College Srinagar, Srinagar, Kashmir
+            </Text>
+          </View>
+
+          {/* Class XII */}
+          <View style={S.item}>
+            <View style={S.itemHeaderRow}>
+              <Text style={S.itemTitle}>Higher Secondary Certificate — Class XII (57%)</Text>
+              <Text style={S.itemPeriod}>2019 — 2020</Text>
+            </View>
+            <Text style={S.itemSubtitle}>
+              Government Model Higher Secondary School, Dooru, Anantnag, J&amp;K | JKBOSE
+            </Text>
+          </View>
+
+          {/* Class X */}
+          <View style={S.item}>
+            <View style={S.itemHeaderRow}>
+              <Text style={S.itemTitle}>Secondary School Certificate — Class X (58%)</Text>
+              <Text style={S.itemPeriod}>2017 — 2018</Text>
+            </View>
+            <Text style={S.itemSubtitle}>
+              Army Goodwill School, Wuzur, Qazigund, Anantnag, J&amp;K | JKBOSE
+            </Text>
+          </View>
+        </View>
+
+        {/* ── CERTIFICATIONS ── */}
+        <View style={S.section}>
+          <SectionHead>Certifications (Selected)</SectionHead>
+          {certifications.slice(0, 8).map((cert, i) => (
+            <View key={i} style={[S.bullet, { marginBottom: 1.5 }]}>
+              <Text style={S.bulletDot}>•</Text>
+              <Text style={S.bulletText}>
+                <Text style={{ fontWeight: 700 }}>{cert.name}</Text>
+                {" — "}
+                {cert.issuer}, {cert.date}
+              </Text>
+            </View>
+          ))}
+          <Text style={[S.bodyText, { color: "#64748b", marginTop: 3 }]}>
+            + {certifications.length - 8} additional certifications (Cisco, Hexagon, HP LIFE,
+            Deloitte, Skill India, YHills, BEX10). Full list available on portfolio.
+          </Text>
+        </View>
+
+        {/* ── ACHIEVEMENTS ── */}
+        <View style={S.section}>
+          <SectionHead>Achievements</SectionHead>
+          {achievements.map((ach, i) => (
+            <View key={i} style={[S.bullet, { marginBottom: 1.5 }]}>
+              <Text style={S.bulletDot}>•</Text>
+              <Text style={S.bulletText}>
+                <Text style={{ fontWeight: 700 }}>{ach.title}</Text>
+                {ach.description !== ach.title ? ` — ${ach.description}` : ""}
+                {" "}
+                <Text style={{ color: "#64748b" }}>({ach.date})</Text>
+              </Text>
+            </View>
+          ))}
+        </View>
+
+        {/* ── FOOTER ── */}
+        <View style={S.footer}>
+          <Text style={S.footerText}>
+            References available on request | Portfolio:{" "}
+            {personalInfo.portfolioUrl.replace("https://", "")}
+          </Text>
+          <Text style={S.footerText}>
+            Generated {new Date().toLocaleDateString("en-IN", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })}
+          </Text>
         </View>
       </Page>
     </Document>
   );
 }
 
-const pdfDoc = <ResumeDocument />;
-
+// ─── Route handler ────────────────────────────────────────────────────────────
 export async function GET(request: Request) {
   try {
     const { pdf } = await import("@react-pdf/renderer");
-
     const url = new URL(request.url);
     const format = url.searchParams.get("format");
 
-    const blob = await pdf(pdfDoc).toBlob();
+    const filename =
+      format === "1page"
+        ? "Arshid_Ahmad_Malik_Resume_1Page.pdf"
+        : "Arshid_Ahmad_Malik_Resume.pdf";
 
-    const filename = format === "1page"
-      ? "Arshid_Ahmad_Malik_Resume_1Page.pdf"
-      : "Arshid_Ahmad_Malik_Resume.pdf";
+    const doc = <ResumeDocument />;
+    const blob = await pdf(doc).toBlob();
 
-    return new NextResponse(blob, {
+    const arrayBuffer = await blob.arrayBuffer();
+
+    return new NextResponse(arrayBuffer, {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Disposition": `attachment; filename="${filename}"`,
-        "Cache-Control": "no-cache",
+        "Content-Disposition": `attachment; filename="${filename}"; filename*=UTF-8''${encodeURIComponent(filename)}`,
+        "Cache-Control": "no-store, no-cache",
+        "X-Content-Type-Options": "nosniff",
       },
     });
   } catch (error) {
-    console.error("Resume generation error:", error);
-    const message = process.env.NODE_ENV === "development"
-      ? `Resume generation failed: ${error instanceof Error ? error.message : "Unknown error"}`
-      : "Failed to generate resume";
-    return NextResponse.json({ error: message }, { status: 500 });
+    console.error("[Resume API] Generation error:", error);
+    const isDev = process.env.NODE_ENV === "development";
+    return NextResponse.json(
+      {
+        error: isDev
+          ? `Resume generation failed: ${error instanceof Error ? error.message : String(error)}`
+          : "Failed to generate resume. Please try again.",
+      },
+      { status: 500 },
+    );
   }
 }
