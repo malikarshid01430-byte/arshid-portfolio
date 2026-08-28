@@ -60,12 +60,15 @@ const ResumePreview = memo(function ResumePreview({
             transition={{ duration: 0.2 }}
             className="relative w-full max-w-5xl h-[90vh] rounded-2xl border border-cyan-500/20 bg-zinc-950 overflow-hidden"
             onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="resume-preview-title"
           >
             {/* Header */}
             <div className="flex items-center justify-between border-b border-zinc-900 p-4">
               <div className="flex items-center gap-3">
                 <FileText className="h-5 w-5 text-cyan-400" />
-                <h3 className="font-mono text-sm font-bold text-white">
+                <h3 id="resume-preview-title" className="font-mono text-sm font-bold text-white">
                   Resume Preview
                 </h3>
               </div>
