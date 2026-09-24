@@ -6,22 +6,22 @@ import { Button } from "./ui/button";
 const ResumeSection = () => {
   // Helper to sort experiences from oldest to newest based on start month/year
   const monthToIndex: Record<string, number> = {
-    january: 0,
-    february: 1,
-    march: 2,
-    april: 3,
+    january: 0, jan: 0,
+    february: 1, feb: 1,
+    march: 2, mar: 2,
+    april: 3, apr: 3,
     may: 4,
-    june: 5,
-    july: 6,
-    august: 7,
-    september: 8,
-    october: 9,
-    november: 10,
-    december: 11,
+    june: 5, jun: 5,
+    july: 6, jul: 6,
+    august: 7, aug: 7,
+    september: 8, sep: 8, sept: 8,
+    october: 9, oct: 9,
+    november: 10, nov: 10,
+    december: 11, dec: 11,
   };
 
   const parseStartOfPeriod = (period: string) => {
-    const [start] = period.split(" - ");
+    const [start] = period.split(/\s*[-–—]\s*/);
     const parts = start.trim().split(" ");
     if (parts.length === 2) {
       const [monthStr, yearStr] = parts;
@@ -65,18 +65,6 @@ const ResumeSection = () => {
       ],
     },
     {
-      period: "June 2025 - Present",
-      role: "Web Developer Intern",
-      company: "NIT Srinagar",
-      location: "Srinagar, J&K, India",
-      badgeColor: "bg-blue-500/15 text-blue-400 border border-blue-500/30",
-      dotColor: "border-blue-400 bg-blue-400/20",
-      description: [
-        "Contributing to web interfaces and internal tools",
-        "Working with React and TailwindCSS for feature delivery",
-      ],
-    },
-    {
       period: "August 2024 - Present",
       role: "Tech Lead",
       company: "SDC, MVJCE",
@@ -97,6 +85,41 @@ const ResumeSection = () => {
       dotColor: "border-violet-400 bg-violet-400/20",
       description: [
         "Managing projects under software team",
+      ],
+    },
+    {
+      period: "June 2025 - Present",
+      role: "Web Developer Intern",
+      company: "NIT Srinagar",
+      location: "Srinagar, J&K, India",
+      badgeColor: "bg-blue-500/15 text-blue-400 border border-blue-500/30",
+      dotColor: "border-blue-400 bg-blue-400/20",
+      description: [
+        "Contributing to web interfaces and internal tools",
+        "Working with React and TailwindCSS for feature delivery",
+      ],
+    },
+    {
+      period: "Feb 2026 - Aug 2026",
+      role: "Software Engineer (Part-Time)",
+      company: "Koshur Scientist",
+      location: "Hybrid",
+      badgeColor: "bg-cyan-500/15 text-cyan-400 border border-cyan-500/30",
+      dotColor: "border-cyan-400 bg-cyan-400/20",
+      description: [
+        "Progressed from intern to part-time SDE within 3 months, owning features across the full software development lifecycle.",
+        "Collaborated in an agile team environment, contributing to code reviews, sprint planning, and production deployments.",
+      ],
+    },
+    {
+      period: "May 2026 - Aug 2026",
+      role: "AI / ML Intern",
+      company: "QuantumTech AI",
+      location: "Remote",
+      badgeColor: "bg-amber-500/15 text-amber-400 border border-amber-500/30",
+      dotColor: "border-amber-400 bg-amber-400/20",
+      description: [
+        "Developed and fine-tuned machine learning models, performed EDA and feature engineering on large datasets, and built automated data pipelines and reporting dashboards for business insights.",
       ],
     },
   ];
@@ -195,35 +218,33 @@ const ResumeSection = () => {
             </p>
           </ScrollReveal>
 
-          <div className="relative">
-            {/* Center spine — desktop only */}
-            <div className="hidden md:block absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-border/50" />
-
-            <div className="space-y-8 md:space-y-12">
-              {([...experience]
-                .sort((a, b) => parseStartOfPeriod(a.period) - parseStartOfPeriod(b.period))
-                .map((item, index) => {
-                  const isLeft = index % 2 === 0;
-                  const card = (
-                    <div className="bg-card/80 border border-border/50 rounded-xl p-5 md:p-6 hover:border-primary/30 hover:shadow-lg transition-all duration-300">
-                      {/* Company badge */}
-                      <span className={`inline-block text-xs font-semibold px-3 py-1 rounded-full mb-3 ${item.badgeColor}`}>
-                        {item.company}
-                      </span>
-
-                      {/* Role title */}
-                      <h4 className="text-lg font-bold mb-3">{item.role}</h4>
-
-                      {/* Date & location row */}
-                      <div className="flex flex-wrap items-center gap-4 mb-4 text-xs text-foreground/50">
-                        <span className="flex items-center gap-1.5">
-                          <Calendar size={12} className="text-primary" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {([...experience]
+              .sort((a, b) => parseStartOfPeriod(a.period) - parseStartOfPeriod(b.period))
+              .map((item, index) => (
+                <ScrollReveal key={index} delay={200 + index * 100} className="h-full">
+                  <div className="bg-card/80 border border-border/50 rounded-xl p-5 md:p-6 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 h-full flex flex-col justify-between group">
+                    <div>
+                      {/* Header row: Company badge + period */}
+                      <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                        <span className={`inline-block text-xs font-semibold px-3 py-1 rounded-full ${item.badgeColor}`}>
+                          {item.company}
+                        </span>
+                        <span className="flex items-center gap-1.5 text-xs text-foreground/50">
+                          <Calendar size={13} className="text-primary" />
                           {item.period}
                         </span>
-                        <span className="flex items-center gap-1.5">
-                          <MapPin size={12} className="text-primary" />
-                          {item.location}
-                        </span>
+                      </div>
+
+                      {/* Role title */}
+                      <h4 className="text-lg font-bold mb-2 text-foreground group-hover:text-primary transition-colors">
+                        {item.role}
+                      </h4>
+
+                      {/* Location */}
+                      <div className="flex items-center gap-1.5 mb-4 text-xs text-foreground/50">
+                        <MapPin size={13} className="text-primary" />
+                        <span>{item.location}</span>
                       </div>
 
                       {/* Diamond bullet description */}
@@ -236,33 +257,9 @@ const ResumeSection = () => {
                         ))}
                       </ul>
                     </div>
-                  );
-
-                  return (
-                    <ScrollReveal key={index} delay={200 + index * 100}>
-                      {/* Mobile: left-aligned timeline */}
-                      <div className="md:hidden relative pl-8 border-l border-border/50">
-                        <div className={`absolute -left-[7px] top-5 w-3.5 h-3.5 rounded-full ${item.dotColor}`} />
-                        {card}
-                      </div>
-
-                      {/* Desktop: alternating layout */}
-                      <div className="hidden md:flex items-start relative">
-                        <div className="w-1/2 pr-10">
-                          {isLeft ? card : null}
-                        </div>
-
-                        {/* Center connector dot */}
-                        <div className={`absolute left-1/2 -translate-x-1/2 top-6 w-4 h-4 rounded-full ${item.dotColor} z-10`} />
-
-                        <div className="w-1/2 pl-10">
-                          {!isLeft ? card : null}
-                        </div>
-                      </div>
-                    </ScrollReveal>
-                  );
-                }))}
-            </div>
+                  </div>
+                </ScrollReveal>
+              )))}
           </div>
         </div>
 
