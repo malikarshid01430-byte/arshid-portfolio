@@ -1,7 +1,6 @@
 import React from "react";
 import ScrollReveal from "./ScrollReveal";
 import { BookOpen, Briefcase, Award, Download, Check, MapPin, Calendar } from "lucide-react";
-import { Button } from "./ui/button";
 
 const ResumeSection = () => {
   // Helper to sort experiences from oldest to newest based on start month/year
@@ -142,16 +141,6 @@ const ResumeSection = () => {
     },
   ];
 
-  const handleDownloadResume = () => {
-    // Create a link element
-    const link = document.createElement('a');
-    link.href = '/uploads/prabjyotsingh resume.pdf';
-    link.download = 'Prabjyotsingh_Resume.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   return (
     <section id="resume" className="section bg-muted/30">
       <div className="container-custom">
@@ -160,14 +149,16 @@ const ResumeSection = () => {
             <h2 className="text-3xl md:text-4xl font-bold mb-4 md:mb-0 text-center md:text-left">
               My Resume
             </h2>
-            <Button 
-              variant="outline" 
-              className="flex items-center gap-2 border-primary text-primary hover:bg-primary hover:text-white transition-all duration-300"
-              onClick={handleDownloadResume}
+            <a
+              href="/uploads/prabjyotsingh_cv.pdf"
+              download="Prabjyotsingh_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md border border-primary text-primary font-medium hover:bg-primary hover:text-white transition-all duration-300 shadow-sm hover:shadow-[0_0_15px_rgba(0,255,180,0.2)]"
             >
               <Download size={18} />
               Download Resume
-            </Button>
+            </a>
           </div>
         </ScrollReveal>
         <ScrollReveal delay={100}>
