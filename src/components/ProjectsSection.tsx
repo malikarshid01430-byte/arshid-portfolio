@@ -10,6 +10,39 @@ const ProjectsSection = () => {
   // Featured projects (a subset of all projects)
   const featuredProjects = [
     {
+      id: 15,
+      title: "Advocate Reminders",
+      category: "ai",
+      image: "/photo/project/advocatereminders.png",
+      description: "Automated WhatsApp assistant system for lawyers to manage client relations, track court hearing schedules, sync live Google Sheets, and dispatch context-aware, localized reminders.",
+      technologies: ["Next.js", "React", "Supabase", "WAHA", "Docker", "Groq API", "Tailwind CSS"],
+      demoLink: "https://quantumlawyer.vercel.app/",
+      codeLink: "https://github.com/prabjyotsingh",
+      featured: true
+    },
+    {
+      id: 14,
+      title: "Auctra AI",
+      category: "ai",
+      image: "/photo/project/auctraai.png",
+      description: "AI-powered procurement and supplier management platform featuring reverse auctions, RFQ automation, Razorpay settlement, spend analytics, and a Chrome extension for marketplace sourcing.",
+      technologies: ["Next.js 15", "React 19", "Tailwind CSS", "Razorpay", "Supabase", "Chrome Extension"],
+      demoLink: "https://auctraai.vercel.app/",
+      codeLink: "https://github.com/prabjyotsingh/razorpay-auctraai",
+      featured: true
+    },
+    {
+      id: 13,
+      title: "CampusConnect",
+      category: "web",
+      image: "/photo/project/campusconnect.png",
+      description: "Placement Automation Portal (mvjlaunchpad.in) built for 1,000+ students and admins: dual dashboards, in-house ATS resume scoring engine, and automated multi-sheet Excel exports.",
+      technologies: ["React 18", "Redux Toolkit", "Node.js", "Firebase", "Tailwind CSS"],
+      demoLink: "https://mvjlaunchpad.in",
+      codeLink: "https://github.com/prabjyotsingh",
+      featured: true
+    },
+    {
       id: 12,
       title: "GT-Skin",
       category: "ai",
