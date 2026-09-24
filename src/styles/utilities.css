@@ -25,18 +25,6 @@
   @apply bg-card border border-border/50 rounded-lg p-6 hover:border-primary/30 transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,255,180,0.15)];
 }
 
-/* White mode specific styles */
-.dark-mode .card-effect {
-  @apply bg-white shadow-sm hover:shadow-md;
-}
-
-.dark-mode .btn-primary {
-  @apply text-white;
-}
-
-.dark-mode .bg-muted\/30 {
-  @apply bg-gray-50;
-}
 
 /* Hover animations for interactive elements */
 .hover-lift {
@@ -142,16 +130,6 @@ h1, h2, h3, h4, h5, h6 {
   @apply text-foreground font-bold;
 }
 
-/* White mode text color fixes */
-.dark-mode h1, .dark-mode h2, .dark-mode h3, 
-.dark-mode h4, .dark-mode h5, .dark-mode h6 {
-  @apply text-gray-800;
-}
-
-.dark-mode .text-foreground\/60,
-.dark-mode .text-foreground\/70 {
-  @apply text-gray-600;
-}
 
 /* Add text shadow for better visibility */
 .text-shadow {

@@ -13,7 +13,7 @@
 }
 
 .timeline-item {
-  @apply relative pl-10 pb-12 border-l-2 border-muted;
+  @apply relative pl-10 pb-12 border-l-2 border-border/50;
   position: relative;
 }
 
@@ -33,7 +33,7 @@
 
 .timeline::before {
   content: '';
-  @apply absolute top-0 bottom-0 left-0 w-0.5 bg-muted;
+  @apply absolute top-0 bottom-0 left-0 w-0.5 bg-border/50;
 }
 
 .timeline .timeline-item {
@@ -162,18 +162,7 @@
   @apply text-primary mt-1 flex-shrink-0;
 }
 
-/* Styling for dark mode */
-.dark-mode .timeline-item {
-  @apply border-border/50;
-}
 
-.dark-mode .timeline-item::before {
-  @apply bg-primary shadow-md shadow-primary/20;
-}
-
-.dark-mode .timeline::before {
-  @apply bg-border/50;
-}
 
 /* Centered timeline with alternating sides */
 .timeline-center {
@@ -182,7 +171,7 @@
 
 .timeline-center::before {
   content: '';
-  @apply absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-0.5 bg-muted;
+  @apply absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-0.5 bg-border/50;
 }
 
 .timeline-entry {
@@ -204,9 +193,7 @@
   left: -11px;
 }
 
-.dark-mode .timeline-center::before {
-  @apply bg-border/50;
-}
+
 
 /* Experience cards */
 .timeline-card {
@@ -225,9 +212,7 @@
   @apply inline-flex items-center gap-2 text-[11px] font-medium px-2 py-1 rounded-full bg-muted text-foreground/80;
 }
 
-.dark-mode .card-effect {
-  @apply bg-white border-border/30 hover:border-primary/20 hover:shadow-[0_0_15px_rgba(0,0,0,0.1)];
-}
+
 
 @keyframes pulse {
   0%, 100% {

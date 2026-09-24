@@ -1,13 +1,12 @@
 
 import React, { useState, useEffect, useRef } from "react";
-import { Menu, X, Moon, Sun } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [darkMode, setDarkMode] = useState(true);
   const headerRef = useRef<HTMLElement>(null);
   const isMobile = useIsMobile();
 
@@ -36,10 +35,14 @@ const Navbar = () => {
       }
     };
 
-    // Always start in dark mode on load.
-    setDarkMode(true);
-    localStorage.setItem("darkMode", "true");
-    document.documentElement.classList.add("dark-mode");
+    // Ensure dark theme is active
+    document.documentElement.classList.add("dark");
+    document.documentElement.classList.remove("dark-mode");
+    try {
+      localStorage.removeItem("darkMode");
+    } catch {
+      // ignore
+    }
 
     window.addEventListener("scroll", handleScroll);
     document.addEventListener("mousedown", handleClickOutside);
@@ -49,18 +52,6 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  const toggleDarkMode = () => {
-    const newDarkMode = !darkMode;
-    setDarkMode(newDarkMode);
-    localStorage.setItem("darkMode", String(newDarkMode));
-    
-    if (newDarkMode) {
-      document.documentElement.classList.add("dark-mode");
-    } else {
-      document.documentElement.classList.remove("dark-mode");
-    }
-  };
 
   return (
     <header
@@ -79,15 +70,6 @@ const Navbar = () => {
         </a>
 
         <div className="flex items-center gap-4">
-          {/* Dark mode toggle */}
-          <button
-            onClick={toggleDarkMode}
-            className="text-foreground hover:text-primary transition-colors p-2 rounded-full hover:bg-primary/10"
-            aria-label="Toggle dark mode"
-          >
-            {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-          </button>
-          
           {/* Mobile menu button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
