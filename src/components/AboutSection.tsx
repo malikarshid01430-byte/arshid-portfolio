@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import ScrollReveal from "./ScrollReveal";
-import { Calendar, Mail, MapPin, Phone } from "lucide-react";
+import { Calendar, Mail, MapPin, Phone, Download } from "lucide-react";
 
 const AboutSection = () => {
   const imageRef = useRef<HTMLDivElement>(null);
@@ -112,6 +112,19 @@ const AboutSection = () => {
                     </div>
                   </div>
                 ))}
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={600}>
+              <div className="mt-8">
+                <a
+                  href="/uploads/prabjyotsingh_cv.pdf"
+                  download="Prabjyotsingh_Resume.pdf"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-primary text-primary-foreground font-medium transition-all hover:bg-primary/90 hover-lift shadow-sm hover:shadow-[0_0_15px_rgba(0,255,180,0.2)]"
+                >
+                  <Download size={18} />
+                  Download CV
+                </a>
               </div>
             </ScrollReveal>
           </div>

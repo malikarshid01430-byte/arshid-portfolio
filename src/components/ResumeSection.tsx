@@ -141,6 +141,29 @@ const ResumeSection = () => {
     },
   ];
 
+  const handleDownload = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    fetch('/uploads/prabjyotsingh_cv.pdf')
+      .then((res) => {
+        if (!res.ok) throw new Error('File not found');
+        return res.blob();
+      })
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'Prabjyotsingh_Resume.pdf';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      })
+      .catch(() => {
+        window.open('/uploads/prabjyotsingh_cv.pdf', '_blank');
+      });
+  };
+
   return (
     <section id="resume" className="section bg-muted/30">
       <div className="container-custom">
@@ -152,9 +175,10 @@ const ResumeSection = () => {
             <a
               href="/uploads/prabjyotsingh_cv.pdf"
               download="Prabjyotsingh_Resume.pdf"
+              onClick={handleDownload}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md border border-primary text-primary font-medium hover:bg-primary hover:text-white transition-all duration-300 shadow-sm hover:shadow-[0_0_15px_rgba(0,255,180,0.2)]"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md border border-primary text-primary font-medium hover:bg-primary hover:text-white transition-all duration-300 shadow-sm hover:shadow-[0_0_15px_rgba(0,255,180,0.2)] cursor-pointer"
             >
               <Download size={18} />
               Download Resume
