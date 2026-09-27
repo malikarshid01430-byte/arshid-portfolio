@@ -64,7 +64,7 @@ const ResumeSection = () => {
       ],
     },
     {
-      period: "August 2024 - Present",
+      period: "August 2024 -August 2026 ",
       role: "Tech Lead",
       company: "SDC, MVJCE",
       location: "Bangalore, Karnataka",
@@ -76,7 +76,7 @@ const ResumeSection = () => {
       ],
     },
     {
-      period: "March 2025 - Present",
+      period: "March 2025 -August 2026",
       role: "Software Team Member",
       company: "IPD, MVJCE",
       location: "Bangalore, Karnataka",
@@ -87,7 +87,7 @@ const ResumeSection = () => {
       ],
     },
     {
-      period: "June 2025 - Present",
+      period: "June 2025 - September 2025",
       role: "Web Developer Intern",
       company: "NIT Srinagar",
       location: "Srinagar, J&K, India",
