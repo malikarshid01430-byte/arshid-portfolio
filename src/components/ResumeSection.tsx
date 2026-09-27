@@ -75,17 +75,7 @@ const ResumeSection = () => {
         "Driving web app initiatives and organizing workshops",
       ],
     },
-    {
-      period: "March 2025 -August 2026",
-      role: "Software Team Member",
-      company: "IPD, MVJCE",
-      location: "Bangalore, Karnataka",
-      badgeColor: "bg-violet-500/15 text-violet-400 border border-violet-500/30",
-      dotColor: "border-violet-400 bg-violet-400/20",
-      description: [
-        "Managing projects under software team",
-      ],
-    },
+
     {
       period: "June 2025 - September 2025",
       role: "Web Developer Intern",
