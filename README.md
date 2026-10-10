@@ -1,4 +1,12 @@
-# Portfolio Website Customization Guide
+# Arshid Ahmad Malik | Engineering Portfolio
+
+Personal engineering portfolio for Arshid Ahmad Malik, an Electronics and Communication Engineering graduate based in Bengaluru, Karnataka, India.
+
+## Professional links
+
+- Email: [malikarshid01430@gmail.com](mailto:malikarshid01430@gmail.com)
+- GitHub: [malikarshid01430-byte](https://github.com/malikarshid01430-byte)
+- LinkedIn: [arshid-ahmad-malik](https://www.linkedin.com/in/arshid-ahmad-malik)
 
 ## Quick Start
 
@@ -12,33 +20,26 @@ npm install
 npm run dev
 ```
 
-## How to Customize Your Portfolio:
+## Portfolio content
+
+Personal identity and contact links are maintained in `src/data/profile.ts`. Projects, education, experience, skills, and all 23 certificate/training records are data-driven and should be updated only when the underlying information is verified. The Emertxe IoT certificate retains its genuine View and Download actions.
+
+## Project structure
 
 ### Personal Information
 Edit the following files to update your personal information:
 
-#### 1. Hero Section (`src/components/HeroSection.tsx`)
-- Name
-- Title/Role
-- Short bio
-- Social media links
+#### 1. Profile (`src/data/profile.ts`)
+- Name, professional role, biography, location, email, and social links
 
-#### 2. About Section (`src/components/AboutSection.tsx`)
-- Professional summary
-- Skills list
-- Experience highlights
+#### 2. Portfolio data (`src/data/`)
+- Skills, projects, education, experience, and certificates
 
-#### 3. Resume Section (`src/components/ResumeSection.tsx`)
-- Work experience
-- Education
-- Certifications
-- Technical skills
+#### 3. Resume (`public/resume/Arshid_Ahmad_Malik_Resume.pdf`)
+- Downloaded from the dedicated Resume section
 
-#### 4. Contact Section (`src/components/ContactSection.tsx`)
-- Contact information
-- Email address
-- Social media links
-- Location
+#### 4. Metadata (`index.html`)
+- Browser title, SEO metadata, social preview metadata, structured data, and favicon
 
 ### Styling Customization
 The main styling files are located in `src/styles/`:
@@ -48,22 +49,12 @@ The main styling files are located in `src/styles/`:
 - `utilities.css`: Utility classes
 
 ### Important Notes
-- Don't modify the core structure of components
-- Keep the existing class names and styling structure
-- Test your changes locally before deploying
+- Retain the completed certificate gallery, categories, filters, descriptions, and responsive cards.
+- Keep project status accurate; all retained projects are marked `Completed`.
+- Do not add unverified credentials, repository links, or personal information.
 
 ## Development
 - Port: The site runs on port 3000 by default
 - Node version: 14.x or higher recommended
 - Package manager: npm
-
-## Need Help?
-If you encounter any issues:
-1. Make sure all dependencies are installed
-2. Clear your npm cache: `npm cache clean --force`
-3. Delete node_modules and reinstall: 
-```bash
-rm -rf node_modules
-npm install
-```
 

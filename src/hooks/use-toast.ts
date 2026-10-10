@@ -125,7 +125,6 @@ export const reducer = (state: State, action: Action): State => {
       }
   }
 }
-// neem_ka_pata_kadwa_ha_prabjyot_sala_bhadwa_hai
 const listeners: Array<(state: State) => void> = []
 
 let memoryState: State = { toasts: [] }

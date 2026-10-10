@@ -1,39 +1,38 @@
+
 import React, { useState } from "react";
 import ScrollReveal from "./ScrollReveal";
-import { MapPin, Mail, Phone, Send, Loader2, Github, Linkedin, Twitter, Instagram, Facebook } from "lucide-react";
+import { MapPin, Mail, Phone, Send, Github, Linkedin, Copy, Check } from "lucide-react";
+import { profile } from "@/data/profile";
 
 const ContactSection = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
-  // FormSubmit.co will handle submission server-side; no local submission state needed
+  const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
+  const [copied, setCopied] = useState(false);
 
   const contactInfo = [
     {
-      icon: <MapPin size={20} />,
+      icon: <MapPin size={18} />,
       title: "Location",
-      details: ["Bangalore, Karnataka", "India"],
+      details: [profile.location],
     },
     {
-      icon: <Mail size={20} />,
+      icon: <Mail size={18} />,
       title: "Email",
-      details: ["prabjyotsingh996@gmail.com"],
+      details: [profile.email],
+      href: `mailto:${profile.email}`,
     },
-    {
-      icon: <Phone size={20} />,
-      title: "Phone",
-      details: ["+91 8899640581"],
-    },
+    ...(profile.phone
+      ? [{
+          icon: <Phone size={18} />,
+          title: "Phone",
+          details: [profile.phone],
+          href: `tel:${profile.phone.replace(/\s/g, "")}`,
+        }]
+      : []),
   ];
 
   const socialLinks = [
-    { name: "Github", icon: <Github size={18} />, url: "https://github.com/prabjyotsingh" },
-    { name: "LinkedIn", icon: <Linkedin size={18} />, url: "https://www.linkedin.com/in/prabjyot-singh-a2bab4259" },
-    { name: "Twitter", icon: <Twitter size={18} />, url: "https://x.com/Prabjyot_singh1" },
-    { name: "Instagram", icon: <Instagram size={18} />, url: "https://www.instagram.com/the_ps_maratha.996" },
+    { name: "GitHub", icon: <Github size={18} />, url: profile.github },
+    { name: "LinkedIn", icon: <Linkedin size={18} />, url: profile.linkedin },
   ];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -41,46 +40,56 @@ const ContactSection = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // No JS submission handler required when using FormSubmit.co
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(profile.email).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
 
   return (
-    <section id="contact" className="section bg-background py-16">
+    <section id="contact" className="section bg-muted/20">
       <div className="container-custom">
         <ScrollReveal>
-          <h2 className="text-3xl md:text-4xl font-bold mb-2 text-center">
-            Get In Touch
-          </h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-2 text-center">Get In Touch</h2>
         </ScrollReveal>
         <ScrollReveal delay={100}>
-          <div className="w-20 h-1 bg-primary mx-auto mb-10 rounded-full"></div>
+          <div className="w-20 h-1 bg-primary mx-auto mb-4 rounded-full"></div>
+        </ScrollReveal>
+        <ScrollReveal delay={150}>
+          <p className="text-foreground/60 text-center text-sm max-w-xl mx-auto mb-12">
+            Whether it's an internship, entry-level role, or just a conversation about tech — I'd love to hear from you.
+          </p>
         </ScrollReveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Left — contact info */}
           <div>
             <ScrollReveal delay={200}>
-              <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
-            </ScrollReveal>
-            <ScrollReveal delay={300}>
-              <p className="text-foreground/70 mb-8">
-                Feel free to reach out to me for collaboration, inquiries, or just 
-                to say hello. I'm always open to discussing new projects, creative 
-                ideas, or opportunities to be part of your vision.
-              </p>
+              <h3 className="text-xl font-bold mb-6">Contact Information</h3>
             </ScrollReveal>
 
-            <div className="space-y-6 mb-8">
+            <div className="space-y-4 mb-8">
               {contactInfo.map((info, index) => (
-                <ScrollReveal key={index} delay={400 + index * 100}>
-                  <div className="flex">
-                    <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-md flex items-center justify-center text-primary mr-4">
+                <ScrollReveal key={index} delay={300 + index * 80}>
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
                       {info.icon}
                     </div>
                     <div>
-                      <h4 className="text-lg font-bold mb-1">{info.title}</h4>
+                      <h4 className="text-sm font-bold mb-0.5">{info.title}</h4>
                       {info.details.map((detail, i) => (
-                        <p key={i} className="text-foreground/70">
-                          {detail}
-                        </p>
+                        info.href ? (
+                          <a
+                            key={i}
+                            href={info.href}
+                            className="text-foreground/65 text-sm hover:text-primary transition-colors"
+                          >
+                            {detail}
+                          </a>
+                        ) : (
+                          <p key={i} className="text-foreground/65 text-sm">{detail}</p>
+                        )
                       ))}
                     </div>
                   </div>
@@ -88,105 +97,141 @@ const ContactSection = () => {
               ))}
             </div>
 
-            <ScrollReveal delay={700}>
-              <h4 className="text-lg font-bold mb-4">Follow Me</h4>
-              <div className="flex space-x-4">
+            {/* Copy email button */}
+            <ScrollReveal delay={500}>
+              <button
+                onClick={handleCopyEmail}
+                id="copy-email-btn"
+                className="flex items-center gap-2 text-sm px-4 py-2.5 rounded-lg bg-muted/60 text-foreground/70 hover:bg-primary/10 hover:text-primary transition-all mb-8"
+                aria-label="Copy email address"
+              >
+                {copied ? <Check size={15} className="text-emerald-400" /> : <Copy size={15} />}
+                {copied ? "Email copied!" : "Copy email address"}
+              </button>
+            </ScrollReveal>
+
+            {/* Social links */}
+            <ScrollReveal delay={600}>
+              <h4 className="text-sm font-bold mb-3">Connect</h4>
+              <div className="flex gap-3">
                 {socialLinks.map((link, index) => (
                   <a
                     key={index}
                     href={link.url}
-                    className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-foreground/80 hover:bg-primary hover:text-white transition-all"
+                    className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-muted/60 text-foreground/70 text-sm font-medium hover:bg-primary/10 hover:text-primary transition-all"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`Visit ${link.name}`}
                   >
                     {link.icon}
+                    {link.name}
                   </a>
                 ))}
               </div>
             </ScrollReveal>
           </div>
 
+          {/* Right — contact form */}
           <div>
             <ScrollReveal delay={200}>
-              <h3 className="text-2xl font-bold mb-6">Send Me a Message</h3>
+              <h3 className="text-xl font-bold mb-6">Send a Message</h3>
             </ScrollReveal>
             <ScrollReveal delay={300}>
-              <form action="https://formsubmit.co/prabjyotsingh996@gmail.com" method="POST" className="space-y-4">
-                {/* FormSubmit settings */}
-                <input type="hidden" name="_subject" value="Someone just submitted your form on https://www.sachinpatel.me/." />
+              {/*
+                FormSubmit.co handles delivery server-side.
+                Replace the action email below with yours once ready.
+                For a no-backend fallback, the mailto: link above works fine.
+              */}
+              <form
+                action={`https://formsubmit.co/${profile.email}`}
+                method="POST"
+                className="space-y-4"
+              >
+                <input type="hidden" name="_subject" value="Portfolio Contact Form — Arshid Ahmad Malik" />
                 <input type="hidden" name="_template" value="table" />
                 <input type="hidden" name="_captcha" value="false" />
-                {/* Optional: redirect after submit - update if you want a different thank-you page */}
                 <input type="hidden" name="_next" value="/" />
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium mb-1">
-                      Your Name
+                    <label htmlFor="contact-name" className="block text-sm font-medium mb-1.5">
+                      Your Name <span className="text-primary">*</span>
                     </label>
                     <input
                       type="text"
-                      id="name"
+                      id="contact-name"
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 rounded-md bg-muted border border-border focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                      placeholder="Jane Smith"
+                      className="w-full px-4 py-2.5 rounded-lg bg-muted/60 border border-border focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary text-sm transition-colors"
                       required
                     />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium mb-1">
-                      Your Email
+                    <label htmlFor="contact-email" className="block text-sm font-medium mb-1.5">
+                      Your Email <span className="text-primary">*</span>
                     </label>
                     <input
                       type="email"
-                      id="email"
+                      id="contact-email"
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 rounded-md bg-muted border border-border focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                      placeholder="jane@company.com"
+                      className="w-full px-4 py-2.5 rounded-lg bg-muted/60 border border-border focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary text-sm transition-colors"
                       required
                     />
                   </div>
                 </div>
+
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium mb-1">
-                    Subject
+                  <label htmlFor="contact-subject" className="block text-sm font-medium mb-1.5">
+                    Subject <span className="text-primary">*</span>
                   </label>
                   <input
                     type="text"
-                    id="subject"
+                    id="contact-subject"
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 rounded-md bg-muted border border-border focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                    placeholder="Internship opportunity / Question about a project"
+                    className="w-full px-4 py-2.5 rounded-lg bg-muted/60 border border-border focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary text-sm transition-colors"
                     required
                   />
                 </div>
+
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium mb-1">
-                    Your Message
+                  <label htmlFor="contact-message" className="block text-sm font-medium mb-1.5">
+                    Message <span className="text-primary">*</span>
                   </label>
                   <textarea
-                    id="message"
+                    id="contact-message"
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    rows={4}
-                    className="w-full px-4 py-2 rounded-md bg-muted border border-border focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary resize-none"
+                    rows={5}
+                    placeholder="Tell me about the role or project..."
+                    className="w-full px-4 py-2.5 rounded-lg bg-muted/60 border border-border focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary resize-none text-sm transition-colors"
                     required
-                  ></textarea>
+                  />
                 </div>
 
                 <button
                   type="submit"
-                  className="px-6 py-3 rounded-md bg-primary text-white font-medium flex items-center justify-center transition-all hover:bg-primary/90 disabled:opacity-70"
+                  id="contact-submit"
+                  className="w-full sm:w-auto px-8 py-3 rounded-lg bg-primary text-white font-medium flex items-center justify-center gap-2 transition-all hover:bg-primary/90 hover-lift"
                 >
-                  <>
-                    <Send size={18} className="mr-2" />
-                    Send Message
-                  </>
+                  <Send size={16} />
+                  Send Message
                 </button>
+
+                <p className="text-foreground/40 text-xs">
+                  This form uses FormSubmit.co for delivery. You can also email directly at{" "}
+                  <a href={`mailto:${profile.email}`} className="text-primary hover:underline">
+                    {profile.email}
+                  </a>.
+                </p>
               </form>
             </ScrollReveal>
           </div>

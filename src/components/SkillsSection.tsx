@@ -1,162 +1,97 @@
 
-import React, { useRef, useEffect } from "react";
+import React, { useState } from "react";
 import ScrollReveal from "./ScrollReveal";
-import { Code, GitBranch, Palette, Database, FileVideo, Star, Book, Cpu, Brain, Globe } from "lucide-react";
+import { skillCategories, levelColors, type SkillLevel } from "@/data/skills";
 
 const SkillsSection = () => {
-  const skillsRef = useRef<HTMLDivElement>(null);
+  const [activeCategory, setActiveCategory] = useState<string>("all");
 
-  // Animate skill progress bars when they come into view
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const progressBar = entry.target.querySelector('.skill-progress');
-            if (progressBar) {
-              const level = progressBar.getAttribute('data-level');
-              (progressBar as HTMLElement).style.width = `${level}%`;
-              
-              // Also animate the value text
-              const valueText = entry.target.querySelector('.skill-value');
-              if (valueText) {
-                setTimeout(() => {
-                  (valueText as HTMLElement).style.opacity = '1';
-                  (valueText as HTMLElement).style.transform = 'translateY(0)';
-                }, 500);
-              }
-            }
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
+  const displayed =
+    activeCategory === "all"
+      ? skillCategories
+      : skillCategories.filter((c) => c.id === activeCategory);
 
-    const skillItems = document.querySelectorAll('.skill-item');
-    skillItems.forEach(item => {
-      observer.observe(item);
-    });
-
-    return () => {
-      skillItems.forEach(item => {
-        observer.unobserve(item);
-      });
-    };
-  }, []);
-
-  const skills = [
-    { 
-      name: "HTML/CSS", 
-      level: 90,
-      icon: <Palette size={24} className="text-primary" /> 
-    },
-    { 
-      name: "JavaScript", 
-      level: 85,
-      icon: <Code size={24} className="text-primary" /> 
-    },
-    { 
-      name: "React.js", 
-      level: 80,
-      icon: <Code size={24} className="text-primary" /> 
-    },
-    { 
-      name: "Java", 
-      level: 75,
-      icon: <Cpu size={24} className="text-primary" /> 
-    },
-    { 
-      name: "Python", 
-      level: 70,
-      icon: <Code size={24} className="text-primary" /> 
-    },
-    { 
-      name: "MySQL", 
-      level: 65,
-      icon: <Database size={24} className="text-primary" /> 
-    },
-    { 
-      name: "Git/GitHub", 
-      level: 80,
-      icon: <GitBranch size={24} className="text-primary" /> 
-    },
-    {
-      name: "Video Editing",
-      level: 60,
-      icon: <FileVideo size={24} className="text-primary" />
-    },
-    {
-      name: "Machine Learning",
-      level: 65,
-      icon: <Brain size={24} className="text-primary" />
-    },
-    {
-      name: "Django",
-      level: 70,
-      icon: <Code size={24} className="text-primary" />
-    },
-    {
-      name: "Web Scraping",
-      level: 75,
-      icon: <Globe size={24} className="text-primary" />
-    },
-  ];
+  const levelOrder: SkillLevel[] = ["Practical Experience", "Foundational Knowledge"];
 
   return (
-    <section id="skills" className="section bg-background py-20" ref={skillsRef}>
+    <section id="skills" className="section bg-muted/20">
       <div className="container-custom">
         <ScrollReveal>
-          <h2 className="text-3xl md:text-4xl font-bold mb-2 text-center">
-            My Skills
-          </h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-2 text-center">Technical Skills</h2>
         </ScrollReveal>
         <ScrollReveal delay={100}>
-          <div className="w-20 h-1 bg-primary mx-auto mb-10 rounded-full"></div>
+          <div className="w-20 h-1 bg-primary mx-auto mb-4 rounded-full"></div>
         </ScrollReveal>
-
-        <ScrollReveal>
-          <p className="text-foreground/70 text-center max-w-3xl mx-auto mb-12">
-            My technical proficiencies span a wide range of programming languages and tools
+        <ScrollReveal delay={150}>
+          <p className="text-foreground/60 text-center text-sm max-w-2xl mx-auto mb-10">
+            Skills organized by area. Labels reflect actual exposure — not arbitrary proficiency percentages.
           </p>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {skills.map((skill, index) => (
-            <ScrollReveal key={index} delay={200 + index * 50}>
-              <div className="card-effect dark:bg-card/80 rounded-lg p-6 group hover:bg-primary/5 transition-all duration-300 skill-item hover-lift h-full">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center mr-3 group-hover:animate-pulse">
-                    {skill.icon}
-                  </div>
-                  <h4 className="font-bold group-hover:text-primary transition-colors text-lg">
-                    {skill.name}
-                  </h4>
+        {/* Legend */}
+        <ScrollReveal delay={200}>
+          <div className="flex flex-wrap justify-center gap-3 mb-8 text-xs">
+            {levelOrder.map((level) => (
+              <span key={level} className={`px-3 py-1 rounded-full font-medium ${levelColors[level]}`}>
+                {level}
+              </span>
+            ))}
+          </div>
+        </ScrollReveal>
+
+        {/* Category filter tabs */}
+        <ScrollReveal delay={250}>
+          <div className="flex flex-wrap justify-center gap-2 mb-10">
+            <button
+              onClick={() => setActiveCategory("all")}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                activeCategory === "all"
+                  ? "bg-primary text-white"
+                  : "bg-muted text-foreground/70 hover:bg-muted/70"
+              }`}
+              id="skill-filter-all"
+            >
+              All Areas
+            </button>
+            {skillCategories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  activeCategory === cat.id
+                    ? "bg-primary text-white"
+                    : "bg-muted text-foreground/70 hover:bg-muted/70"
+                }`}
+                id={`skill-filter-${cat.id}`}
+              >
+                {cat.emoji} {cat.label}
+              </button>
+            ))}
+          </div>
+        </ScrollReveal>
+
+        {/* Skill categories grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {displayed.map((category, catIdx) => (
+            <ScrollReveal key={category.id} delay={300 + catIdx * 80}>
+              <div className="bg-card border border-border rounded-xl p-6 h-full hover:border-primary/40 transition-all duration-300 group">
+                <div className="flex items-center gap-3 mb-5">
+                  <span className="text-2xl">{category.emoji}</span>
+                  <h3 className="font-bold text-foreground text-base group-hover:text-primary transition-colors">
+                    {category.label}
+                  </h3>
                 </div>
-                <div>
-                  <div className="flex justify-between mb-2 text-sm">
-                    <span>Proficiency</span>
-                    <span className="text-primary skill-value">{skill.level}%</span>
-                  </div>
-                  <div className="skill-bar bg-muted dark:bg-muted/50">
-                    <div
-                      className="skill-progress bg-primary"
-                      data-level={skill.level}
-                      style={{ width: "0%" }}
-                    />
-                  </div>
-                </div>
-                
-                {/* Decorative dots - more interactive now */}
-                <div className="flex justify-between mt-6">
-                  {[...Array(5)].map((_, i) => (
-                    <div 
-                      key={i} 
-                      className={`h-2 w-2 rounded-full transition-all duration-300 ${
-                        i < Math.ceil(skill.level / 20) 
-                          ? 'bg-primary scale-100' 
-                          : 'bg-border scale-75'
-                      } group-hover:scale-100`}
-                    ></div>
+                <div className="flex flex-wrap gap-2">
+                  {category.skills.map((skill) => (
+                    <span
+                      key={skill.name}
+                      className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1.5 rounded-md bg-muted/60 text-foreground/75 hover:bg-muted transition-colors"
+                    >
+                      {skill.name}
+                      <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-semibold ${levelColors[skill.level]}`}>
+                        {skill.level}
+                      </span>
+                    </span>
                   ))}
                 </div>
               </div>

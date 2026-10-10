@@ -1,300 +1,174 @@
-import React from "react";
+
+import React, { useState } from "react";
 import ScrollReveal from "./ScrollReveal";
-import { BookOpen, Briefcase, Award, Download, Check, MapPin, Calendar } from "lucide-react";
+import { Download, FileText, AlertCircle, BookOpen, Briefcase, ExternalLink } from "lucide-react";
+import { profile } from "@/data/profile";
+import { education } from "@/data/education";
+import { experiences } from "@/data/experience";
 
 const ResumeSection = () => {
-  // Helper to sort experiences from oldest to newest based on start month/year
-  const monthToIndex: Record<string, number> = {
-    january: 0, jan: 0,
-    february: 1, feb: 1,
-    march: 2, mar: 2,
-    april: 3, apr: 3,
-    may: 4,
-    june: 5, jun: 5,
-    july: 6, jul: 6,
-    august: 7, aug: 7,
-    september: 8, sep: 8, sept: 8,
-    october: 9, oct: 9,
-    november: 10, nov: 10,
-    december: 11, dec: 11,
-  };
+  const [pdfError, setPdfError] = useState(false);
 
-  const parseStartOfPeriod = (period: string) => {
-    const [start] = period.split(/\s*[-–—]\s*/);
-    const parts = start.trim().split(" ");
-    if (parts.length === 2) {
-      const [monthStr, yearStr] = parts;
-      const month = monthToIndex[monthStr.toLowerCase()] ?? 0;
-      const year = parseInt(yearStr, 10) || 0;
-      return new Date(year, month, 1).getTime();
+  const handleDownload = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!profile.resumePdf) {
+      e.preventDefault();
+      return;
     }
-    // Fallback: just try year only
-    const yr = parseInt(start, 10) || 0;
-    return new Date(yr, 0, 1).getTime();
-  };
-  const education = [
-    {
-      period: "2023 - 2027",
-      degree: "Bachelor of Engineering-BE, Computer Science & Engineering",
-      institution: "MVJ College of Engineering, Bangalore, India",
-      description:
-        "Relevant Course work: Data Structures, Algorithms, Database Management Systems, Object-Oriented Programming",
-    },
-    {
-      period: "2023",
-      degree: "Higher Secondary Education",
-      institution: "Hajad Public Hr Secondary School",
-      description:
-        "Completed higher secondary education with PCM, scoring 86.4%",
-    },
-  ];
-
-  const experience = [
-    {
-      period: "June 2024 - July 2024",
-      role: "Web Dev Intern",
-      company: "Cognifyz Technologies",
-      location: "Remote, India",
-      badgeColor: "bg-rose-500/15 text-rose-400 border border-rose-500/30",
-      dotColor: "border-rose-400 bg-rose-400/20",
-      description: [
-        "Projects based on web development",
-        "Tools used: HTML, CSS, JS, React.js",
-        "Created visualizations and dashboards to present key insights to stakeholders",
-      ],
-    },
-    {
-      period: "August 2024 -August 2026 ",
-      role: "Tech Lead",
-      company: "SDC, MVJCE",
-      location: "Bangalore, Karnataka",
-      badgeColor: "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30",
-      dotColor: "border-emerald-400 bg-emerald-400/20",
-      description: [
-        "Leading technical direction and mentoring peers in the club",
-        "Driving web app initiatives and organizing workshops",
-      ],
-    },
-
-    {
-      period: "June 2025 - September 2025",
-      role: "Web Developer Intern",
-      company: "NIT Srinagar",
-      location: "Srinagar, J&K, India",
-      badgeColor: "bg-blue-500/15 text-blue-400 border border-blue-500/30",
-      dotColor: "border-blue-400 bg-blue-400/20",
-      description: [
-        "Contributing to web interfaces and internal tools",
-        "Working with React and TailwindCSS for feature delivery",
-      ],
-    },
-    {
-      period: "Feb 2026 - Aug 2026",
-      role: "Software Engineer (Part-Time)",
-      company: "Koshur Scientist",
-      location: "Hybrid",
-      badgeColor: "bg-cyan-500/15 text-cyan-400 border border-cyan-500/30",
-      dotColor: "border-cyan-400 bg-cyan-400/20",
-      description: [
-        "Progressed from intern to part-time SDE within 3 months, owning features across the full software development lifecycle.",
-        "Collaborated in an agile team environment, contributing to code reviews, sprint planning, and production deployments.",
-      ],
-    },
-    {
-      period: "May 2026 - Aug 2026",
-      role: "AI / ML Intern",
-      company: "QuantumTech AI",
-      location: "Remote",
-      badgeColor: "bg-amber-500/15 text-amber-400 border border-amber-500/30",
-      dotColor: "border-amber-400 bg-amber-400/20",
-      description: [
-        "Developed and fine-tuned machine learning models, performed EDA and feature engineering on large datasets, and built automated data pipelines and reporting dashboards for business insights.",
-      ],
-    },
-  ];
-
-  const achievements = [
-    {
-      title: "IIT Madras Innovation Challenge",
-      description: "Runner-Up in the prestigious innovation competition hosted by IIT Madras.",
-      year: "2023",
-    },
-    {
-      title: "MVJCE Innovation Challenge",
-      description: "Finalist in the college-level innovation challenge for a sustainable technology solution.",
-      year: "2024",
-    },
-    {
-      title: "Coding Competition",
-      description: "Secured 1st place in the inter-college coding competition.",
-      year: "2024",
-    },
-  ];
-
-  const handleDownload = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    fetch('/uploads/prabjyotsingh_cv.pdf')
-      .then((res) => {
-        if (!res.ok) throw new Error('File not found');
-        return res.blob();
-      })
-      .then((blob) => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = url;
-        a.download = 'Prabjyotsingh_Resume.pdf';
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-      })
-      .catch(() => {
-        window.open('/uploads/prabjyotsingh_cv.pdf', '_blank');
-      });
+    try {
+      const res = await fetch(profile.resumePdf);
+      if (!res.ok) throw new Error("Not found");
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "Arshid_Ahmad_Malik_Resume.pdf";
+      document.body.appendChild(a);
+      a.click();
+      URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch {
+      setPdfError(true);
+      setTimeout(() => setPdfError(false), 4000);
+    }
   };
 
   return (
-    <section id="resume" className="section bg-muted/30">
+    <section id="resume" className="section bg-muted/10">
       <div className="container-custom">
         <ScrollReveal>
-          <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 md:mb-0 text-center md:text-left">
-              My Resume
-            </h2>
-            <a
-              href="/uploads/prabjyotsingh_cv.pdf"
-              download="Prabjyotsingh_Resume.pdf"
-              onClick={handleDownload}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md border border-primary text-primary font-medium hover:bg-primary hover:text-white transition-all duration-300 shadow-sm hover:shadow-[0_0_15px_rgba(0,255,180,0.2)] cursor-pointer"
-            >
-              <Download size={18} />
-              Download Resume
-            </a>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-1">Resume</h2>
+              <p className="text-foreground/55 text-sm">Education &amp; Experience at a glance</p>
+            </div>
+            <div className="flex flex-col sm:flex-row items-start gap-2">
+              {profile.resumePdf ? (
+                <a
+                  href={profile.resumePdf}
+                  download="Arshid_Ahmad_Malik_Resume.pdf"
+                  onClick={handleDownload}
+                  id="resume-download-btn"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-primary text-primary font-medium hover:bg-primary hover:text-white transition-all duration-300 shadow-sm text-sm"
+                  aria-label="Download Arshid Ahmad Malik's resume PDF"
+                >
+                  <Download size={16} />
+                  Download Resume (PDF)
+                </a>
+              ) : (
+                <a
+                  href={`mailto:${profile.email}?subject=Resume Request`}
+                  id="resume-request-btn"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border text-foreground/70 font-medium hover:bg-muted transition-all duration-300 text-sm"
+                >
+                  <FileText size={16} />
+                  Request Resume via Email
+                </a>
+              )}
+              <a
+                href={profile.resumePdf}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-foreground/75 font-medium hover:text-primary transition-all text-sm"
+                aria-label="Open Arshid Ahmad Malik's resume PDF in a new tab"
+              >
+                <ExternalLink size={16} />
+                Open Resume
+              </a>
+              {pdfError && (
+                <p className="flex items-center gap-1.5 text-xs text-amber-400">
+                  <AlertCircle size={12} />
+                  PDF not found yet — please email me to request a copy.
+                </p>
+              )}
+            </div>
           </div>
         </ScrollReveal>
+
         <ScrollReveal delay={100}>
-          <div className="w-20 h-1 bg-primary mb-10 rounded-full md:mx-0"></div>
+          <div className="w-20 h-1 bg-primary mb-10 rounded-full"></div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 gap-10 mb-16">
-          {/* Education Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+          {/* Education summary */}
           <div>
             <ScrollReveal delay={200}>
-              <div className="flex items-center mb-5">
-                <div className="w-12 h-12 bg-primary/10 rounded-md flex items-center justify-center text-primary mr-4 shadow-sm">
-                  <BookOpen size={22} />
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+                  <BookOpen size={20} />
                 </div>
-                <h3 className="text-xl md:text-2xl font-bold">Education</h3>
+                <h3 className="text-xl font-bold">Education</h3>
               </div>
             </ScrollReveal>
 
-            <div className="timeline space-y-8">
+            <div className="space-y-4">
               {education.map((item, index) => (
-                <ScrollReveal key={index} delay={300 + index * 100}>
+                <ScrollReveal key={item.id} delay={300 + index * 80}>
                   <div className="timeline-item">
                     <div className="timeline-card">
-                      <div className="flex items-center gap-2 mb-2">
+                      <div className="flex flex-wrap items-center gap-2 mb-2">
                         <span className="period-badge">{item.period}</span>
-                        <span className="company-badge">{item.institution}</span>
+                        <span
+                          className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
+                            item.status.includes("Completed")
+                              ? "bg-emerald-500/15 text-emerald-400"
+                              : "bg-amber-500/15 text-amber-400"
+                          }`}
+                        >
+                          {item.status}
+                        </span>
+                        {item.percentage && (
+                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-primary/10 text-primary">
+                            {item.percentage}
+                          </span>
+                        )}
                       </div>
-                      <h4 className="text-lg font-bold mb-2">{item.degree}</h4>
-                      <p className="text-foreground/60 text-sm leading-relaxed">{item.description}</p>
+                      <h4 className="font-bold text-sm mb-0.5">
+                        {item.degree}
+                        {item.field && ` — ${item.field}`}
+                      </h4>
+                      <p className="text-foreground/60 text-xs">{item.institution}</p>
                     </div>
                   </div>
                 </ScrollReveal>
               ))}
             </div>
           </div>
-        </div>
 
-        {/* Experience Section */}
-        <div className="mb-16">
-          <ScrollReveal>
-            <h3 className="text-2xl md:text-3xl font-bold text-center mb-3">
-              My <span className="text-primary">Experience</span>
-            </h3>
-          </ScrollReveal>
-          <ScrollReveal delay={100}>
-            <p className="text-foreground/50 text-center max-w-2xl mx-auto mb-12 text-sm">
-              A journey through impactful roles in tech communities and innovative projects
-            </p>
-          </ScrollReveal>
+          {/* Experience summary */}
+          <div>
+            <ScrollReveal delay={200}>
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+                  <Briefcase size={20} />
+                </div>
+                <h3 className="text-xl font-bold">Training &amp; Internships</h3>
+              </div>
+            </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {([...experience]
-              .sort((a, b) => parseStartOfPeriod(a.period) - parseStartOfPeriod(b.period))
-              .map((item, index) => (
-                <ScrollReveal key={index} delay={200 + index * 100} className="h-full">
-                  <div className="bg-card/80 border border-border/50 rounded-xl p-5 md:p-6 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 h-full flex flex-col justify-between group">
-                    <div>
-                      {/* Header row: Company badge + period */}
-                      <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-                        <span className={`inline-block text-xs font-semibold px-3 py-1 rounded-full ${item.badgeColor}`}>
-                          {item.company}
-                        </span>
-                        <span className="flex items-center gap-1.5 text-xs text-foreground/50">
-                          <Calendar size={13} className="text-primary" />
-                          {item.period}
+            <div className="space-y-4">
+              {experiences.map((item, index) => (
+                <ScrollReveal key={item.id} delay={300 + index * 80}>
+                  <div className="timeline-item">
+                    <div className="timeline-card">
+                      <div className="flex flex-wrap items-center gap-2 mb-2">
+                        <span className="period-badge">{item.period}</span>
+                        <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
+                          item.type === "Internship"
+                            ? "bg-violet-500/15 text-violet-400"
+                            : "bg-emerald-500/15 text-emerald-400"
+                        }`}>
+                          {item.type}
                         </span>
                       </div>
-
-                      {/* Role title */}
-                      <h4 className="text-lg font-bold mb-2 text-foreground group-hover:text-primary transition-colors">
-                        {item.role}
-                      </h4>
-
-                      {/* Location */}
-                      <div className="flex items-center gap-1.5 mb-4 text-xs text-foreground/50">
-                        <MapPin size={13} className="text-primary" />
-                        <span>{item.location}</span>
-                      </div>
-
-                      {/* Diamond bullet description */}
-                      <ul className="space-y-2">
-                        {item.description.map((desc, i) => (
-                          <li key={i} className="flex items-start gap-2.5 text-sm text-foreground/60">
-                            <span className="mt-1.5 w-1.5 h-1.5 rounded-sm bg-primary rotate-45 flex-shrink-0" />
-                            <span className="leading-relaxed">{desc}</span>
-                          </li>
-                        ))}
-                      </ul>
+                      <h4 className="font-bold text-sm mb-0.5">{item.role}</h4>
+                      <p className="text-primary font-semibold text-xs mb-0.5">{item.company}</p>
+                      <p className="text-foreground/50 text-xs">{item.location}</p>
                     </div>
                   </div>
                 </ScrollReveal>
-              )))}
-          </div>
-        </div>
-
-        {/* Achievements Section */}
-        <div>
-          <ScrollReveal delay={200}>
-            <div className="flex items-center mb-8">
-              <div className="w-12 h-12 bg-primary/10 rounded-md flex items-center justify-center text-primary mr-4 shadow-sm">
-                <Award size={22} />
-              </div>
-              <h3 className="text-xl md:text-2xl font-bold">Achievements</h3>
+              ))}
             </div>
-          </ScrollReveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {achievements.map((item, index) => (
-              <ScrollReveal key={index} delay={300 + index * 100}>
-                <div className="card-effect dark:bg-card/90 rounded-lg p-6 h-full group hover:translate-y-[-5px] transition-all duration-300">
-                  <div className="flex justify-between items-start mb-4">
-                    <h4 className="text-lg font-bold group-hover:text-primary transition-colors">
-                      {item.title}
-                    </h4>
-                    <span className="text-xs font-medium text-primary bg-primary/10 py-1.5 px-3 rounded-full">
-                      {item.year}
-                    </span>
-                  </div>
-                  <p className="text-foreground/70 text-sm leading-relaxed">{item.description}</p>
-                </div>
-              </ScrollReveal>
-            ))}
           </div>
         </div>
       </div>

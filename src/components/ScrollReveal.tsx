@@ -15,13 +15,24 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      node.classList.add("active");
+      return;
+    }
+
+    const timeouts = new Set<ReturnType<typeof setTimeout>>();
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setTimeout(() => {
+            const timeout = setTimeout(() => {
               entry.target.classList.add("active");
+              timeouts.delete(timeout);
             }, delay);
+            timeouts.add(timeout);
             observer.unobserve(entry.target);
           }
         });
@@ -32,14 +43,11 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
       }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+    observer.observe(node);
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
+      timeouts.forEach(clearTimeout);
+      observer.disconnect();
     };
   }, [delay]);
 
