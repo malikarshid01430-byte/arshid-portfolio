@@ -21,8 +21,10 @@ export const profile = {
   phone: "+91 9682397579",
   location: "Bengaluru, Karnataka, India",
   // ─── Social links ──────────────────────────────────────────
+  portfolioUrl: "https://arshid-portfolio.vercel.app",
   linkedin: "https://www.linkedin.com/in/arshid-ahmad-malik",
   github: "https://github.com/malikarshid01430-byte",
+  repositoryUrl: "https://github.com/malikarshid01430-byte/arshid-portfolio",
 
   // ─── Resume PDF ────────────────────────────────────────────
   // Configurable path. If file is not present, UI provides email request fallback.

@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import ScrollReveal from "./ScrollReveal";
-import { MapPin, Mail, Phone, Send, Github, Linkedin, Copy, Check } from "lucide-react";
+import { MapPin, Mail, Phone, Send, Github, Linkedin, Copy, Check, Globe2 } from "lucide-react";
 import { profile } from "@/data/profile";
 
 const ContactSection = () => {
@@ -31,6 +31,7 @@ const ContactSection = () => {
   ];
 
   const socialLinks = [
+    { name: "Live Portfolio", icon: <Globe2 size={18} />, url: profile.portfolioUrl },
     { name: "GitHub", icon: <Github size={18} />, url: profile.github },
     { name: "LinkedIn", icon: <Linkedin size={18} />, url: profile.linkedin },
   ];
@@ -113,7 +114,7 @@ const ContactSection = () => {
             {/* Social links */}
             <ScrollReveal delay={600}>
               <h4 className="text-sm font-bold mb-3">Connect</h4>
-              <div className="flex gap-3">
+              <div className="flex flex-wrap gap-3">
                 {socialLinks.map((link, index) => (
                   <a
                     key={index}

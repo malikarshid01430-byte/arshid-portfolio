@@ -1,6 +1,6 @@
 
 import React from "react";
-import { ArrowUp, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowUp, Github, Globe2, Linkedin, Mail } from "lucide-react";
 import { profile } from "@/data/profile";
 
 const Footer = () => {
@@ -18,7 +18,9 @@ const Footer = () => {
   ];
 
   const socialLinks = [
+    { name: "Portfolio", icon: <Globe2 size={18} />, url: profile.portfolioUrl },
     { name: "GitHub", icon: <Github size={18} />, url: profile.github },
+    { name: "Repository", icon: <Github size={18} />, url: profile.repositoryUrl },
     { name: "LinkedIn", icon: <Linkedin size={18} />, url: profile.linkedin },
     { name: "Email", icon: <Mail size={18} />, url: `mailto:${profile.email}` },
   ];

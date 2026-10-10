@@ -1,158 +1,96 @@
-# ⚡ ARSHID AHMAD MALIK
-### Electronics & Communication Engineering | Software Development | Embedded Systems | IoT
+# Arshid Ahmad Malik — Engineering Portfolio
 
-📍 Bengaluru, Karnataka, India
+<p align="center">
+  <img src="public/images/mvj-college-presentation.png" alt="Arshid Ahmad Malik presenting at MVJ College of Engineering" width="720" />
+</p>
 
-Welcome to my GitHub repository! 👋
+<p align="center"><strong>Electronics &amp; Communication Engineering graduate building practical technology across embedded systems, IoT, Android, AI-assisted applications, and EV technology.</strong></p>
 
-I am **Arshid Ahmad Malik**, an Electronics and Communication Engineering graduate passionate about technology, innovation, and continuous learning. My interests span electronics engineering, software development, embedded systems, the Internet of Things (IoT), artificial intelligence, and electric-vehicle technologies.
+<p align="center">
+  <a href="https://arshid-portfolio.vercel.app"><img src="https://img.shields.io/badge/Live_Portfolio-0F766E?style=for-the-badge&amp;logo=vercel&amp;logoColor=white" alt="Open live portfolio" /></a>
+  <a href="https://github.com/malikarshid01430-byte"><img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="Open GitHub profile" /></a>
+  <a href="https://www.linkedin.com/in/arshid-ahmad-malik"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="Open LinkedIn profile" /></a>
+  <a href="mailto:malikarshid01430@gmail.com"><img src="https://img.shields.io/badge/Email-EA4335?style=for-the-badge&amp;logo=gmail&amp;logoColor=white" alt="Send an email" /></a>
+</p>
 
-I enjoy exploring how hardware and software work together to solve practical problems. Through academic projects, internships, technical training, and independent learning, I am continuously developing my engineering knowledge and professional skills.
+## About
 
-My goal is to contribute to meaningful technology projects, learn from experienced professionals, and build a career where I can combine engineering fundamentals with modern technological solutions.
+This repository contains the personal portfolio of **Arshid Ahmad Malik**, an Electronics and Communication Engineering graduate based in Bengaluru, Karnataka, India. It presents an engineering-focused profile spanning hardware-software integration, connected devices, Android development, generative-AI exploration, digital design fundamentals, and EV charging technology.
 
----
+The site gives recruiters, collaborators, and fellow engineers one clear place to review professional interests, learning experience, project work, education, certificates, resume, and contact details.
 
-## 🚀 About My Portfolio
+## Portfolio highlights
 
-My portfolio represents my technical journey, educational background, projects, and professional development. It is designed to help recruiters, hiring managers, fellow developers, and engineering professionals understand my interests, capabilities, and aspirations.
+- A focused hero, profile, and contact experience with direct GitHub, LinkedIn, email, and resume access.
+- Skills organised by practical experience and foundational knowledge.
+- Data-driven project cards covering embedded systems, electronics, IoT, robotics, Android development, AI-assisted applications, and this portfolio.
+- Dedicated experience, education, certificate, and resume sections.
+- Searchable/filterable certificate gallery that preserves available view and download actions.
+- Responsive layouts for mobile through desktop, with keyboard-accessible controls and reduced-motion support.
+- Semantic metadata, structured person data, canonical URL, social sharing metadata, favicon, and crawler instructions.
 
-The website brings together my professional introduction, technical skills, academic qualifications, project work, internship experiences, certificates, resume, and contact information in one place.
+## Technical skills and interests
 
-✨ **My portfolio reflects three important principles:**
+Skill labels in the portfolio distinguish **Practical Experience** from **Foundational Knowledge**.
 
-- **Innovation:** Exploring new technologies and practical engineering solutions.
-- **Continuous Learning:** Developing technical knowledge through hands-on work and professional training.
-- **Problem-Solving:** Applying logical thinking and engineering fundamentals to real-world challenges.
+| Area | Verified technologies and topics |
+| --- | --- |
+| Programming & software | C, C++, Kotlin, HTML, CSS, JavaScript; foundational Python, Java, TypeScript, and Verilog HDL |
+| Android development | Android Studio, Kotlin, Jetpack Compose, Material 3, Firebase fundamentals |
+| Embedded systems & electronics | ESP32, Arduino, NodeMCU, microcontrollers, sensors, actuators, relay interfacing, hardware debugging and testing |
+| IoT & automation | Sensor data collection, embedded connectivity, Blynk IoT Platform, connected-device workflows, MQTT and IoT protocol fundamentals |
+| AI-assisted development | Gemini and generative-AI integration, Google AI Studio, AI-assisted development, prompt-engineering fundamentals |
+| Engineering tools | Git, GitHub, VS Code, multimeter and lab-instrument use |
+| EV technology | Charging infrastructure, battery-technology exposure, sustainable mobility, and charging-standard fundamentals |
 
-## 🛠️ Technical Skills & Interests
+## Projects
 
-My technical interests cover multiple areas of engineering and software development.
+Project content is maintained in [`src/data/projects.ts`](src/data/projects.ts). All listed entries are presented as completed in the portfolio; repository and demo buttons appear only when verified links exist.
 
-🔹 **Programming & Software Development**  
-C, C++, Python fundamentals, Kotlin, Android application development, and modern application development concepts.
+| Project | Purpose and implementation | Technologies |
+| --- | --- | --- |
+| Solar Solution — Indoor Air Purifier for Urban Areas | Embedded monitoring and purification prototype that combines air-quality sensing, threshold-based relay control, filtering, LCD telemetry, and solar-power integration. | ESP32, MQ135, optical dust sensor, DHT11, relay module, LCD I2C, solar panel |
+| NutriSnap — AI Food Diary | Android concept for photographed-meal analysis and structured nutrition journaling with multimodal AI. | Kotlin, Jetpack Compose, Gemini API, Firebase |
+| Obstacle-Avoiding Robot with Lane Detector | Autonomous robot prototype combining ultrasonic collision avoidance with infrared lane tracking and differential motor control. | Arduino/ESP32, HC-SR04, IR sensors, L298N, C/C++ |
+| Namma Santhe Ledger | Lightweight Android ledger for local-vendor income, expenses, summaries, and offline-friendly record keeping. | Kotlin, Jetpack Compose, Material 3 |
+| Aircraft Monitoring System | Educational digital-electronics project for telemetry thresholds, warning states, and test-oriented logic. | Verilog HDL, digital logic, simulation testbenches |
+| Blynk Home Automation | Connected-device prototype for remotely switching and monitoring household loads. | ESP32/NodeMCU, Blynk, relay module, Wi-Fi, C/C++ |
+| Automatic Door Lock | Embedded access-control prototype with credential input, actuator control, display feedback, and lockout logic. | Arduino, keypad, servo/solenoid driver, LCD, C/C++ |
+| Health Monitoring System | Sensor-instrumentation prototype for presenting pulse and temperature telemetry on an LCD. | ESP32/Arduino, pulse sensor/MAX30102, temperature sensor, LCD, C/C++ |
+| Smart Helmet | Electronics safety prototype exploring alcohol sensing, wear detection, alerts, and control logic. | Arduino/ESP32, MQ-3, touch/limit sensors, buzzer, C/C++ |
+| Personal Portfolio Website | The responsive website in this repository. | React, TypeScript, Vite, Tailwind CSS, Lucide React, Radix UI |
 
-🔹 **Embedded Systems & Electronics**  
-Microcontrollers, ESP32, Arduino, NodeMCU, sensors, hardware integration, circuit fundamentals, testing, and troubleshooting.
+## Education and professional development
 
-🔹 **Internet of Things (IoT)**  
-Connected devices, sensor monitoring, automation, communication protocols, and microcontroller-based applications.
+**Bachelor of Engineering, Electronics and Communication Engineering** — MVJ College of Engineering, Bengaluru; affiliated with Visvesvaraya Technological University (2023–2026).
 
-🔹 **Artificial Intelligence & Application Integration**  
-Generative AI tools, AI-assisted application development, and exploring ways to integrate intelligent features into software applications.
+**Diploma, Electronics and Communication Engineering** — Government Polytechnic College, Srinagar (2020–2023).
 
-🔹 **Engineering Tools & Technologies**  
-MATLAB/Simulink fundamentals, Verilog fundamentals, and electronic system development concepts.
+The portfolio also documents internships and structured training with CODEC Technologies, Emertxe, MindMatrix, VLSIGuru, and VisionAstraa EV Academy with TERI. These records are presented as internships or training—not as unverified employment claims—and are backed by the descriptions in [`src/data/experience.ts`](src/data/experience.ts).
 
-🔹 **Electric Vehicles & Sustainable Mobility**  
-Electric-vehicle technologies, charging infrastructure, battery systems, charging standards, and sustainable transportation.
+The certificate gallery records learning across electronics, IoT, AI, data, cloud, cybersecurity, EV technology, communication, and participation. Available source documents keep their original view/download actions; items without a stored original document are not presented as verified files.
 
-*My proficiency varies across these technologies, and I continue to strengthen my practical skills through projects and learning.*
+## Website technology
 
-## 💡 Projects & Engineering Work
+This portfolio is built with **React 18**, **TypeScript**, **Vite**, **Tailwind CSS**, HTML, CSS, and npm. It uses reusable component primitives from Radix UI, Lucide icons, React Router, and related packages listed in [`package.json`](package.json). Git and GitHub are used for source control and publication.
 
-My project work combines engineering fundamentals, software development, hardware integration, and practical problem-solving.
+These are the technologies used to build the website. They are distinct from the engineering tools and technologies documented as personal learning or project experience above.
 
-### 🌿 Solar-Powered Indoor Air Purifier
+## GitHub activity
 
-An engineering project focused on indoor air-quality monitoring and purification. The system explores the integration of environmental sensors, an ESP32 microcontroller, display components, a fan, filtration elements, and solar power.
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=malikarshid01430-byte&amp;show_icons=true&amp;hide_border=true&amp;theme=transparent" alt="GitHub statistics for malikarshid01430-byte" />
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=malikarshid01430-byte&amp;layout=compact&amp;hide_border=true&amp;theme=transparent" alt="Most used GitHub languages for malikarshid01430-byte" />
+</p>
 
-**Key areas:** Embedded systems, environmental monitoring, sensor integration, air-quality awareness, and renewable energy.
+These optional cards are supplied by a third-party public statistics service and may be unavailable temporarily without affecting the portfolio itself.
 
-### 📱 Android Application Development
+## Connect
 
-Hands-on experience exploring Android application development using Kotlin and Jetpack Compose, including the development of modern user interfaces and AI-assisted application features.
+- **Live portfolio:** [arshid-portfolio.vercel.app](https://arshid-portfolio.vercel.app/)
+- **GitHub profile:** [github.com/malikarshid01430-byte](https://github.com/malikarshid01430-byte)
+- **Repository:** [github.com/malikarshid01430-byte/arshid-portfolio](https://github.com/malikarshid01430-byte/arshid-portfolio)
+- **LinkedIn:** [linkedin.com/in/arshid-ahmad-malik](https://www.linkedin.com/in/arshid-ahmad-malik)
+- **Email:** [malikarshid01430@gmail.com](mailto:malikarshid01430@gmail.com)
 
-**Key areas:** Mobile application development, UI design, Kotlin, Jetpack Compose, and generative AI integration.
-
-### 🌐 IoT & Embedded Systems
-
-Practical learning and project work involving microcontrollers, sensors, electronic components, automation concepts, and connected-device applications.
-
-**Key areas:** Hardware-software integration, sensor data, embedded programming, device control, and IoT fundamentals.
-
-### ⚙️ Additional Engineering Projects
-
-My broader learning journey includes work and exploration involving obstacle-avoiding robotics, smart home automation, monitoring systems, and other electronics-based applications.
-
-These projects help me strengthen my understanding of system design, hardware interfacing, programming logic, and troubleshooting.
-
-## 🎓 Education
-
-My educational background is in Electronics and Communication Engineering, supported by a foundation in electronics and related technical disciplines.
-
-🎓 **Bachelor of Engineering — Electronics and Communication Engineering**  
-MVJ College of Engineering, Bengaluru, affiliated with Visvesvaraya Technological University.
-
-🔌 **Diploma — Electronics and Communication Engineering**  
-Government Polytechnic College, Kashmir.
-
-My academic journey has helped me develop an understanding of electronic circuits, communication systems, microcontrollers, digital electronics, and engineering problem-solving.
-
-## 💼 Internship & Professional Development
-
-I have pursued practical learning opportunities to expand my skills beyond academic coursework.
-
-📱 **Android Application Development — MindMatrix**  
-Worked on Android application development using Kotlin and Jetpack Compose, with exposure to generative AI integration and application-building workflows.
-
-🔧 **Design for Testability (DFT) — VLSIGuru**  
-Technical training exposure to VLSI design-for-testability concepts and semiconductor testing fundamentals.
-
-⚡ **Electric Vehicle & Charging Infrastructure Training**  
-Participated in training focused on EV charging infrastructure, charging technologies, battery systems, and sustainable mobility.
-
-These experiences have helped me explore different technical domains and understand how engineering knowledge is applied in practical environments.
-
-## 🏅 Certifications & Achievements
-
-My portfolio includes a collection of certificates and training records documenting professional development and technical learning.
-
-The certificate section of my website provides access to available supporting documents and descriptions. Each credential should be reviewed against its original certificate for the issuing organization, title, and completion date.
-
-I believe that continuous learning, practical experience, and a willingness to adapt are essential for long-term professional growth.
-
-## 🌱 My Professional Goals
-
-I am interested in opportunities where I can develop my technical capabilities, contribute to engineering projects, and learn from experienced teams.
-
-My areas of interest include:
-
-- Embedded Systems and Firmware Development
-- Electronics Testing and Hardware Validation
-- IoT and Industrial Automation
-- Android and Software Development
-- AI-Integrated Applications
-- Electric Vehicles and Charging Infrastructure
-- Technical Support and Engineering Operations
-
-I am open to suitable entry-level roles, internships, training opportunities, and collaborative projects that align with my background and interests.
-
-## 📊 My GitHub Journey
-
-GitHub is an important part of my learning and development journey. It allows me to organize projects, maintain source code, document technical work, and share my progress with the developer community.
-
-I aim to keep improving the quality of my projects through better documentation, cleaner implementation, testing, and continuous learning.
-
-## 🤝 Let's Connect
-
-I welcome opportunities to connect with recruiters, engineers, developers, and technology enthusiasts. If you are interested in my background, would like to discuss a project, or have a suitable professional opportunity, feel free to reach out.
-
-📧 **Email:** malikarshid01430@gmail.com
-
-💻 **GitHub:** github.com/malikarshid01430-byte
-
-🔗 **LinkedIn:** linkedin.com/in/arshid-ahmad-malik
-
-📍 **Location:** Bengaluru, Karnataka, India
-
----
-
-## ✨ My Philosophy
-
-*“Learn continuously, build with purpose, solve problems thoughtfully, and turn ideas into meaningful solutions.”*
-
-Thank you for visiting my GitHub repository and taking the time to learn about my engineering journey. 🚀
-
-**— Arshid Ahmad Malik**
-
+Arshid is committed to continuous learning, thoughtful engineering, practical innovation, and collaboration on meaningful technology work.
